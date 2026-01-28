@@ -1,32 +1,28 @@
 ---
 /**
  * Navigation - PC800.fr
- * Style: Ocean Deep avec accents turquoise
+ * Style: Premium touring, sobre, intemporel
  */
 
 const navItems = [
-  { href: '/#a-la-une', label: 'À la Une', icon: '🏠' },
-  { href: '/#derniers-articles', label: 'Actualités', icon: '📰' },
-  { href: '/#histoire', label: "L'Histoire", icon: '📖' },
-  { href: '/#outils', label: 'Outils', icon: '🛠️' },
-  { href: '/#technique', label: 'Fiche Technique', icon: '📋' },
-  { href: '/#galerie', label: 'Galerie', icon: '📸' },
+  { href: '/#a-la-une', label: 'À la Une' },
+  { href: '/#articles', label: 'Actualités' },
+  { href: '/histoire', label: "L'Histoire" },
+  { href: '/#outils', label: 'Outils' },
+  { href: '/#technique', label: 'Fiche Technique' },
+  { href: '/#galerie', label: 'Galerie' },
 ];
 ---
 
-<nav class="fixed top-0 left-0 right-0 z-50 bg-ocean-deep/95 backdrop-blur-md border-b border-ocean-light/30 shadow-lg">
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-20">
+    <div class="flex items-center justify-between h-16">
       <!-- Logo -->
-      <a href="/" class="flex items-center gap-3 group">
-        <img 
-          src="/images/logo-white.svg" 
-          alt="PC800.fr" 
-          width="120" 
-          height="40"
-          class="h-10 w-auto transition-transform duration-300 group-hover:scale-105"
-        />
-        <span class="text-turquoise text-sm italic hidden lg:block opacity-90">
+      <a href="/" class="flex items-center gap-2 group">
+        <span class="text-xl font-bold text-gray-900 tracking-tight">
+          PC800<span class="text-red-700">.fr</span>
+        </span>
+        <span class="text-xs text-gray-500 hidden sm:block">
           L'Esprit Pacific Coast
         </span>
       </a>
@@ -36,10 +32,9 @@ const navItems = [
         {navItems.map((link) => (
           <a
             href={link.href}
-            class="flex items-center gap-1.5 px-3 py-2 text-warm-white/90 hover:text-turquoise transition-colors duration-200 text-sm font-medium rounded-md hover:bg-ocean-light/20"
+            class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 rounded-md transition-colors"
           >
-            <span class="text-base">{link.icon}</span>
-            <span>{link.label}</span>
+            {link.label}
           </a>
         ))}
       </div>
@@ -47,18 +42,17 @@ const navItems = [
       <!-- CTA Button Desktop -->
       <div class="hidden md:block">
         <a 
-          href="/#communaute" 
-          class="inline-flex items-center gap-2 bg-sunset-orange hover:bg-sunset-orange-dark text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
+          href="/#contribuer" 
+          class="inline-flex items-center px-4 py-2 bg-red-700 hover:bg-red-800 text-white text-sm font-medium rounded-md transition-colors"
         >
-          <span>👥</span>
-          <span>Rejoindre</span>
+          Contribuer
         </a>
       </div>
 
       <!-- Mobile Menu Button -->
       <button
         type="button"
-        class="md:hidden text-warm-white hover:text-turquoise p-2 rounded-lg hover:bg-ocean-light/20 transition-colors"
+        class="md:hidden p-2 text-gray-600 hover:text-gray-900"
         aria-label="Ouvrir le menu"
         id="mobile-menu-button"
       >
@@ -74,19 +68,17 @@ const navItems = [
         {navItems.map((link) => (
           <a
             href={link.href}
-            class="flex items-center gap-3 px-4 py-3 text-warm-white/90 hover:text-turquoise hover:bg-ocean-light/20 rounded-lg text-sm font-medium transition-colors"
+            class="block px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md text-sm font-medium transition-colors"
           >
-            <span class="text-lg">{link.icon}</span>
-            <span>{link.label}</span>
+            {link.label}
           </a>
         ))}
-        <div class="pt-2 mt-2 border-t border-ocean-light/20">
+        <div class="pt-2 mt-2 border-t border-gray-200">
           <a 
-            href="/#communaute" 
-            class="flex items-center gap-3 mx-4 bg-sunset-orange hover:bg-sunset-orange-dark text-white px-4 py-3 rounded-lg text-sm font-semibold transition-colors"
+            href="/#contribuer" 
+            class="block px-3 py-2 bg-red-700 hover:bg-red-800 text-white rounded-md text-sm font-medium transition-colors"
           >
-            <span>👥</span>
-            <span>Rejoindre la communauté</span>
+            Contribuer
           </a>
         </div>
       </div>
@@ -94,8 +86,8 @@ const navItems = [
   </div>
 </nav>
 
-<!-- Spacer pour compenser le header fixed -->
-<div class="h-20"></div>
+<!-- Spacer -->
+<div class="h-16"></div>
 
 <script>
   const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -110,51 +102,4 @@ const navItems = [
       mobileMenu.classList.add('hidden');
     });
   });
-
-  // Fermer le menu en cliquant à l'extérieur
-  document.addEventListener('click', (e) => {
-    if (!mobileMenuButton?.contains(e.target as Node) && !mobileMenu?.contains(e.target as Node)) {
-      mobileMenu?.classList.add('hidden');
-    }
-  });
 </script>
-
-<style>
-  /* Classes utilitaires CSS custom pour les couleurs du design system */
-  .bg-ocean-deep\/95 {
-    background-color: rgba(0, 61, 92, 0.95);
-  }
-  .bg-ocean-deep {
-    background-color: #003d5c;
-  }
-  .border-ocean-light\/30 {
-    border-color: rgba(0, 116, 163, 0.3);
-  }
-  .hover\:bg-ocean-light\/20:hover {
-    background-color: rgba(0, 116, 163, 0.2);
-  }
-  .bg-ocean-light\/20 {
-    background-color: rgba(0, 116, 163, 0.2);
-  }
-  .text-turquoise {
-    color: #00b4d8;
-  }
-  .hover\:text-turquoise:hover {
-    color: #00b4d8;
-  }
-  .text-warm-white {
-    color: #fefefe;
-  }
-  .text-warm-white\/90 {
-    color: rgba(254, 254, 254, 0.9);
-  }
-  .bg-sunset-orange {
-    background-color: #ff6b35;
-  }
-  .hover\:bg-sunset-orange-dark:hover {
-    background-color: #e55a2b;
-  }
-  .bg-sunset-orange-dark {
-    background-color: #e55a2b;
-  }
-</style>

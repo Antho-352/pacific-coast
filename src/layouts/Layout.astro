@@ -1,6 +1,5 @@
 ---
-import '../styles/design-system.css';
-import '../styles/global.css';
+import '../styles/premium-theme.css';
 
 interface Props {
   title: string;
@@ -10,7 +9,7 @@ interface Props {
 
 const { 
   title, 
-  description = "L'Esprit Pacific Coast - La communauté des passionnés de Honda PC800. Découvrez l'histoire, les spécifications et la communauté de cette moto culte des années 90.",
+  description = "L'Esprit Pacific Coast - La référence pour les passionnés de Honda PC800. Découvrez l'histoire, les spécifications et les guides de cette moto culte.",
   image = "https://honda-pacific-coast.fr/images/og-image.jpg"
 } = Astro.props;
 
@@ -26,11 +25,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://honda-pa
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#003d5c" />
+    <meta name="theme-color" content="#1C1917" />
     
     <!-- SEO Meta Tags -->
     <title>{title}</title>
@@ -44,24 +40,26 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://honda-pa
     <meta property="og:description" content={description} />
     <meta property="og:image" content={image} />
     <meta property="og:locale" content="fr_FR" />
-    <meta property="og:site_name" content="PC800.fr - L'Esprit Pacific Coast" />
+    <meta property="og:site_name" content="PC800.fr" />
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content={canonicalURL} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={image} />
     
-    <!-- Preconnect pour performance -->
-    <link rel="preconnect" href="https://honda-pacific-coast.fr" />
-    <link rel="dns-prefetch" href="https://honda-pacific-coast.fr" />
-    
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+      body {
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      }
+    </style>
   </head>
-  <body class="bg-warm-white text-dark-navy font-sans antialiased">
+  <body class="bg-white text-gray-900 antialiased">
     <slot />
   </body>
 </html>

@@ -1,99 +1,307 @@
 ---
 /**
- * DISCLAIMER: Site indépendant non affilié à Honda Motor Co., Ltd.
+ * Quiz Section - PC800.fr
+ * Mise en valeur premium, présentation éditoriale
  */
+
+const quizThemes = [
+  {
+    id: 'motoVsAuto',
+    title: 'Moto vs Auto',
+    description: 'Comprendre ce qui change vraiment : comportement, freinage, risques, réflexes.',
+    level: 'Accessible',
+    category: 'Sécurité',
+    questions: 15,
+    duration: '5 min',
+    available: true
+  },
+  {
+    id: 'racing',
+    title: 'Histoire du Racing',
+    description: 'Légendes, records, et moments qui ont construit la culture moto.',
+    level: 'Intermédiaire',
+    category: 'Culture',
+    questions: 15,
+    duration: '5 min',
+    available: true
+  },
+  {
+    id: 'pc800',
+    title: 'Spécial PC800',
+    description: 'Tout savoir sur la Pacific Coast : specs, histoire, entretien.',
+    level: 'Passionné',
+    category: 'PC800',
+    questions: 15,
+    duration: '5 min',
+    available: false
+  },
+  {
+    id: 'touring',
+    title: 'Mécanique Touring',
+    description: 'Entretien, préparation voyage, accessoires pour la route.',
+    level: 'Intermédiaire',
+    category: 'Entretien',
+    questions: 15,
+    duration: '5 min',
+    available: false
+  }
+];
 ---
 
-<section class="bg-slate-800 rounded-2xl p-6 lg:p-8 border border-slate-700 shadow-2xl">
-  <div class="flex items-center gap-3 mb-6">
-    <div class="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center">
-      <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-      </svg>
+<section id="quiz" class="section bg-white">
+  <div class="container">
+    <!-- Header éditorial -->
+    <div class="section-header text-center">
+      <span class="section-header__label">Quiz</span>
+      <h2 class="section-header__title mx-auto">Testez votre culture PC800 & touring</h2>
+      <p class="section-header__intro mx-auto">
+        15 questions par thème, rapides et fun. Parfait pour apprendre, réviser, ou défier un ami avant une sortie.
+      </p>
     </div>
-    <div>
-      <h3 class="font-display text-lg font-bold text-white">Testez votre Culture Moto</h3>
-      <p class="text-slate-400 text-xs">15 questions par thème - Saurez-vous tout maîtriser ?</p>
-    </div>
-  </div>
 
-  <div id="quiz-selection" class="mb-6">
-    <p class="text-slate-300 text-sm mb-4">Choisissez votre défi :</p>
-    <div class="grid sm:grid-cols-2 gap-4">
-      <button onclick="startQuiz('motoVsAuto')" class="group p-4 bg-slate-700 hover:bg-slate-600 rounded-xl border border-slate-600 hover:border-red-500 transition-all text-left">
-        <div class="flex items-center gap-3">
-          <div class="w-12 h-12 bg-slate-800 rounded-lg flex items-center justify-center group-hover:bg-red-600/20 transition-colors">
-            <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
+    <!-- Grille des thèmes -->
+    <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto" id="quiz-selection">
+      {quizThemes.map((theme) => (
+        <div class={`card relative ${!theme.available ? 'opacity-60' : ''}`}>
+          {!theme.available && (
+            <div class="absolute top-4 right-4">
+              <span class="badge badge--metal">Bientôt</span>
+            </div>
+          )}
+          
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <span class="badge badge--red mb-2">{theme.category}</span>
+              <h3 class="text-xl font-bold text-gray-900">{theme.title}</h3>
+            </div>
           </div>
-          <div>
-            <h4 class="font-semibold text-white">Moto vs Auto</h4>
-            <p class="text-slate-400 text-xs">Différences techniques, code de la route</p>
+          
+          <p class="text-gray-600 mb-6">{theme.description}</p>
+          
+          <div class="flex items-center gap-4 text-sm text-gray-500 mb-6">
+            <span class="flex items-center gap-1">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              {theme.questions} questions
+            </span>
+            <span class="flex items-center gap-1">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              {theme.duration}
+            </span>
+            <span class="flex items-center gap-1">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              {theme.level}
+            </span>
+          </div>
+          
+          {theme.available ? (
+            <button 
+              onclick={`startQuiz('${theme.id}')`}
+              class="btn btn--primary w-full"
+            >
+              Commencer
+            </button>
+          ) : (
+            <button 
+              disabled
+              class="btn btn--secondary w-full opacity-50 cursor-not-allowed"
+            >
+              Bientôt disponible
+            </button>
+          )}
+        </div>
+      ))}
+    </div>
+
+    <!-- Container du quiz (caché initialement) -->
+    <div id="quiz-container" class="hidden max-w-2xl mx-auto">
+      <div class="card card--feature">
+        <!-- Progress -->
+        <div class="mb-6">
+          <div class="flex items-center justify-between text-sm text-gray-500 mb-2">
+            <span>Question <span id="current-question">1</span>/15</span>
+            <span id="current-score">Score: 0</span>
+          </div>
+          <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div id="progress-bar" class="h-full bg-red-700 transition-all duration-300" style="width: 6.66%"></div>
           </div>
         </div>
-      </button>
 
-      <button onclick="startQuiz('racing')" class="group p-4 bg-slate-700 hover:bg-slate-600 rounded-xl border border-slate-600 hover:border-red-500 transition-all text-left">
-        <div class="flex items-center gap-3">
-          <div class="w-12 h-12 bg-slate-800 rounded-lg flex items-center justify-center group-hover:bg-red-600/20 transition-colors">
-            <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M10 11V7a4 4 0 118 0v4" />
-            </svg>
-          </div>
-          <div>
-            <h4 class="font-semibold text-white">Histoire du Racing</h4>
-            <p class="text-slate-400 text-xs">MotoGP, TT, légendes et records</p>
+        <!-- Question -->
+        <div id="question-container" class="mb-6">
+          <h4 id="question-text" class="text-xl font-semibold text-gray-900 mb-4"></h4>
+          <div id="answers-container" class="space-y-3"></div>
+        </div>
+
+        <!-- Feedback -->
+        <div id="feedback-container" class="hidden mb-4">
+          <div id="feedback-box" class="rounded-lg p-4">
+            <div class="flex items-start gap-3">
+              <div id="feedback-icon" class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center"></div>
+              <div>
+                <p id="feedback-title" class="font-semibold"></p>
+                <p id="feedback-text" class="text-sm mt-1"></p>
+              </div>
+            </div>
           </div>
         </div>
-      </button>
-    </div>
-  </div>
 
-  <div id="quiz-container" class="hidden">
-    <div class="mb-6">
-      <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
-        <span>Question <span id="current-question">1</span>/15</span>
-        <span id="current-score">Score: 0</span>
-      </div>
-      <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
-        <div id="progress-bar" class="h-full bg-red-600 transition-all duration-300" style="width: 6.66%"></div>
-      </div>
-    </div>
-
-    <div id="question-container" class="mb-6">
-      <h4 id="question-text" class="font-display text-xl font-semibold text-white mb-4"></h4>
-      <div id="answers-container" class="space-y-3"></div>
-    </div>
-
-    <div id="feedback-container" class="hidden mb-4">
-      <div id="feedback-box" class="rounded-lg p-4">
-        <div class="flex items-start gap-3">
-          <div id="feedback-icon" class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center"></div>
-          <div>
-            <p id="feedback-title" class="font-semibold"></p>
-            <p id="feedback-text" class="text-sm mt-1"></p>
-          </div>
+        <!-- Navigation -->
+        <div id="quiz-navigation" class="flex justify-end">
+          <button id="next-btn" onclick="nextQuestion()" class="hidden btn btn--primary">
+            Suivant
+          </button>
         </div>
       </div>
     </div>
 
-    <div id="quiz-navigation" class="flex justify-end">
-      <button id="next-btn" onclick="nextQuestion()" class="hidden px-6 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors">Suivant →</button>
+    <!-- Résultats (caché initialement) -->
+    <div id="results-container" class="hidden max-w-2xl mx-auto text-center">
+      <div class="card card--feature">
+        <div id="result-icon" class="w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center text-4xl bg-gray-100"></div>
+        <h4 id="result-title" class="text-2xl font-bold text-gray-900 mb-2"></h4>
+        <p id="result-score" class="text-4xl font-bold text-red-700 mb-2"></p>
+        <p id="result-grade" class="text-gray-500 mb-6"></p>
+        <p id="result-message" class="text-gray-600 mb-8 max-w-md mx-auto"></p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <button onclick="resetQuiz()" class="btn btn--primary">
+            Rejouer
+          </button>
+          <button onclick="document.getElementById('quiz-selection').scrollIntoView({behavior: 'smooth'})" class="btn btn--secondary">
+            Choisir un autre thème
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <div id="results-container" class="hidden text-center py-8">
-    <div id="result-icon" class="w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center text-4xl"></div>
-    <h4 id="result-title" class="font-display text-2xl font-bold text-white mb-2"></h4>
-    <p id="result-score" class="text-4xl font-bold text-red-500 mb-2"></p>
-    <p id="result-grade" class="text-slate-400 mb-6"></p>
-    <p id="result-message" class="text-slate-300 mb-8 max-w-md mx-auto"></p>
-    <button onclick="resetQuiz()" class="px-8 py-3 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg transition-colors">Rejouer</button>
   </div>
 </section>
 
+<style>
+  .section { padding: 4rem 0; }
+  @media (min-width: 768px) { .section { padding: 6rem 0; } }
+  
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .section-header {
+    margin-bottom: 3rem;
+  }
+  
+  .section-header__label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #C41E3A;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  
+  .section-header__title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  
+  .section-header__intro {
+    font-size: 1.125rem;
+    color: #4B5563;
+    line-height: 1.6;
+    max-width: 600px;
+  }
+  
+  .card {
+    background-color: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.2s ease;
+  }
+  
+  .card:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+    border-color: #D1D5DB;
+    transform: translateY(-2px);
+  }
+  
+  .card--feature {
+    padding: 2rem;
+  }
+  
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .badge--red {
+    background-color: rgba(196, 30, 58, 0.1);
+    color: #C41E3A;
+  }
+  
+  .badge--metal {
+    background-color: #F3F4F6;
+    color: #6B7280;
+  }
+  
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .btn:focus-visible {
+    outline: 2px solid #C41E3A;
+    outline-offset: 2px;
+  }
+  
+  .btn--primary {
+    background-color: #C41E3A;
+    color: white;
+  }
+  
+  .btn--primary:hover {
+    background-color: #A01830;
+  }
+  
+  .btn--secondary {
+    background-color: transparent;
+    color: #111827;
+    border: 1.5px solid #D1D5DB;
+  }
+  
+  .btn--secondary:hover {
+    border-color: #C41E3A;
+    color: #C41E3A;
+  }
+</style>
+
 <script is:inline>
+  // Quiz data
   const quizMotoVsAuto = [
     { question: "Quelle est la distance de freinage approximative d'une moto à 50 km/h sur route sèche ?", answers: ["8-10 mètres", "12-15 mètres", "18-22 mètres", "25-30 mètres"], correct: 1, explanation: "Une moto freine généralement en 12-15 mètres à 50 km/h, comparable à une voiture moderne mais avec moins de stabilité." },
     { question: "Sur route mouillée, la distance de freinage d'une moto est multipliée par :", answers: ["1,5", "2", "2,5 à 3", "4"], correct: 2, explanation: "Sur route mouillée, la distance de freinage peut être multipliée par 2,5 à 3 en raison de la réduction d'adhérence des deux roues." },
@@ -150,9 +358,9 @@
     document.getElementById('progress-bar').style.width = `${((currentQuestionIndex + 1) / 15) * 100}%`;
     document.getElementById('question-text').textContent = question.question;
     document.getElementById('answers-container').innerHTML = question.answers.map((answer, index) => `
-      <button onclick="selectAnswer(${index})" id="answer-${index}" class="w-full p-4 bg-slate-700 hover:bg-slate-600 rounded-lg border border-slate-600 text-left transition-all answer-btn">
-        <span class="inline-block w-8 h-8 bg-slate-800 rounded-full text-center leading-8 mr-3 text-sm font-semibold">${String.fromCharCode(65 + index)}</span>
-        <span class="text-white">${answer}</span>
+      <button onclick="selectAnswer(${index})" id="answer-${index}" class="w-full p-4 bg-gray-50 hover:bg-gray-100 rounded-lg border border-gray-200 text-left transition-all answer-btn">
+        <span class="inline-block w-8 h-8 bg-white border border-gray-300 rounded-full text-center leading-8 mr-3 text-sm font-semibold text-gray-700">${String.fromCharCode(65 + index)}</span>
+        <span class="text-gray-900">${answer}</span>
       </button>
     `).join('');
     document.getElementById('feedback-container').classList.add('hidden');
@@ -165,26 +373,37 @@
     const question = currentQuiz[currentQuestionIndex];
     const isCorrect = index === question.correct;
     document.querySelectorAll('.answer-btn').forEach((btn, i) => {
-      btn.disabled = true; btn.classList.add('opacity-60', 'cursor-not-allowed');
-      if (i === question.correct) { btn.classList.remove('bg-slate-700', 'border-slate-600'); btn.classList.add('bg-green-900/50', 'border-green-500'); }
-      else if (i === index && !isCorrect) { btn.classList.remove('bg-slate-700', 'border-slate-600'); btn.classList.add('bg-red-900/50', 'border-red-500'); }
+      btn.disabled = true; btn.classList.add('opacity-70');
+      const letterSpan = btn.querySelector('span:first-child');
+      if (i === question.correct) { 
+        btn.classList.remove('bg-gray-50', 'border-gray-200'); 
+        btn.classList.add('bg-green-50', 'border-green-500');
+        letterSpan.classList.add('bg-green-500', 'text-white', 'border-green-500');
+        letterSpan.classList.remove('bg-white', 'text-gray-700', 'border-gray-300');
+      }
+      else if (i === index && !isCorrect) { 
+        btn.classList.remove('bg-gray-50', 'border-gray-200'); 
+        btn.classList.add('bg-red-50', 'border-red-500');
+        letterSpan.classList.add('bg-red-500', 'text-white', 'border-red-500');
+        letterSpan.classList.remove('bg-white', 'text-gray-700', 'border-gray-300');
+      }
     });
     if (isCorrect) score++;
     document.getElementById('current-score').textContent = `Score: ${score}`;
     const feedbackBox = document.getElementById('feedback-box'), feedbackIcon = document.getElementById('feedback-icon'), feedbackTitle = document.getElementById('feedback-title'), feedbackText = document.getElementById('feedback-text');
     if (isCorrect) {
-      feedbackBox.className = 'rounded-lg p-4 bg-green-900/30 border border-green-500/50';
-      feedbackIcon.className = 'flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center bg-green-500'; feedbackIcon.innerHTML = '✓';
-      feedbackTitle.className = 'font-semibold text-green-400'; feedbackTitle.textContent = 'Bonne réponse !';
+      feedbackBox.className = 'rounded-lg p-4 bg-green-50 border border-green-200';
+      feedbackIcon.className = 'flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center bg-green-500 text-white text-sm font-bold'; feedbackIcon.innerHTML = '✓';
+      feedbackTitle.className = 'font-semibold text-green-800'; feedbackTitle.textContent = 'Bonne réponse !';
     } else {
-      feedbackBox.className = 'rounded-lg p-4 bg-red-900/30 border border-red-500/50';
-      feedbackIcon.className = 'flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center bg-red-500'; feedbackIcon.innerHTML = '✕';
-      feedbackTitle.className = 'font-semibold text-red-400'; feedbackTitle.textContent = 'Mauvaise réponse';
+      feedbackBox.className = 'rounded-lg p-4 bg-red-50 border border-red-200';
+      feedbackIcon.className = 'flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center bg-red-500 text-white text-sm font-bold'; feedbackIcon.innerHTML = '✕';
+      feedbackTitle.className = 'font-semibold text-red-800'; feedbackTitle.textContent = 'Mauvaise réponse';
     }
-    feedbackText.className = 'text-slate-400 text-sm mt-1'; feedbackText.textContent = question.explanation;
+    feedbackText.className = 'text-gray-600 text-sm mt-1'; feedbackText.textContent = question.explanation;
     document.getElementById('feedback-container').classList.remove('hidden');
     const nextBtn = document.getElementById('next-btn');
-    nextBtn.textContent = currentQuestionIndex < 14 ? 'Suivant →' : 'Voir les résultats';
+    nextBtn.textContent = currentQuestionIndex < 14 ? 'Suivant' : 'Voir les résultats';
     nextBtn.classList.remove('hidden');
   }
 
@@ -198,15 +417,15 @@
     document.getElementById('results-container').classList.remove('hidden');
     const resultIcon = document.getElementById('result-icon'), resultTitle = document.getElementById('result-title'), resultScore = document.getElementById('result-score'), resultGrade = document.getElementById('result-grade'), resultMessage = document.getElementById('result-message');
     resultScore.textContent = `${score}/15`;
-    let grade, message, icon, colorClass;
-    if (score === 15) { grade = "👑 King of the Road"; message = "Perfection absolue ! Vous êtes une légende vivante de la moto."; icon = "🏆"; colorClass = "bg-yellow-500"; }
-    else if (score >= 13) { grade = "🔥 Maître des Deux Roues"; message = "Excellent ! Vous connaissez votre sujet sur le bout des doigts."; icon = "🥇"; colorClass = "bg-yellow-600"; }
-    else if (score >= 10) { grade = "🏍️ Expert Motard"; message = "Très bon score ! Vous avez une solide culture moto."; icon = "🥈"; colorClass = "bg-slate-400"; }
-    else if (score >= 7) { grade = "🛵 Conducteur Averti"; message = "Pas mal ! Mais il reste encore des choses à apprendre."; icon = "🥉"; colorClass = "bg-orange-600"; }
-    else if (score >= 4) { grade = "🛴 Débutant"; message = "Il faut rouler plus pour accumuler l'expérience !"; icon = "📖"; colorClass = "bg-slate-600"; }
-    else { grade = "🚲 Piéton"; message = "Peut-être devriez-vous commencer par un scooter ? 😄"; icon = "🚲"; colorClass = "bg-red-600"; }
-    resultIcon.className = `w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center text-4xl ${colorClass}`;
-    resultIcon.textContent = icon; resultTitle.textContent = grade; resultGrade.textContent = grade.split(' ').slice(1).join(' '); resultMessage.textContent = message;
+    let grade, message, icon, bgClass;
+    if (score === 15) { grade = "King of the Road"; message = "Perfection absolue ! Vous êtes une légende vivante de la moto."; icon = "👑"; bgClass = "bg-yellow-100"; }
+    else if (score >= 13) { grade = "Maître des Deux Roues"; message = "Excellent ! Vous connaissez votre sujet sur le bout des doigts."; icon = "🏆"; bgClass = "bg-yellow-50"; }
+    else if (score >= 10) { grade = "Expert Motard"; message = "Très bon score ! Vous avez une solide culture moto."; icon = "🏅"; bgClass = "bg-gray-100"; }
+    else if (score >= 7) { grade = "Conducteur Averti"; message = "Pas mal ! Mais il reste encore des choses à apprendre."; icon = "🎯"; bgClass = "bg-orange-50"; }
+    else if (score >= 4) { grade = "Débutant"; message = "Il faut rouler plus pour accumuler l'expérience !"; icon = "📖"; bgClass = "bg-gray-100"; }
+    else { grade = "Piéton"; message = "Peut-être devriez-vous commencer par un scooter ?"; icon = "🚶"; bgClass = "bg-red-50"; }
+    resultIcon.className = `w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center text-4xl ${bgClass}`;
+    resultIcon.textContent = icon; resultTitle.textContent = grade; resultGrade.textContent = grade; resultMessage.textContent = message;
   }
 
   function resetQuiz() {

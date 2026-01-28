@@ -1,71 +1,196 @@
 ---
 /**
- * DISCLAIMER: Site indépendant non affilié à Honda Motor Co., Ltd.
+ * Outils pratiques - Widget Carburant
+ * Design premium, contexte éditorial, cohérence graphique
  */
 ---
 
-<section class="bg-slate-900 rounded-2xl p-6 lg:p-8 border border-slate-700 shadow-2xl">
-  <div class="flex items-center gap-3 mb-6">
-    <div class="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center">
-      <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-      </svg>
-    </div>
-    <div>
-      <h3 class="font-display text-lg font-bold text-white">Prix des Carburants</h3>
-      <p class="text-slate-400 text-xs">Données ouvertes data.economie.gouv.fr</p>
-    </div>
-  </div>
-
-  <div class="flex gap-3 mb-6">
-    <div class="flex-1">
-      <input
-        type="text"
-        id="fuel-zipcode"
-        placeholder="Code postal (ex: 75001)"
-        maxlength="5"
-        class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors"
-      />
-    </div>
-    <button
-      id="fuel-search-btn"
-      class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors flex items-center gap-2"
-    >
-      <span id="btn-text">Chercher</span>
-    </button>
-  </div>
-
-  <div id="fuel-loading" class="hidden py-8 text-center">
-    <div class="inline-block w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full animate-spin"></div>
-    <p class="text-slate-400 text-sm mt-3">Recherche des stations...</p>
-  </div>
-
-  <div id="fuel-error" class="hidden py-4">
-    <div class="bg-red-900/30 border border-red-500/50 rounded-lg p-4">
-      <p id="fuel-error-message" class="text-red-400 text-sm mt-1"></p>
-    </div>
-  </div>
-
-  <div id="fuel-results" class="hidden">
-    <div class="flex items-center justify-between mb-4">
-      <p class="text-slate-400 text-sm">
-        <span id="fuel-count">0</span> station(s) trouvée(s)
+<section id="outils" class="section bg-metal-100">
+  <div class="container">
+    <!-- Header éditorial -->
+    <div class="section-header text-center">
+      <span class="section-header__label">Outils pratiques</span>
+      <h2 class="section-header__title mx-auto">Prix des carburants</h2>
+      <p class="section-header__intro mx-auto">
+        Préparez vos trajets et gardez un œil sur votre budget. Cet outil vous permet de consulter rapidement les prix des carburants autour de chez vous, à partir de données publiques.
       </p>
     </div>
-    <div id="fuel-stations-list" class="space-y-3 max-h-80 overflow-y-auto pr-1 custom-scrollbar">
+
+    <!-- Card principale -->
+    <div class="max-w-2xl mx-auto">
+      <div class="card card--feature">
+        <!-- Icon + titre -->
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 bg-red-700/10 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-red-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-gray-900">Stations à proximité</h3>
+            <p class="text-sm text-gray-500">Données ouvertes data.economie.gouv.fr</p>
+          </div>
+        </div>
+
+        <!-- Input group -->
+        <div class="flex gap-3 mb-4">
+          <div class="flex-1">
+            <input
+              type="text"
+              id="fuel-zipcode"
+              placeholder="Entrez votre code postal (ex : 75001)"
+              maxlength="5"
+              class="input"
+            />
+          </div>
+          <button
+            id="fuel-search-btn"
+            class="btn btn--primary whitespace-nowrap"
+          >
+            <span id="btn-text">Voir les stations</span>
+          </button>
+        </div>
+
+        <!-- Message d'info initial -->
+        <div id="fuel-info" class="text-sm text-gray-500 bg-gray-50 rounded-lg p-4">
+          Entrez un code postal pour afficher les stations à proximité.
+        </div>
+
+        <!-- Loading -->
+        <div id="fuel-loading" class="hidden py-8 text-center">
+          <div class="inline-block w-8 h-8 border-2 border-red-700 border-t-transparent rounded-full animate-spin"></div>
+          <p class="text-sm text-gray-500 mt-3">Recherche des stations...</p>
+        </div>
+
+        <!-- Error -->
+        <div id="fuel-error" class="hidden mt-4">
+          <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
+            <p id="fuel-error-message" class="text-amber-800 text-sm">
+              Impossible de récupérer les données pour le moment. Réessayez dans quelques instants.
+            </p>
+          </div>
+        </div>
+
+        <!-- Results -->
+        <div id="fuel-results" class="hidden mt-6">
+          <div class="flex items-center justify-between mb-4">
+            <p class="text-sm text-gray-600">
+              <span id="fuel-count">0</span> station(s) trouvée(s)
+            </p>
+          </div>
+          <div id="fuel-stations-list" class="space-y-3 max-h-80 overflow-y-auto pr-1 custom-scrollbar">
+          </div>
+        </div>
+
+        <!-- Crédibilité -->
+        <div class="mt-6 pt-4 border-t border-gray-200">
+          <p class="text-xs text-gray-400">
+            Source : données publiques (data.economie.gouv.fr). Les prix peuvent varier selon la mise à jour des stations.
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
+  .bg-metal-100 { background-color: #F5F5F4; }
+  .section { padding: 4rem 0; }
+  @media (min-width: 768px) { .section { padding: 6rem 0; } }
+  
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .section-header {
+    margin-bottom: 3rem;
+  }
+  
+  .section-header__label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #C41E3A;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  
+  .section-header__title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  
+  .section-header__intro {
+    font-size: 1.125rem;
+    color: #4B5563;
+    line-height: 1.6;
+    max-width: 600px;
+  }
+  
+  .card {
+    background-color: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  
+  .card--feature {
+    padding: 2rem;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 0.9375rem;
+    color: #111827;
+    background-color: white;
+    border: 1.5px solid #D1D5DB;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+  
+  .input:focus {
+    outline: none;
+    border-color: #C41E3A;
+    box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
+  }
+  
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .btn--primary {
+    background-color: #C41E3A;
+    color: white;
+  }
+  
+  .btn--primary:hover {
+    background-color: #A01830;
+  }
+  
   .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-  .custom-scrollbar::-webkit-scrollbar-track { background: rgba(30, 41, 59, 0.5); border-radius: 3px; }
-  .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(71, 85, 105, 0.8); border-radius: 3px; }
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(100, 116, 139, 1); }
+  .custom-scrollbar::-webkit-scrollbar-track { background: #F3F4F6; border-radius: 3px; }
+  .custom-scrollbar::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 3px; }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #9CA3AF; }
 </style>
 
 <script is:inline>
-  // Fonctions utilitaires définies globalement pour éviter les erreurs de portée
   function isValidZipCode(cp) { return /^\d{5}$/.test(cp); }
 
   function formatPrice(price) {
@@ -86,28 +211,37 @@
     const sp98 = fields.sp98_prix;
 
     return `
-      <div class="bg-slate-800 rounded-lg p-4 border border-slate-700">
+      <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
         <div class="flex justify-between mb-2">
           <div>
-            <div class="font-bold text-white">${fields.adresse || 'Adresse inconnue'}</div>
-            <div class="text-xs text-slate-400">${fields.ville || ''}</div>
+            <div class="font-semibold text-gray-900 text-sm">${fields.adresse || 'Adresse inconnue'}</div>
+            <div class="text-xs text-gray-500">${fields.ville || ''}</div>
           </div>
-          <div class="text-xs text-slate-500">${formatDistance(fields.distance)}</div>
+          <div class="text-xs text-gray-400">${formatDistance(fields.distance)}</div>
         </div>
-        <div class="grid grid-cols-3 gap-2 text-center">
-          <div><div class="text-xs text-slate-500">Gazole</div><div class="font-bold text-red-500">${formatPrice(gazole)}</div></div>
-          <div><div class="text-xs text-slate-500">SP95</div><div class="font-bold text-white">${formatPrice(sp95)}</div></div>
-          <div><div class="text-xs text-slate-500">SP98</div><div class="font-bold text-white">${formatPrice(sp98)}</div></div>
+        <div class="grid grid-cols-3 gap-2 text-center text-sm">
+          <div>
+            <div class="text-xs text-gray-500">Gazole</div>
+            <div class="font-semibold text-gray-900">${formatPrice(gazole)}</div>
+          </div>
+          <div>
+            <div class="text-xs text-gray-500">SP95</div>
+            <div class="font-semibold text-gray-900">${formatPrice(sp95)}</div>
+          </div>
+          <div>
+            <div class="text-xs text-gray-500">SP98</div>
+            <div class="font-semibold text-gray-900">${formatPrice(sp98)}</div>
+          </div>
         </div>
       </div>
     `;
   }
 
-  // Logique principale
   document.addEventListener('DOMContentLoaded', () => {
     const zipInput = document.getElementById('fuel-zipcode');
     const searchBtn = document.getElementById('fuel-search-btn');
     const btnText = document.getElementById('btn-text');
+    const infoEl = document.getElementById('fuel-info');
     const loadingEl = document.getElementById('fuel-loading');
     const errorEl = document.getElementById('fuel-error');
     const errorMsgEl = document.getElementById('fuel-error-message');
@@ -115,17 +249,28 @@
     const listEl = document.getElementById('fuel-stations-list');
     const countEl = document.getElementById('fuel-count');
 
+    // Récupérer le dernier code postal
+    const lastZip = localStorage.getItem('fuel-last-zipcode');
+    if (lastZip && zipInput) {
+      zipInput.value = lastZip;
+    }
+
     if (!searchBtn || !zipInput) return;
 
     searchBtn.addEventListener('click', async () => {
       const zip = zipInput.value.trim();
       if (!isValidZipCode(zip)) {
+        infoEl.classList.add('hidden');
         errorEl.classList.remove('hidden');
-        errorMsgEl.textContent = 'Code postal invalide (5 chiffres)';
+        errorMsgEl.textContent = 'Veuillez entrer un code postal valide (5 chiffres).';
         return;
       }
 
+      // Sauvegarder le code postal
+      localStorage.setItem('fuel-last-zipcode', zip);
+
       // Reset UI
+      infoEl.classList.add('hidden');
       errorEl.classList.add('hidden');
       resultsEl.classList.add('hidden');
       loadingEl.classList.remove('hidden');
@@ -137,11 +282,11 @@
         const data = await req.json();
 
         loadingEl.classList.add('hidden');
-        btnText.textContent = 'Chercher';
+        btnText.textContent = 'Voir les stations';
 
         if (!data.records || data.records.length === 0) {
           errorEl.classList.remove('hidden');
-          errorMsgEl.textContent = 'Aucune station trouvée.';
+          errorMsgEl.textContent = 'Aucune station trouvée pour ce code postal.';
           return;
         }
 
@@ -151,10 +296,15 @@
 
       } catch (e) {
         loadingEl.classList.add('hidden');
-        btnText.textContent = 'Chercher';
+        btnText.textContent = 'Voir les stations';
         errorEl.classList.remove('hidden');
-        errorMsgEl.textContent = 'Erreur de connexion.';
+        errorMsgEl.textContent = 'Impossible de récupérer les données pour le moment. Réessayez dans quelques instants.';
       }
+    });
+
+    // Enter key
+    zipInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') searchBtn.click();
     });
   });
 </script>
