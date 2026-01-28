@@ -1,0 +1,28 @@
+---
+import '../styles/global.css';
+const { title } = Astro.props;
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body class="bg-slate-50 text-slate-900">
+    <header class="bg-slate-900 text-white p-4 sticky top-0 z-50">
+      <nav class="max-w-7xl mx-auto flex justify-between">
+        <a href="/" class="font-bold text-xl">PC800<span class="text-red-600">.fr</span></a>
+        <div class="space-x-4">
+           <a href="/" class="hover:text-red-400">Accueil</a>
+           <a href="/mentions-legales" class="hover:text-red-400">Légal</a>
+        </div>
+      </nav>
+    </header>
+    <main><slot /></main>
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center mt-12">
+      <p>Site indépendant non affilié à Honda Motor Co., Ltd.</p>
+    </footer>
+  </body>
+</html>

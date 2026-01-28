@@ -1,17 +1,410 @@
 ---
+  import Layout from '../layouts/Layout.astro';
+  import Navigation from '../components/Navigation.astro';
+  import Footer from '../components/Footer.astro';
+  import FuelWidget from '../components/Interactive/FuelWidget.astro';
+  import QuizSection from '../components/Interactive/QuizSection.astro';
+  import { getFeaturedPosts, getRecentPosts, getFeaturedImageUrl, formatDate, ex
+  tractExcerpt } from '../lib/wordpress.js';
 
----
+  let featuredPosts = [], recentPosts = [], error = null;
+  try {
+    [featuredPosts, recentPosts] = await Promise.all([getFeaturedPosts(3), getRe
+  centPosts(21)]);
+  } catch (e) { error = e.message; console.error('Erreur chargement articles:',
+  e); }
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+  const pageTitle = "L'Esprit Pacific Coast";
+  const specs = [
+    { label: "Moteur", value: "V-Twin 52° refroidi par eau" },
+    { label: "Cylindrée", value: "800 cc (45 cv en France)" },
+    { label: "Puissance", value: "57 ch (42 kW) @ 7500 tr/min" },
+    { label: "Couple", value: "67 Nm @ 6000 tr/min" },
+    { label: "Transmission", value: "Cardan (arbre de transmission)" },
+    { label: "Boîte", value: "5 rapports" },
+    { label: "Poids", value: "280 kg à sec" },
+    { label: "Réservoir", value: "16 litres (4L de réserve)" },
+    { label: "Autonomie", value: "~350 km" },
+    { label: "Coffre", value: "140 litres (2 casques intégraux)" },
+    { label: "Freins AV", value: "Double disque 296 mm" },
+    { label: "Freins AR", value: "Disque simple 296 mm" },
+    { label: "Pneu AV", value: "120/90-17" },
+    { label: "Pneu AR", value: "140/90-17" },
+    { label: "Hauteur selle", value: "775 mm" },
+    { label: "Production", value: "1989 - 1998" },
+  ];
+  ---
+
+  <Layout title={pageTitle}>
+    <Navigation />
+    <main>
+      <section class="relative min-h-screen flex items-center justify-center ove
+  rflow-hidden">
+        <div class="absolute inset-0 z-0">
+          <img src="/images/hero-coastal-road.jpg" alt="Honda PC800 sur une rout
+  e côtière" class="w-full h-full object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-sl
+  ate-900/60 to-slate-900/90"></div>
+        </div>
+        <div class="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-
+  auto pt-20">
+          <div class="animate-fade-in">
+            <span class="inline-block px-4 py-1 bg-gauge/20 border border-gauge/
+  40 rounded-full text-gauge-light text-sm font-medium mb-6">Communauté Passionn
+  ée</span>
+            <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl font-bold t
+  ext-cream-50 mb-6 tracking-tight">L'Esprit <span class="text-gauge">Pacific Co
+  ast</span></h1>
+            <p class="text-xl sm:text-2xl text-slate-300 mb-8 font-light">Le sit
+  e des passionnés de la PC800</p>
+            <div class="flex flex-col sm:flex-row items-center justify-center ga
+  p-4 mb-12">
+              <a href="#a-la-une" class="px-8 py-3 bg-gauge hover:bg-gauge-dark
+  text-white font-semibold rounded-lg transition-all duration-200 shadow-lg shad
+  ow-gauge/25">Dernières Actualités</a>
+              <a href="#histoire" class="px-8 py-3 bg-slate-800/80 hover:bg-slat
+  e-700 text-cream-100 font-semibold rounded-lg border border-slate-600 transiti
+  on-all duration-200">Découvrir la PC800</a>
+            </div>
+            <p class="text-slate-500 text-xs max-w-lg mx-auto">Site communautair
+  e indépendant • Non affilié à Honda Motor Co., Ltd.</p>
+          </div>
+        </div>
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+          <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor"
+  viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" strok
+  e-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+        </div>
+      </section>
+
+      <section id="a-la-une" class="py-20 lg:py-28 bg-slate-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between mb-12">
+            <div>
+              <span class="text-gauge font-semibold text-sm tracking-wider upper
+  case">Magazine</span>
+              <h2 class="font-display text-4xl lg:text-5xl font-bold text-cream-
+  50 mt-2">À la Une</h2>
+            </div>
+          </div>
+          {error && (<div class="bg-red-900/30 border border-red-500/50 rounded-
+  lg p-6 text-center mb-8"><p class="text-red-300">Impossible de charger les art
+  icles mis en avant.</p></div>)}
+          {featuredPosts.length > 0 ? (
+            <div class="grid lg:grid-cols-3 gap-8">
+              <article class="lg:col-span-2 group">
+                <a href={`/blog/${featuredPosts[0].slug}/`} class="block">
+                  <div class="relative aspect-[16/9] rounded-2xl overflow-hidden
+  ">
+                    {getFeaturedImageUrl(featuredPosts[0], 'large') ? (<img src=
+  {getFeaturedImageUrl(featuredPosts[0], 'large')} alt={featuredPosts[0].title.r
+  endered} class="w-full h-full object-cover group-hover:scale-105 transition-tr
+  ansform duration-700" />) : (<div class="w-full h-full bg-slate-800 flex items
+  -center justify-center"><span class="text-slate-500">Pas d'image</span></div>)
+  }
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950
+  via-slate-950/50 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 lg:p-8">
+                      <span class="inline-block px-3 py-1 bg-gauge text-white te
+  xt-xs font-semibold rounded-full mb-3">À la Une</span>
+                      <h3 class="font-display text-2xl lg:text-3xl font-bold tex
+  t-cream-100 mb-2 group-hover:text-gauge transition-colors">{featuredPosts[0].t
+  itle.rendered.replace(/<[^>]*>/g, '')}</h3>
+                      <p class="text-slate-300 line-clamp-2 mb-3">{extractExcerp
+  t(featuredPosts[0].excerpt?.rendered || featuredPosts[0].content?.rendered, 20
+  0)}</p>
+                      <time class="text-slate-400 text-sm">{formatDate(featuredP
+  osts[0].date)}</time>
+                    </div>
+                  </div>
+                </a>
+              </article>
+              <div class="space-y-8">
+                {featuredPosts.slice(1, 3).map((post) => (
+                  <article class="group">
+                    <a href={`/blog/${post.slug}/`} class="block">
+                      <div class="relative aspect-video rounded-xl overflow-hidd
+  en mb-4">
+                        {getFeaturedImageUrl(post, 'medium_large') ? (<img src={
+  getFeaturedImageUrl(post, 'medium_large')} alt={post.title.rendered} class="w-
+  full h-full object-cover group-hover:scale-110 transition-transform duration-5
+  00" />) : (<div class="w-full h-full bg-slate-800 flex items-center justify-ce
+  nter"><span class="text-slate-500">Pas d'image</span></div>)}
+                      </div>
+                      <span class="text-gauge text-xs font-semibold uppercase tr
+  acking-wider">À la Une</span>
+                      <h3 class="font-display text-lg font-bold text-cream-100 m
+  t-1 group-hover:text-gauge transition-colors line-clamp-2">{post.title.rendere
+  d.replace(/<[^>]*>/g, '')}</h3>
+                      <time class="text-slate-500 text-sm">{formatDate(post.date
+  )}</time>
+                    </a>
+                  </article>
+                ))}
+              </div>
+            </div>
+          ) : (!error && (<div class="text-center py-12"><p class="text-slate-50
+  0">Aucun article mis en avant pour le moment.</p></div>))}
+        </div>
+      </section>
+
+      <section id="histoire" class="py-20 lg:py-28 bg-cream-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <div class="relative">
+              <div class="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
+                <img src="/images/pc800-trunk.jpg" alt="Le coffre intégré de la
+  Honda PC800" class="w-full h-full object-cover hover:scale-105 transition-tran
+  sform duration-700" />
+              </div>
+              <div class="absolute -bottom-6 -right-6 bg-slate-900 text-cream-50
+  p-6 rounded-xl shadow-xl hidden sm:block">
+                <p class="font-display text-3xl font-bold text-gauge">1989</p>
+                <p class="text-slate-400 text-sm">Année de lancement</p>
+              </div>
+            </div>
+            <div class="animate-slide-up">
+              <span class="text-gauge font-semibold text-sm tracking-wider upper
+  case">L'Histoire</span>
+              <h2 class="font-display text-4xl lg:text-5xl font-bold text-slate-
+  900 mt-3 mb-6">La PC800 : La Moto-Coffre Née pour la Pacific Coast Highway</h2
+  >
+              <div class="prose prose-slate prose-lg text-slate-600">
+                <p class="mb-4">En 1989, Honda surprend le monde de la moto avec une machine révolutionnaire : la <strong>Pacific Coast 800</stro
+  ng>. Contrairement aux conventions de l'époque, cette moto n'est pas dessinée
+  par les ingénieurs moto traditionnels, mais par la <strong>division automobile
+  de Honda</strong> — la même qui conçoit les berlines et coupés.</p>
+                <p class="mb-4">Le résultat ? Une moto intégrale qui ressemble à
+  une voiture découpée en deux, dotée d'un <strong>coffre intégré de 140 litres<
+  /strong> capable d'engouffrer deux casques intégraux, une valise et une trouss
+  e à outils. Un concept unique sur le marché du touring.</p>
+                <p class="mb-4">Son nom fait référence à la célèbre <strong>Paci
+  fic Coast Highway</strong>, cette route mythique de Californie longeant l'océa
+  n. Honda visait le marché américain des motards « occasionnels » qui voulaient
+  le plaisir de la moto sans les inconvénients.</p>
+                <p class="mb-6">Équipée d'un <strong>V-Twin 800cc de 57 chevaux<
+  /strong> et d'une transmission par cardan (adieu l'entretien chaîne !), la PC8
+  00 est produite de 1989 à 1998. Si elle n'a pas connu le succès commercial esc
+  ompté aux États-Unis, elle est devenue une moto culte en Europe.</p>
+              </div>
+              <div class="grid grid-cols-3 gap-6 mt-8 pt-8 border-t border-slate
+  -200">
+                <div><p class="font-display text-2xl font-bold text-slate-900">8
+  00cc</p><p class="text-slate-500 text-sm">V-Twin 52°</p></div>
+                <div><p class="font-display text-2xl font-bold text-slate-900">1
+  40L</p><p class="text-slate-500 text-sm">Coffre intégré</p></div>
+                <div><p class="font-display text-2xl font-bold text-slate-900">9
+  ans</p><p class="text-slate-500 text-sm">De production</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="outils" class="py-20 lg:py-28 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid lg:grid-cols-2 gap-12 items-start">
+            <div>
+              <span class="text-gauge font-semibold text-sm tracking-wider upper
+  case">Outils Pratiques</span>
+              <h2 class="font-display text-4xl lg:text-5xl font-bold text-cream-
+  50 mt-3 mb-6">⛽ Trouvez l'Essence la Moins Chère</h2>
+              <p class="text-slate-400 text-lg mb-6">La PC800 consomme environ 5
+  -6L aux 100km, mais avec son réservoir de 16L, chaque centime compte quand vou
+  s partez en weekend. Utilisez notre outil pour localiser les stations les moin
+  s chères près de chez vous.</p>
+              <div class="space-y-4">
+                <div class="flex items-start gap-3">
+                  <div class="w-8 h-8 bg-gauge/20 rounded-lg flex items-center j
+  ustify-center flex-shrink-0 mt-1">
+                    <svg class="w-4 h-4 text-gauge" fill="none" stroke="currentC
+  olor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
+  stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                  </div>
+                  <div><h4 class="text-cream-100 font-semibold">Données en temps
+  réel</h4><p class="text-slate-400 text-sm">Prix actualisés directement depuis
+  les données ouvertes du gouvernement.</p></div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <div class="w-8 h-8 bg-gauge/20 rounded-lg flex items-center j
+  ustify-center flex-shrink-0 mt-1">
+                    <svg class="w-4 h-4 text-gauge" fill="none" stroke="currentC
+  olor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
+  stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                  </div>
+                  <div><h4 class="text-cream-100 font-semibold">Tous les carbura
+  nts</h4><p class="text-slate-400 text-sm">Gazole, SP95, SP98 et E10 — comparez
+  facilement.</p></div>
+                </div>
+              </div>
+            </div>
+            <div class="lg:sticky lg:top-24"><FuelWidget /></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="quiz" class="py-20 lg:py-28 bg-cream-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid lg:grid-cols-2 gap-12 items-start">
+            <div class="order-2 lg:order-1"><QuizSection /></div>
+            <div class="order-1 lg:order-2">
+              <span class="text-gauge font-semibold text-sm tracking-wider upper
+  case">Divertissement</span>
+              <h2 class="font-display text-4xl lg:text-5xl font-bold text-slate-
+  900 mt-3 mb-6">🧠 Testez votre Culture Moto</h2>
+              <p class="text-slate-600 text-lg mb-6">Pensez tout connaître sur l
+  a moto et son histoire ? Prouvez-le avec nos quiz interactifs ! Deux thèmes au
+  choix : les différences techniques entre moto et voiture, ou l'histoire du rac
+  ing mondial.</p>
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div class="bg-white rounded-xl p-5 shadow-sm border border-slat
+  e-200">
+                  <div class="w-10 h-10 bg-gauge/10 rounded-lg flex items-center
+  justify-center mb-3">
+                    <svg class="w-5 h-5 text-gauge" fill="none" stroke="currentC
+  olor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
+  stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                  </div>
+                  <h4 class="font-semibold text-slate-900 mb-1">Moto vs Auto</h4
+  >
+                  <p class="text-slate-500 text-sm">Différences techniques, code
+  de la route et sécurité.</p>
+                </div>
+                <div class="bg-white rounded-xl p-5 shadow-sm border border-slat
+  e-200">
+                  <div class="w-10 h-10 bg-gauge/10 rounded-lg flex items-center
+  justify-center mb-3">
+                    <svg class="w-5 h-5 text-gauge" fill="none" stroke="currentC
+  olor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
+  stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M10 11V7a4 4 0 118 0v
+  4" /></svg>
+                  </div>
+                  <h4 class="font-semibold text-slate-900 mb-1">Histoire du Raci
+  ng</h4>
+                  <p class="text-slate-500 text-sm">MotoGP, TT, légendes et reco
+  rds de la compétition.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="derniers-articles" class="py-20 lg:py-28 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16">
+            <span class="text-gauge font-semibold text-sm tracking-wider upperca
+  se">Blog</span>
+            <h2 class="font-display text-4xl lg:text-5xl font-bold text-cream-50
+  mt-3 mb-4">Derniers Articles</h2>
+            <p class="text-slate-400 max-w-2xl mx-auto">Toute l'actualité de la
+  communauté PC800 : entretien, balades, rencontres et bons plans.</p>
+          </div>
+          {error && (<div class="bg-red-900/30 border border-red-500/50 rounded-
+  lg p-6 text-center mb-8"><p class="text-red-300">Impossible de charger les art
+  icles.</p></div>)}
+          {recentPosts.length > 0 ? (
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {recentPosts.map((post) => {
+                const imageUrl = getFeaturedImageUrl(post, 'medium_large');
+                const excerpt = extractExcerpt(post.excerpt?.rendered || post.co
+  ntent?.rendered, 120);
+                return (
+                  <article class="group bg-slate-800 rounded-xl overflow-hidden
+  hover:shadow-2xl hover:shadow-gauge/10 transition-all duration-300 border bord
+  er-slate-700">
+                    <a href={`/blog/${post.slug}/`} class="block aspect-[16/10]
+  overflow-hidden">
+                      {imageUrl ? (<img src={imageUrl} alt={post.title.rendered}
+  class="w-full h-full object-cover group-hover:scale-110 transition-transform d
+  uration-500" />) : (<div class="w-full h-full bg-slate-700 flex items-center j
+  ustify-center"><span class="text-slate-500">Pas d'image</span></div>)}
+                    </a>
+                    <div class="p-6">
+                      <time class="text-slate-500 text-sm">{formatDate(post.date
+  )}</time>
+                      <h3 class="font-display text-xl font-bold text-cream-100 m
+  t-2 mb-3 line-clamp-2 group-hover:text-gauge transition-colors"><a href={`/blo
+  g/${post.slug}/`}>{post.title.rendered.replace(/<[^>]*>/g, '')}</a></h3>
+                      <p class="text-slate-400 text-sm mb-4 line-clamp-3">{excer
+  pt}</p>
+                      <a href={`/blog/${post.slug}/`} class="inline-flex items-c
+  enter text-gauge hover:text-gauge-light font-semibold text-sm transition-color
+  s">Lire l'article<svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition
+  -transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke
+  -linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4
+  4m4-4H3" /></svg></a>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          ) : (!error && (<div class="text-center py-12"><p class="text-slate-50
+  0">Aucun article disponible pour le moment.</p></div>))}
+        </div>
+      </section>
+
+      <section id="technique" class="py-20 lg:py-28 bg-cream-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16">
+            <span class="text-gauge font-semibold text-sm tracking-wider upperca
+  se">Spécifications</span>
+            <h2 class="font-display text-4xl lg:text-5xl font-bold text-slate-90
+  0 mt-3 mb-4">Fiche Technique PC800</h2>
+            <p class="text-slate-600 max-w-2xl mx-auto">Les caractéristiques tec
+  hniques de la Honda Pacific Coast 800 (1989-1998).</p>
+          </div>
+          <div class="max-w-3xl mx-auto">
+            <div class="bg-white rounded-2xl shadow-lg border border-slate-200 o
+  verflow-hidden">
+              <div class="bg-slate-900 px-6 py-4">
+                <h3 class="font-display text-xl font-bold text-cream-100">Honda
+  PC800 Pacific Coast</h3>
+                <p class="text-slate-400 text-sm">Données constructeur</p>
+              </div>
+              <div class="divide-y divide-slate-100">
+                {specs.map((spec, index) => (
+                  <div class={`flex justify-between items-center px-6 py-4 ${ind
+  ex % 2 === 0 ? 'bg-cream-50' : 'bg-white'}`}>
+                    <span class="text-slate-600 font-medium">{spec.label}</span>
+                    <span class="text-slate-900 font-semibold text-right">{spec.
+  value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div class="mt-6 bg-gauge/5 border-l-4 border-gauge rounded-r-xl p-4
+  ">
+              <p class="text-slate-600 text-sm"><strong>Note :</strong> La versi
+  on française était bridée à 45 cv pour respecter la législation des motos acce
+  ssibles avec le permis A2. La version d'origine développe 57 chevaux.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="galerie" class="py-20 lg:py-28 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16">
+            <span class="text-gauge font-semibold text-sm tracking-wider upperca
+  se">Communauté</span>
+            <h2 class="font-display text-4xl lg:text-5xl font-bold text-cream-50
+  mt-3 mb-4">Galerie Photos</h2>
+            <p class="text-slate-400 max-w-2xl mx-auto">Partagez vos plus belles
+  photos de balades et découvrez les machines des membres.</p>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+              <div class="aspect-square rounded-lg overflow-hidden group cursor-
+  pointer">
+                <img src={`/images/gallery/pc800-${i}.jpg`} alt={`Photo galerie
+  PC800 ${i}`} class="w-full h-full object-cover group-hover:scale-110 transitio
+  n-transform duration-500" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
+    <Footer />
+  </Layout>
