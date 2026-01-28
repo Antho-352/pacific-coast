@@ -1,6 +1,6 @@
 // src/lib/wordpress.js
 
-const API_URL = 'https://honda-pacific-coast.fr/wp/wp-json/wp/v2';
+const API_URL = 'https://honda-pacific-coast.fr/magazine/wp-json/wp/v2';
 
 export async function getRecentPosts(perPage = 10) {
   try {
