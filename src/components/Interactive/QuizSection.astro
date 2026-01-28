@@ -1,43 +1,218 @@
-<div class="bg-slate-800 rounded-xl p-6 shadow-xl border border-slate-700">
-  <div class="flex justify-between mb-4">
-    <h3 class="text-xl font-bold text-white">🧠 Quiz Moto</h3>
-    <span id="score" class="text-red-500 font-bold">0/5</span>
-  </div>
-  <div id="quiz-box">
-    <h4 id="q-text" class="text-lg text-white mb-4">Chargement...</h4>
-    <div id="opts" class="space-y-2"></div>
-    <div id="feed" class="mt-4 hidden p-2 rounded text-sm"></div>
-    <button id="next" class="mt-4 w-full bg-red-600 text-white py-2 rounded hidden">Suivant</button>
-  </div>
-</div>
+---
+/**
+ * DISCLAIMER: Site indépendant non affilié à Honda Motor Co., Ltd.
+ */
+---
 
-<script>
-  const qs = [
-    {q:"Année PC800?", o:["1985","1989","1995"], a:1, e:"Lancée en 1989."},
-    {q:"Volume coffre?", o:["30L","48L","60L"], a:1, e:"48 Litres."},
-    {q:"Transmission?", o:["Chaîne","Cardan","Courroie"], a:1, e:"Cardan."},
-    {q:"Cylindrée?", o:["500cc","800cc","1000cc"], a:1, e:"V-Twin 800cc."},
-    {q:"Origine design?", o:["Moto GP","Auto Honda","Yamaha"]    {q:"Origine design?", o:["Moto GP","Auto Honda","Yamah;
-  const els = {t:document.getElementById('q-text'), o:document.getElementById('opts'), f:document.getElementById('feed'), n:document.getElementById('next'), s:document.getElementById('score')};
-  
-  function load() {
-    const q = qs[cur];
-    if(!els.t) return;
-    els.t.innerText = q.q; els.o.innerHTML=''; els.f.classList.add('hidden'); els.n.classList.add('hidden');
-    q.o.forEach((opt,i) => {
-      const b = document.createElement('button');
-      b.className="w-full text-left p-2 rounded bg-slate-700 text-white hover:bg-slate-600";
-      b.innerText=opt;
-      b.onclick=()=>check(i,b);
-      els.o.appendChild(b);
+<section class="bg-slate-800 rounded-2xl p-6 lg:p-8 border border-slate-700 shadow-2xl">
+  <div class="flex items-center gap-3 mb-6">
+    <div class="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center">
+      <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+      </svg>
+    </div>
+    <div>
+      <h3 class="font-display text-lg font-bold text-white">Testez votre Culture Moto</h3>
+      <p class="text-slate-400 text-xs">15 questions par thème - Saurez-vous tout maîtriser ?</p>
+    </div>
+  </div>
+
+  <div id="quiz-selection" class="mb-6">
+    <p class="text-slate-300 text-sm mb-4">Choisissez votre défi :</p>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <button onclick="startQuiz('motoVsAuto')" class="group p-4 bg-slate-700 hover:bg-slate-600 rounded-xl border border-slate-600 hover:border-red-500 transition-all text-left">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 bg-slate-800 rounded-lg flex items-center justify-center group-hover:bg-red-600/20 transition-colors">
+            <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <div>
+            <h4 class="font-semibold text-white">Moto vs Auto</h4>
+            <p class="text-slate-400 text-xs">Différences techniques, code de la route</p>
+          </div>
+        </div>
+      </button>
+
+      <button onclick="startQuiz('racing')" class="group p-4 bg-slate-700 hover:bg-slate-600 rounded-xl border border-slate-600 hover:border-red-500 transition-all text-left">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 bg-slate-800 rounded-lg flex items-center justify-center group-hover:bg-red-600/20 transition-colors">
+            <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M10 11V7a4 4 0 118 0v4" />
+            </svg>
+          </div>
+          <div>
+            <h4 class="font-semibold text-white">Histoire du Racing</h4>
+            <p class="text-slate-400 text-xs">MotoGP, TT, légendes et records</p>
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <div id="quiz-container" class="hidden">
+    <div class="mb-6">
+      <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
+        <span>Question <span id="current-question">1</span>/15</span>
+        <span id="current-score">Score: 0</span>
+      </div>
+      <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+        <div id="progress-bar" class="h-full bg-red-600 transition-all duration-300" style="width: 6.66%"></div>
+      </div>
+    </div>
+
+    <div id="question-container" class="mb-6">
+      <h4 id="question-text" class="font-display text-xl font-semibold text-white mb-4"></h4>
+      <div id="answers-container" class="space-y-3"></div>
+    </div>
+
+    <div id="feedback-container" class="hidden mb-4">
+      <div id="feedback-box" class="rounded-lg p-4">
+        <div class="flex items-start gap-3">
+          <div id="feedback-icon" class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center"></div>
+          <div>
+            <p id="feedback-title" class="font-semibold"></p>
+            <p id="feedback-text" class="text-sm mt-1"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="quiz-navigation" class="flex justify-end">
+      <button id="next-btn" onclick="nextQuestion()" class="hidden px-6 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors">Suivant →</button>
+    </div>
+  </div>
+
+  <div id="results-container" class="hidden text-center py-8">
+    <div id="result-icon" class="w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center text-4xl"></div>
+    <h4 id="result-title" class="font-display text-2xl font-bold text-white mb-2"></h4>
+    <p id="result-score" class="text-4xl font-bold text-red-500 mb-2"></p>
+    <p id="result-grade" class="text-slate-400 mb-6"></p>
+    <p id="result-message" class="text-slate-300 mb-8 max-w-md mx-auto"></p>
+    <button onclick="resetQuiz()" class="px-8 py-3 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg transition-colors">Rejouer</button>
+  </div>
+</section>
+
+<script is:inline>
+  const quizMotoVsAuto = [
+    { question: "Quelle est la distance de freinage approximative d'une moto à 50 km/h sur route sèche ?", answers: ["8-10 mètres", "12-15 mètres", "18-22 mètres", "25-30 mètres"], correct: 1, explanation: "Une moto freine généralement en 12-15 mètres à 50 km/h, comparable à une voiture moderne mais avec moins de stabilité." },
+    { question: "Sur route mouillée, la distance de freinage d'une moto est multipliée par :", answers: ["1,5", "2", "2,5 à 3", "4"], correct: 2, explanation: "Sur route mouillée, la distance de freinage peut être multipliée par 2,5 à 3 en raison de la réduction d'adhérence des deux roues." },
+    { question: "Le champ de vision d'un motard est environ :", answers: ["90° (comme une voiture)", "120°", "180° (vision panoramique)", "360° avec les rétros"], correct: 2, explanation: "Sans carénage, un motard dispose d'environ 180° de champ visuel, bien supérieur à celui d'un automobiliste." },
+    { question: "Dans un virage, une moto doit :", answers: ["Ralentir avant d'entrer, maintenir sa vitesse", "Freiner en courbe si nécessaire", "Accélérer pour stabiliser", "Rester au milieu de la chaussée"], correct: 0, explanation: "La règle d'or : ralentir AVANT le virage, maintenir une vitesse constante dans le virage, et réaccélérer à la sortie." },
+    { question: "L'angle mort d'un motard comparé à une voiture est :", answers: ["Identique", "Plus grand", "Plus petit (pas d'angle mort)", "Inexistant grâce aux rétros"], correct: 2, explanation: "Le motard n'a pratiquement pas d'angle mort grâce à sa position élevée et sa capacité à tourner la tête." },
+    { question: "En cas d'aquaplaning sur moto :", answers: ["Freiner fort pour stabiliser", "Maintenir l'accélérateur constant, ne pas freiner", "Accélérer pour traverser", "Se coucher sur le réservoir"], correct: 1, explanation: "Il faut maintenir l'accélérateur constant sans freiner ni tourner brutalement, et laisser la moto se stabiliser seule." },
+    { question: "La distance de sécurité recommandée entre deux motos est :", answers: ["1 seconde", "2 secondes (règle des 2 secondes)", "3 secondes", "5 secondes"], correct: 1, explanation: "La règle des 2 secondes s'applique aussi aux motos, mais beaucoup de motards préfèrent 3 secondes pour plus de marge." },
+    { question: "Un motard doit-il traverser sur les passages cloutés ?", answers: ["Oui, comme les piétons", "Non, il doit rester sur la chaussée", "Oui, mais à pied en poussant la moto", "Seulement si le feu est rouge"], correct: 2, explanation: "Un motard doit descendre de sa moto et la pousser pour traverser sur un passage piéton, comme un piéton." },
+    { question: "Le 'traversier' (traverser les files) est autorisé :", answers: ["Toujours", "Jamais", "Uniquement en circulation dense < 50 km/h (inter-files)", "Seulement sur autoroute"], correct: 2, explanation: "L'inter-files est théoriquement interdit mais toléré en France en circulation dense < 50 km/h, sous certaines conditions." },
+    { question: "Quelle est la principale cause d'accident mortel en moto ?", answers: ["Vitesse excessive", "Non-respect de la priorité par l'autre usager", "Alcool", "Météo"], correct: 1, explanation: "Le non-respect de la priorité par un autre usager (surtout en intersection) est la principale cause d'accident mortel moto." },
+    { question: "Le 'tête-à-queue' en moto est généralement causé par :", answers: ["Un freinage trop tardif", "Une accélération brutale en courbe", "Un changement de rapport inadapté", "Un pneu sous-gonflé"], correct: 1, explanation: "L'accélération brutale en courbe peut faire patiner la roue arrière et provoquer un dérapage (tête-à-queue)." },
+    { question: "Un motard doit positionner sa moto au feu rouge :", answers: ["Au milieu de la voie", "Sur le côté gauche de la voie", "Sur le côté droit de la voie (devant le filet)", "N'importe où, c'est pareil"], correct: 2, explanation: "Le motard doit se placer à droite de sa voie (pour être visible dans le rétro de la voiture devant) tout en restant visible." },
+    { question: "La conduite préventive en moto implique :", answers: ["Rouler vite pour ne pas gêner", "Anticiper les dangers et prévoir une échappatoire", "Siffler les voitures qui doublent", "Rouler toujours avec les warnings"], correct: 1, explanation: "La conduite préventive consiste à anticiper les dangers (sortie de voiture, gravier...) et toujours avoir un 'plan B'." },
+    { question: "En duo (passager), la moto voit sa distance de freinage :", answers: ["Diminuer (plus de poids = plus d'adhérence)", "Augmenter de 20-30%", "Rester identique", "Être divisée par 2"], correct: 1, explanation: "Avec un passager, le poids supplémentaire allonge la distance de freinage d'environ 20-30%." },
+    { question: "Le 'blocage de direction' (Death Wobble) peut être provoqué par :", answers: ["Un guidon lâche", "Une vitesse excessive", "Un défaut d'équilibrage des roues", "Toutes ces réponses"], correct: 3, explanation: "Le wobble peut être causé par un guidon lâche, une vitesse trop élevée, un défaut d'équilibrage ou un pneus usé." }
+  ];
+
+  const quizRacing = [
+    { question: "Qui détient le record du plus grand nombre de titres en MotoGP ?", answers: ["Valentino Rossi", "Giacomo Agostini", "Marc Marquez", "Mick Doohan"], correct: 1, explanation: "Giacomo Agostini détient le record avec 15 titres mondiaux (8 en 500cc, 7 en 350cc) entre 1966 et 1975." },
+    { question: "Le Tourist Trophy de l'île de Man se court sur un circuit de :", answers: ["3,5 km", "10 km", "37,7 miles (60,7 km)", "100 km"], correct: 2, explanation: "Le Snaefell Mountain Course fait 37,73 miles (60,72 km), c'est le circuit le plus long et dangereux du monde." },
+    { question: "En quelle année Valentino Rossi a-t-il remporté son premier titre en 500cc ?", answers: ["1997", "1999", "2001", "2004"], correct: 2, explanation: "Valentino Rossi a remporté son premier titre en 500cc en 2001 avec Honda, avant de passer en MotoGP." },
+    { question: "Le 'Doctor' est le surnom de :", answers: ["Jorge Lorenzo", "Casey Stoner", "Valentino Rossi", "Dani Pedrosa"], correct: 2, explanation: "Valentino Rossi est surnommé 'The Doctor' depuis ses débuts, en référence à son style de pilotage 'clinique'." },
+    { question: "Quel constructeur a remporté le plus de constructeurs en MotoGP/500cc ?", answers: ["Yamaha", "Honda", "Ducati", "Suzuki"], correct: 1, explanation: "Honda domine l'histoire avec plus de 20 titres constructeurs en catégorie reine." },
+    { question: "Le 'King of the Mountain' Joey Dunlop a remporté combien de TT ?", answers: ["13", "18", "26", "32"], correct: 2, explanation: "Joey Dunlop détient le record absolu avec 26 victoires au Tourist Trophy de l'île de Man." },
+    { question: "En quelle année la catégorie 500cc est-elle devenue MotoGP ?", answers: ["1998", "2002", "2005", "2010"], correct: 1, explanation: "La catégorie 500cc a été remplacée par le MotoGP en 2002, avec l'introduction des 4-temps 990cc." },
+    { question: "Qui est le pilote français le plus titré en Grand Prix ?", answers: ["Christian Sarron", "Jean-Philippe Ruggia", "Loris Baz", "Fabio Quartararo"], correct: 0, explanation: "Christian Sarron est le pilote français le plus titré avec 6 victoires en 250cc dans les années 80." },
+    { question: "Le 'Corkscrew' est une célèbre séquence de virages située à :", answers: ["Silverstone", "Le Mans", "Laguna Seca", "Phillip Island"], correct: 2, explanation: "Le Corkscrew (Tire-bouchon) est une célèbre descente de 8 étages au WeatherTech Raceway Laguna Seca." },
+    { question: "Quel pilote a remporté 5 titres consécutifs en 500cc/MotoGP ?", answers: ["Valentino Rossi", "Marc Marquez", "Mick Doohan", "Michael Schumacher"], correct: 2, explanation: "Mick Doohan a dominé la catégorie reine de 1994 à 1998 avec 5 titres consécutifs chez Honda." },
+    { question: "Le Circuit de Phillip Island est situé en :", answers: ["Nouvelle-Zélande", "Australie", "Afrique du Sud", "Argentine"], correct: 1, explanation: "Phillip Island est situé au sud de Melbourne, en Australie, et est réputé pour ses vues spectaculaires." },
+    { question: "En 2020, Fabio Quartararo est devenu le premier Champion du Monde français en :", answers: ["Moto2", "Moto3", "MotoGP", "Superbike"], correct: 2, explanation: "Fabio Quartararo est devenu en 2021 le premier Champion du Monde français de l'histoire en MotoGP." },
+    { question: "Le 'Elbow Down' (coude à terre) a été popularisé par :", answers: ["Kenny Roberts", "Wayne Rainey", "Valentino Rossi", "Marc Marquez"], correct: 3, explanation: "Marc Marquez a popularisé le coude à terre dans les années 2010, bien que le technique existe depuis les 80s." },
+    { question: "La vitesse maximale atteinte au TT de l'île de Man est d'environ :", answers: ["280 km/h", "320 km/h", "340 km/h", "380 km/h"], correct: 2, explanation: "Peter Hickman a établi le record absolu à 340,5 km/h en 2023 avec sa BMW M 1000 RR." },
+    { question: "Quelle course est surnommée 'The Greatest Show on Earth' ?", answers: ["Le Mans 24h Moto", "Daytona 200", "Isle of Man TT", "Suzuka 8 Hours"], correct: 2, explanation: "Le Tourist Trophy de l'île de Man est souvent appelé 'The Greatest Show on Earth' par sa dangerosité légendaire." }
+  ];
+
+  let currentQuiz = [], currentQuestionIndex = 0, score = 0, selectedAnswer = null;
+
+  function startQuiz(quizType) {
+    currentQuiz = quizType === 'motoVsAuto' ? [...quizMotoVsAuto] : [...quizRacing];
+    currentQuiz.sort(() => Math.random() - 0.5);
+    currentQuestionIndex = 0; score = 0; selectedAnswer = null;
+    document.getElementById('quiz-selection').classList.add('hidden');
+    document.getElementById('quiz-container').classList.remove('hidden');
+    document.getElementById('results-container').classList.add('hidden');
+    showQuestion();
+  }
+
+  function showQuestion() {
+    const question = currentQuiz[currentQuestionIndex];
+    selectedAnswer = null;
+    document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+    document.getElementById('current-score').textContent = `Score: ${score}`;
+    document.getElementById('progress-bar').style.width = `${((currentQuestionIndex + 1) / 15) * 100}%`;
+    document.getElementById('question-text').textContent = question.question;
+    document.getElementById('answers-container').innerHTML = question.answers.map((answer, index) => `
+      <button onclick="selectAnswer(${index})" id="answer-${index}" class="w-full p-4 bg-slate-700 hover:bg-slate-600 rounded-lg border border-slate-600 text-left transition-all answer-btn">
+        <span class="inline-block w-8 h-8 bg-slate-800 rounded-full text-center leading-8 mr-3 text-sm font-semibold">${String.fromCharCode(65 + index)}</span>
+        <span class="text-white">${answer}</span>
+      </button>
+    `).join('');
+    document.getElementById('feedback-container').classList.add('hidden');
+    document.getElementById('next-btn').classList.add('hidden');
+  }
+
+  function selectAnswer(index) {
+    if (selectedAnswer !== null) return;
+    selectedAnswer = index;
+    const question = currentQuiz[currentQuestionIndex];
+    const isCorrect = index === question.correct;
+    document.querySelectorAll('.answer-btn').forEach((btn, i) => {
+      btn.disabled = true; btn.classList.add('opacity-60', 'cursor-not-allowed');
+      if (i === question.correct) { btn.classList.remove('bg-slate-700', 'border-slate-600'); btn.classList.add('bg-green-900/50', 'border-green-500'); }
+      else if (i === index && !isCorrect) { btn.classList.remove('bg-slate-700', 'border-slate-600'); btn.classList.add('bg-red-900/50', 'border-red-500'); }
     });
+    if (isCorrect) score++;
+    document.getElementById('current-score').textContent = `Score: ${score}`;
+    const feedbackBox = document.getElementById('feedback-box'), feedbackIcon = document.getElementById('feedback-icon'), feedbackTitle = document.getElementById('feedback-title'), feedbackText = document.getElementById('feedback-text');
+    if (isCorrect) {
+      feedbackBox.className = 'rounded-lg p-4 bg-green-900/30 border border-green-500/50';
+      feedbackIcon.className = 'flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center bg-green-500'; feedbackIcon.innerHTML = '✓';
+      feedbackTitle.className = 'font-semibold text-green-400'; feedbackTitle.textContent = 'Bonne réponse !';
+    } else {
+      feedbackBox.className = 'rounded-lg p-4 bg-red-900/30 border border-red-500/50';
+      feedbackIcon.className = 'flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center bg-red-500'; feedbackIcon.innerHTML = '✕';
+      feedbackTitle.className = 'font-semibold text-red-400'; feedbackTitle.textContent = 'Mauvaise réponse';
+    }
+    feedbackText.className = 'text-slate-400 text-sm mt-1'; feedbackText.textContent = question.explanation;
+    document.getElementById('feedback-container').classList.remove('hidden');
+    const nextBtn = document.getElementById('next-btn');
+    nextBtn.textContent = currentQuestionIndex < 14 ? 'Suivant →' : 'Voir les résultats';
+    nextBtn.classList.remove('hidden');
   }
-  function check(i,b) {
-    const q=qs[cur];
-    if(i===q.a) { sc++; b.classList.add('bg-green-600'); els.f.innerText="✅ "+q.e; els.f.className="mt-4 block p-2 bg-green-900 text-green-200"; }
-    else { b.classList.add('bg-red-600'); els.f.innerText="❌ "+q.e; els.f.className="mt-4 block p-2 bg-red-900 text-red-200"; }
-    els.s.innerText=sc+"/5"; els.n.classList.remove('hidden');
+
+  function nextQuestion() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < 15) showQuestion(); else showResults();
   }
-  if(els.n) els.n.onclick=()=>{ cur++; if(cur<qs.length) load(); else els.t.innerText="Fini! Score: "+sc+"/5"; };
-  load();
+
+  function showResults() {
+    document.getElementById('quiz-container').classList.add('hidden');
+    document.getElementById('results-container').classList.remove('hidden');
+    const resultIcon = document.getElementById('result-icon'), resultTitle = document.getElementById('result-title'), resultScore = document.getElementById('result-score'), resultGrade = document.getElementById('result-grade'), resultMessage = document.getElementById('result-message');
+    resultScore.textContent = `${score}/15`;
+    let grade, message, icon, colorClass;
+    if (score === 15) { grade = "👑 King of the Road"; message = "Perfection absolue ! Vous êtes une légende vivante de la moto."; icon = "🏆"; colorClass = "bg-yellow-500"; }
+    else if (score >= 13) { grade = "🔥 Maître des Deux Roues"; message = "Excellent ! Vous connaissez votre sujet sur le bout des doigts."; icon = "🥇"; colorClass = "bg-yellow-600"; }
+    else if (score >= 10) { grade = "🏍️ Expert Motard"; message = "Très bon score ! Vous avez une solide culture moto."; icon = "🥈"; colorClass = "bg-slate-400"; }
+    else if (score >= 7) { grade = "🛵 Conducteur Averti"; message = "Pas mal ! Mais il reste encore des choses à apprendre."; icon = "🥉"; colorClass = "bg-orange-600"; }
+    else if (score >= 4) { grade = "🛴 Débutant"; message = "Il faut rouler plus pour accumuler l'expérience !"; icon = "📖"; colorClass = "bg-slate-600"; }
+    else { grade = "🚲 Piéton"; message = "Peut-être devriez-vous commencer par un scooter ? 😄"; icon = "🚲"; colorClass = "bg-red-600"; }
+    resultIcon.className = `w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center text-4xl ${colorClass}`;
+    resultIcon.textContent = icon; resultTitle.textContent = grade; resultGrade.textContent = grade.split(' ').slice(1).join(' '); resultMessage.textContent = message;
+  }
+
+  function resetQuiz() {
+    document.getElementById('quiz-selection').classList.remove('hidden');
+    document.getElementById('quiz-container').classList.add('hidden');
+    document.getElementById('results-container').classList.add('hidden');
+    currentQuiz = []; currentQuestionIndex = 0; score = 0; selectedAnswer = null;
+  }
 </script>

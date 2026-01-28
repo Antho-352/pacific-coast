@@ -1,0 +1,86 @@
+---
+  /**
+   * DISCLAIMER: Site indépendant non affilié à Honda Motor Co., Ltd.
+   */
+
+  const navLinks = [
+    { href: '/#a-la-une', label: 'À la Une' },
+    { href: '/#derniers-articles', label: 'Actualités' },
+    { href: '/#histoire', label: "L'Histoire" },
+    { href: '/#outils', label: 'Outils' },
+    { href: '/#technique', label: 'Fiche Technique' },
+    { href: '/#galerie', label: 'Galerie' },
+  ];
+  ---
+
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-sm b
+  order-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="flex items-center space-x-2">
+          <div class="w-8 h-8 bg-gauge rounded-sm flex items-center justify-cent
+  er">
+            <span class="text-white font-display font-bold text-sm">PC</span>
+          </div>
+          <span class="text-cream-100 font-display font-semibold text-lg trackin
+  g-wide hidden sm:block">
+            L'Esprit Pacific Coast
+          </span>
+        </a>
+
+        <div class="hidden md:flex items-center space-x-8">
+          {navLinks.map((link) => (
+            <a
+              href={link.href}
+              class="text-slate-300 hover:text-gauge transition-colors duration-
+  200 text-sm font-medium"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+
+        <button
+          type="button"
+          class="md:hidden text-slate-300 hover:text-cream-100 p-2"
+          aria-label="Ouvrir le menu"
+          id="mobile-menu-button"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24
+  24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2
+  " d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="md:hidden hidden" id="mobile-menu">
+        <div class="py-3 space-y-2">
+          {navLinks.map((link) => (
+            <a
+              href={link.href}
+              class="block px-3 py-2 text-slate-300 hover:text-gauge hover:bg-sl
+  ate-800 rounded-md text-sm font-medium"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <script>
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuButton?.addEventListener('click', () => {
+      mobileMenu?.classList.toggle('hidden');
+    });
+
+    mobileMenu?.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+  </script>

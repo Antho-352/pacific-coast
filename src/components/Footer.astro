@@ -1,0 +1,83 @@
+---
+/**
+ * DISCLAIMER: Site indépendant non affilié à Honda Motor Co., Ltd.
+ */
+
+const currentYear = new Date().getFullYear();
+
+const footerLinks = {
+  navigation: [
+    { label: "Accueil", href: "/" },
+    { label: "À la Une", href: "/#a-la-une" },
+    { label: "Actualités", href: "/#derniers-articles" },
+    { label: "Histoire", href: "/#histoire" },
+  ],
+  legal: [
+    { label: "Mentions Légales", href: "/mentions-legales" },
+    { label: "Plan du site", href: "/plan-du-site" },
+  ],
+};
+---
+
+<footer class="bg-slate-950 border-t border-slate-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div>
+        <div class="flex items-center space-x-2 mb-4">
+          <div class="w-8 h-8 bg-red-600 rounded-sm flex items-center justify-center">
+            <span class="text-white font-display font-bold text-sm">PC</span>
+          </div>
+          <span class="text-white font-display font-semibold text-lg">
+            L'Esprit Pacific Coast
+          </span>
+        </div>
+        <p class="text-slate-400 text-sm leading-relaxed">
+          Le site de référence pour les passionnés de la Honda Pacific Coast PC800.
+          Partage, entraide et passion du touring.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-white font-display font-semibold mb-4">Navigation</h3>
+        <ul class="space-y-2">
+          {footerLinks.navigation.map((link) => (
+            <li>
+              <a href={link.href} class="text-slate-400 hover:text-red-500 transition-colors text-sm">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-white font-display font-semibold mb-4">Informations</h3>
+        <ul class="space-y-2">
+          {footerLinks.legal.map((link) => (
+            <li>
+              <a href={link.href} class="text-slate-400 hover:text-red-500 transition-colors text-sm">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-10 pt-8 border-t border-slate-800">
+      <div class="bg-slate-900/50 rounded-lg p-4 mb-6">
+        <p class="text-slate-500 text-xs text-center leading-relaxed">
+          <strong class="text-slate-400">DISCLAIMER IMPORTANT :</strong>
+          Ce site est un projet communautaire indépendant.
+          <strong class="text-slate-400">Nous ne sommes pas affiliés, associés, autorisés, approuvés par, ou en aucune façon officiellement connectés avec Honda Motor Co., Ltd.</strong>
+          Honda® et Pacific Coast® sont des marques déposées de Honda Motor Co., Ltd.
+        </p>
+      </div>
+
+      <div class="flex flex-col md:flex-row items-center justify-between text-slate-500 text-sm">
+        <p>&copy; {currentYear} L'Esprit Pacific Coast. Tous droits réservés.</p>
+        <p class="mt-2 md:mt-0">Site créé avec passion par des motards pour des motards.</p>
+      </div>
+    </div>
+  </div>
+</footer>
