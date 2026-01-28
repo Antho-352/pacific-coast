@@ -2,10 +2,49 @@
 
 const API_URL = 'https://honda-pacific-coast.fr/magazine/wp-json/wp/v2';
 
-export async function getRecentPosts(perPage = 10) {
+export async function getRecentPosts(perPage = 10, excludeIds = []) {
   try {
-    const res = await fetch(`${API_URL}/posts?_embed&per_page=${perPage}`);
+    // Construit l'URL avec les IDs à exclure si nécessaire
+    let url = `${API_URL}/posts?_embed&per_page=${perPage}`;
+    if (excludeIds.length > 0) {
+      url += `&exclude=${excludeIds.join(',')}`;
+    }
+    const res = await fetch(url);
     if (!res.ok) throw new Error('Erreur fetch posts');
+    return await res.json();
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+}
+
+// Récupère l'ID de la catégorie par son slug
+export async function getCategoryIdBySlug(slug) {
+  try {
+    const res = await fetch(`${API_URL}/categories?slug=${slug}`);
+    if (!res.ok) throw new Error('Erreur fetch catégorie');
+    const categories = await res.json();
+    return categories.length > 0 ? categories[0].id : null;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+}
+
+// Récupère les articles de la catégorie "a-la-une"
+export async function getALaUnePosts(perPage = 3) {
+  try {
+    // Récupère l'ID de la catégorie "a-la-une"
+    const categoryId = await getCategoryIdBySlug('a-la-une');
+    
+    if (!categoryId) {
+      console.log('Catégorie a-la-une non trouvée');
+      return [];
+    }
+    
+    // Récupère les articles de cette catégorie
+    const res = await fetch(`${API_URL}/posts?_embed&categories=${categoryId}&per_page=${perPage}`);
+    if (!res.ok) throw new Error('Erreur fetch posts à la une');
     return await res.json();
   } catch (e) {
     console.error(e);

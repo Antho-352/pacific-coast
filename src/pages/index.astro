@@ -4,21 +4,20 @@ import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import FuelWidget from '../components/Interactive/FuelWidget.astro';
 import QuizSection from '../components/Interactive/QuizSection.astro';
-import { getFeaturedPosts, getRecentPosts, getFeaturedImageUrl, formatDate, extractExcerpt } from '../lib/wordpress.js';
+import { getALaUnePosts, getRecentPosts, getFeaturedImageUrl, formatDate, extractExcerpt } from '../lib/wordpress.js';
 
 // Initialisation des variables pour éviter les crashs si l'API échoue
-let featuredPosts = [];
+let aLaUnePosts = [];
 let recentPosts = [];
 let error = null;
 
 try {
-  // Récupération des données WordPress
-  const [featured, recent] = await Promise.all([
-    getFeaturedPosts(3),
-    getRecentPosts(21)
-  ]);
-  featuredPosts = featured || [];
-  recentPosts = recent || [];
+  // Récupère d'abord les articles "à la une"
+  aLaUnePosts = await getALaUnePosts(3);
+  
+  // Exclut les IDs des articles "à la une" des articles récents pour éviter les doublons
+  const aLaUneIds = aLaUnePosts.map(post => post.id);
+  recentPosts = await getRecentPosts(21, aLaUneIds);
 } catch (e) { 
   error = e.message; 
   console.error('Erreur chargement articles:', e); 
@@ -74,6 +73,45 @@ const specs = [
       <div class="mb-16">
         <FuelWidget />
       </div>
+
+      {/* Articles À la une */}
+      {aLaUnePosts.length > 0 && (
+        <section id="a-la-une" class="mb-20">
+          <h2 class="text-3xl font-bold text-gray-900 mb-10 text-center border-b pb-4">À la Une</h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {aLaUnePosts.map(post => (
+              <article class="bg-gradient-to-br from-blue-50 to-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300 flex flex-col h-full border-2 border-blue-200">
+                <a href={`/post/${post.slug}`} class="block h-48 overflow-hidden relative group">
+                  <img 
+                    src={getFeaturedImageUrl(post)} 
+                    alt={post.title.rendered}
+                    class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500"
+                    loading="lazy"
+                  />
+                  <div class="absolute top-0 right-0 bg-amber-500 text-white text-xs font-bold px-3 py-1 m-2 rounded shadow-md">
+                    ⭐ À la Une
+                  </div>
+                </a>
+                <div class="p-6 flex-1 flex flex-col">
+                  <div class="text-sm text-gray-500 mb-2 flex items-center">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    {formatDate(post.date)}
+                  </div>
+                  <h3 class="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-blue-600 transition">
+                    <a href={`/post/${post.slug}`} set:html={post.title.rendered} />
+                  </h3>
+                  <div class="text-gray-600 mb-4 text-sm flex-1 line-clamp-3" set:html={extractExcerpt(post.excerpt.rendered)} />
+                  <a href={`/post/${post.slug}`} class="inline-flex items-center text-blue-600 font-semibold hover:text-blue-800 mt-auto">
+                    Lire la suite
+                    <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Articles Récents */}
       <section id="articles" class="mb-20">
