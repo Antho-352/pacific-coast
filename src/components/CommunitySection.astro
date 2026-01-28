@@ -1,0 +1,171 @@
+---
+/**
+ * Community Section - PC800.fr
+ * Section sobre sans faux chiffres - invitation à rejoindre/participer
+ */
+
+const resources = [
+  {
+    title: "Forum de discussion",
+    description: "Échangez avec d'autres propriétaires, posez vos questions techniques et partagez vos astuces.",
+    icon: "💬",
+    link: "#",
+    action: "Participer"
+  },
+  {
+    title: "Documentation technique",
+    description: "Manuels d'atelier, schémas électriques et guides d'entretien pour entretenir votre PC800.",
+    icon: "📚",
+    link: "#",
+    action: "Consulter"
+  },
+  {
+    title: "Votre PC800",
+    description: "Vous avez une PC800 ? Partagez votre expérience et vos photos avec la communauté.",
+    icon: "📸",
+    link: "#",
+    action: "Contribuer"
+  }
+];
+---
+
+<section id="communaute" class="py-20 bg-ocean-deep">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    {/* Header */}
+    <div class="text-center mb-16">
+      <div class="flex items-center justify-center gap-3 mb-4">
+        <span class="text-4xl">👥</span>
+        <h2 class="text-4xl font-bold text-warm-white">Participez à l'aventure</h2>
+      </div>
+      <p class="text-warm-white/80 text-lg max-w-2xl mx-auto">
+        Que vous soyez propriétaire, passionné ou simplement curieux, il y a une place pour vous dans l'univers de la PC800.
+      </p>
+    </div>
+
+    {/* Cards */}
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+      {resources.map((resource) => (
+        <div class="bg-warm-white/10 backdrop-blur-sm rounded-xl p-8 border border-warm-white/20 hover:bg-warm-white/15 transition-all hover:-translate-y-1">
+          <div class="text-4xl mb-4">{resource.icon}</div>
+          <h3 class="text-xl font-bold text-warm-white mb-3">{resource.title}</h3>
+          <p class="text-warm-white/70 mb-6 leading-relaxed">{resource.description}</p>
+          <a 
+            href={resource.link}
+            class="inline-flex items-center gap-2 text-turquoise font-semibold hover:text-turquoise-light transition-colors"
+          >
+            <span>{resource.action}</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </a>
+        </div>
+      ))}
+    </div>
+
+    {/* Newsletter / Contact */}
+    <div class="bg-warm-white/5 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-warm-white/10">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="text-center md:text-left">
+          <h3 class="text-2xl font-bold text-warm-white mb-2">Restez informé</h3>
+          <p class="text-warm-white/70">
+            Suivez l'actualité du site et les nouveautés sur la PC800. Pas de spam, promis.
+          </p>
+        </div>
+        
+        {/* Formulaire simple */}
+        <form class="flex flex-col sm:flex-row gap-3 w-full md:w-auto" onsubmit="event.preventDefault(); alert('Merci ! Cette fonctionnalité sera bientôt disponible.');">
+          <input 
+            type="email" 
+            placeholder="votre@email.com"
+            class="px-5 py-3 rounded-full bg-warm-white/10 border border-warm-white/20 text-warm-white placeholder-warm-white/50 focus:outline-none focus:border-turquoise w-full sm:w-64"
+            required
+          />
+          <button 
+            type="submit"
+            class="px-6 py-3 rounded-full bg-sunset-orange hover:bg-sunset-orange-dark text-white font-semibold transition-colors whitespace-nowrap"
+          >
+            S'inscrire
+          </button>
+        </form>
+      </div>
+      
+      {/* Réseaux sociaux */}
+      <div class="mt-8 pt-8 border-t border-warm-white/10 flex flex-wrap items-center justify-center gap-6">
+        <span class="text-warm-white/60 text-sm">Suivez-nous :</span>
+        <a href="#" class="flex items-center gap-2 text-warm-white/80 hover:text-turquoise transition-colors">
+          <span>📘</span>
+          <span class="text-sm">Facebook</span>
+        </a>
+        <a href="#" class="flex items-center gap-2 text-warm-white/80 hover:text-turquoise transition-colors">
+          <span>📷</span>
+          <span class="text-sm">Instagram</span>
+        </a>
+        <a href="#" class="flex items-center gap-2 text-warm-white/80 hover:text-turquoise transition-colors">
+          <span>🎬</span>
+          <span class="text-sm">YouTube</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .bg-ocean-deep {
+    background-color: #003d5c;
+  }
+  .bg-warm-white {
+    background-color: #fefefe;
+  }
+  .bg-warm-white\/10 {
+    background-color: rgba(254, 254, 254, 0.1);
+  }
+  .bg-warm-white\/5 {
+    background-color: rgba(254, 254, 254, 0.05);
+  }
+  .bg-warm-white\/15 {
+    background-color: rgba(254, 254, 254, 0.15);
+  }
+  .border-warm-white\/20 {
+    border-color: rgba(254, 254, 254, 0.2);
+  }
+  .border-warm-white\/10 {
+    border-color: rgba(254, 254, 254, 0.1);
+  }
+  .text-warm-white {
+    color: #fefefe;
+  }
+  .text-warm-white\/80 {
+    color: rgba(254, 254, 254, 0.8);
+  }
+  .text-warm-white\/70 {
+    color: rgba(254, 254, 254, 0.7);
+  }
+  .text-warm-white\/60 {
+    color: rgba(254, 254, 254, 0.6);
+  }
+  .text-warm-white\/50 {
+    color: rgba(254, 254, 254, 0.5);
+  }
+  .text-turquoise {
+    color: #00b4d8;
+  }
+  .hover\:text-turquoise-light:hover {
+    color: #4dcce6;
+  }
+  .text-turquoise-light {
+    color: #4dcce6;
+  }
+  .bg-sunset-orange {
+    background-color: #ff6b35;
+  }
+  .hover\:bg-sunset-orange-dark:hover {
+    background-color: #e55a2b;
+  }
+  .bg-sunset-orange-dark {
+    background-color: #e55a2b;
+  }
+  .border-turquoise {
+    border-color: #00b4d8;
+  }
+</style>

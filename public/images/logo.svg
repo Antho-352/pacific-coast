@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 60" width="180" height="60">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ff6b35"/>
+      <stop offset="100%" style="stop-color:#00b4d8"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Vague stylisée en arrière-plan -->
+  <path d="M0 45 Q 30 35, 60 45 T 120 45 T 180 45 L 180 60 L 0 60 Z" 
+        fill="url(#logoGradient)" 
+        opacity="0.15"/>
+  
+  <!-- Silhouette de moto stylisée (sous le texte) -->
+  <path d="M25 42 L 32 38 L 45 38 L 52 42 L 55 40 L 60 42 L 58 44 L 52 44 L 45 40 L 32 40 L 28 44 L 22 44 Z" 
+        fill="#003d5c" 
+        opacity="0.3"/>
+  
+  <!-- Texte PC800 -->
+  <text x="10" y="38" 
+        font-family="Arial Black, Impact, sans-serif" 
+        font-size="32" 
+        font-weight="900" 
+        fill="#003d5c"
+        letter-spacing="-2"
+        filter="url(#shadow)">
+    PC<tspan fill="#ff6b35">800</tspan>
+  </text>
+  
+  <!-- Ligne décorative sous le texte -->
+  <line x1="10" y1="48" x2="110" y2="48" 
+        stroke="#00b4d8" 
+        stroke-width="3" 
+        stroke-linecap="round"/>
+  
+  <!-- Point décoratif -->
+  <circle cx="115" cy="48" r="3" fill="#ff6b35"/>
+</svg>

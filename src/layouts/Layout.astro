@@ -1,28 +1,67 @@
 ---
+import '../styles/design-system.css';
 import '../styles/global.css';
-const { title } = Astro.props;
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+
+const { 
+  title, 
+  description = "L'Esprit Pacific Coast - La communauté des passionnés de Honda PC800. Découvrez l'histoire, les spécifications et la communauté de cette moto culte des années 90.",
+  image = "https://honda-pacific-coast.fr/images/og-image.jpg"
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://honda-pacific-coast.fr');
 ---
+
 <!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#003d5c" />
+    
+    <!-- SEO Meta Tags -->
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="PC800.fr - L'Esprit Pacific Coast" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    
+    <!-- Preconnect pour performance -->
+    <link rel="preconnect" href="https://honda-pacific-coast.fr" />
+    <link rel="dns-prefetch" href="https://honda-pacific-coast.fr" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   </head>
-  <body class="bg-slate-50 text-slate-900">
-    <header class="bg-slate-900 text-white p-4 sticky top-0 z-50">
-      <nav class="max-w-7xl mx-auto flex justify-between">
-        <a href="/" class="font-bold text-xl">PC800<span class="text-red-600">.fr</span></a>
-        <div class="space-x-4">
-           <a href="/" class="hover:text-red-400">Accueil</a>
-           <a href="/mentions-legales" class="hover:text-red-400">Légal</a>
-        </div>
-      </nav>
-    </header>
-    <main><slot /></main>
-    <footer class="bg-slate-900 text-slate-400 py-8 text-center mt-12">
-      <p>Site indépendant non affilié à Honda Motor Co., Ltd.</p>
-    </footer>
+  <body class="bg-warm-white text-dark-navy font-sans antialiased">
+    <slot />
   </body>
 </html>

@@ -2,6 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+import HeroSection from '../components/HeroSection.astro';
+import GallerySection from '../components/GallerySection.astro';
+import TimelineSection from '../components/TimelineSection.astro';
+import CommunitySection from '../components/CommunitySection.astro';
 import FuelWidget from '../components/Interactive/FuelWidget.astro';
 import QuizSection from '../components/Interactive/QuizSection.astro';
 import { getALaUnePosts, getRecentPosts, getFeaturedImageUrl, formatDate, extractExcerpt } from '../lib/wordpress.js';
@@ -23,7 +27,8 @@ try {
   console.error('Erreur chargement articles:', e); 
 }
 
-const pageTitle = "L'Esprit Pacific Coast";
+const pageTitle = "PC800.fr - L'Esprit Pacific Coast";
+const pageDescription = "La communauté des passionnés de Honda Pacific Coast PC800. Découvrez l'histoire, les spécifications et la communauté de cette moto culte des années 90.";
 
 // Données statiques pour la fiche technique
 const specs = [
@@ -46,65 +51,63 @@ const specs = [
 ];
 ---
 
-<Layout title={pageTitle}>
+<Layout title={pageTitle} description={pageDescription}>
   <Navigation />
   
   <main>
-    {/* Hero Section */}
-    <div class="relative bg-gray-900 text-white py-24 px-6 mb-12 overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-r from-blue-900 to-gray-900 opacity-90 z-0"></div>
-      <div class="relative z-10 max-w-4xl mx-auto text-center">
-        <h1 class="text-5xl md:text-6xl font-bold mb-6 tracking-tight">Honda Pacific Coast PC800</h1>
-        <p class="text-xl md:text-2xl text-gray-300 mb-8 font-light">Plus qu'une moto, un art de vivre.</p>
-        <div class="flex justify-center gap-4">
-          <a href="#articles" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition duration-300">
-            Découvrir
-          </a>
-          <a href="/specs" class="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 text-white font-bold py-3 px-8 rounded-full transition duration-300">
-            Fiche technique
-          </a>
-        </div>
-      </div>
-    </div>
+    {/* Hero Section Immersive */}
+    <HeroSection 
+      title="Honda Pacific Coast PC800"
+      subtitle="La GT des années 90 qui traverse les décennies"
+      badge="Produite de 1989 à 1998 • Communauté active en 2026"
+    />
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       {/* Widget Prix Essence */}
-      <div class="mb-16">
+      <div class="py-16">
         <FuelWidget />
       </div>
 
       {/* Articles À la une */}
       {aLaUnePosts.length > 0 && (
         <section id="a-la-une" class="mb-20">
-          <h2 class="text-3xl font-bold text-gray-900 mb-10 text-center border-b pb-4">À la Une</h2>
+          <div class="flex items-center gap-3 mb-8">
+            <span class="text-3xl">⭐</span>
+            <h2 class="text-3xl font-bold text-dark-navy">À la Une</h2>
+            <div class="flex-1 h-px bg-gray-soft"></div>
+          </div>
           
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {aLaUnePosts.map(post => (
-              <article class="bg-gradient-to-br from-blue-50 to-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300 flex flex-col h-full border-2 border-blue-200">
-                <a href={`/post/${post.slug}`} class="block h-48 overflow-hidden relative group">
+              <article class="card group">
+                <a href={`/post/${post.slug}`} class="block h-48 overflow-hidden relative">
                   <img 
                     src={getFeaturedImageUrl(post)} 
                     alt={post.title.rendered}
-                    class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500"
+                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                   />
-                  <div class="absolute top-0 right-0 bg-amber-500 text-white text-xs font-bold px-3 py-1 m-2 rounded shadow-md">
-                    ⭐ À la Une
+                  <div class="absolute top-0 right-0 bg-sunset-orange text-white text-xs font-bold px-3 py-1 m-2 rounded-full shadow-md">
+                    À la Une
                   </div>
                 </a>
                 <div class="p-6 flex-1 flex flex-col">
-                  <div class="text-sm text-gray-500 mb-2 flex items-center">
-                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                  <div class="text-sm text-gray-medium mb-2 flex items-center">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
                     {formatDate(post.date)}
                   </div>
-                  <h3 class="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-blue-600 transition">
+                  <h3 class="text-xl font-bold text-dark-navy mb-3 leading-tight group-hover:text-ocean-light transition-colors">
                     <a href={`/post/${post.slug}`} set:html={post.title.rendered} />
                   </h3>
-                  <div class="text-gray-600 mb-4 text-sm flex-1 line-clamp-3" set:html={extractExcerpt(post.excerpt.rendered)} />
-                  <a href={`/post/${post.slug}`} class="inline-flex items-center text-blue-600 font-semibold hover:text-blue-800 mt-auto">
+                  <div class="text-gray-dark mb-4 text-sm flex-1 line-clamp-3" set:html={extractExcerpt(post.excerpt.rendered)} />
+                  <a href={`/post/${post.slug}`} class="inline-flex items-center text-ocean-light font-semibold hover:text-ocean-medium transition-colors mt-auto">
                     Lire la suite
-                    <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    <svg class="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
                   </a>
                 </div>
               </article>
@@ -115,10 +118,14 @@ const specs = [
 
       {/* Articles Récents */}
       <section id="articles" class="mb-20">
-        <h2 class="text-3xl font-bold text-gray-900 mb-10 text-center border-b pb-4">Dernières Publications</h2>
+        <div class="flex items-center gap-3 mb-8">
+          <span class="text-3xl">📰</span>
+          <h2 class="text-3xl font-bold text-dark-navy">Dernières Publications</h2>
+          <div class="flex-1 h-px bg-gray-soft"></div>
+        </div>
         
         {error && (
-          <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-8" role="alert">
+          <div class="bg-red-50 border-l-4 border-sunset-orange text-red-700 p-4 mb-8 rounded-r-lg" role="alert">
             <p class="font-bold">Erreur de connexion</p>
             <p>Impossible de charger les articles depuis le site principal ({error}).</p>
           </div>
@@ -126,30 +133,34 @@ const specs = [
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {recentPosts.map(post => (
-            <article class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300 flex flex-col h-full border border-gray-100">
-              <a href={`/post/${post.slug}`} class="block h-48 overflow-hidden relative group">
+            <article class="card group">
+              <a href={`/post/${post.slug}`} class="block h-48 overflow-hidden relative">
                 <img 
                   src={getFeaturedImageUrl(post)} 
                   alt={post.title.rendered}
-                  class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   loading="lazy"
                 />
-                <div class="absolute top-0 right-0 bg-blue-600 text-white text-xs font-bold px-3 py-1 m-2 rounded">
+                <div class="absolute top-0 right-0 bg-ocean-light text-white text-xs font-bold px-3 py-1 m-2 rounded-full">
                   Blog
                 </div>
               </a>
               <div class="p-6 flex-1 flex flex-col">
-                <div class="text-sm text-gray-500 mb-2 flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <div class="text-sm text-gray-medium mb-2 flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                  </svg>
                   {formatDate(post.date)}
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-blue-600 transition">
+                <h3 class="text-xl font-bold text-dark-navy mb-3 leading-tight group-hover:text-ocean-light transition-colors">
                   <a href={`/post/${post.slug}`} set:html={post.title.rendered} />
                 </h3>
-                <div class="text-gray-600 mb-4 text-sm flex-1 line-clamp-3" set:html={extractExcerpt(post.excerpt.rendered)} />
-                <a href={`/post/${post.slug}`} class="inline-flex items-center text-blue-600 font-semibold hover:text-blue-800 mt-auto">
+                <div class="text-gray-dark mb-4 text-sm flex-1 line-clamp-3" set:html={extractExcerpt(post.excerpt.rendered)} />
+                <a href={`/post/${post.slug}`} class="inline-flex items-center text-ocean-light font-semibold hover:text-ocean-medium transition-colors mt-auto">
                   Lire la suite
-                  <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                  <svg class="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                  </svg>
                 </a>
               </div>
             </article>
@@ -162,24 +173,33 @@ const specs = [
         <QuizSection />
       </div>
 
+      {/* Galerie Photos */}
+      <GallerySection />
+
       {/* Fiche Technique Rapide */}
-      <section class="mb-20 bg-gray-50 rounded-2xl p-8 md:p-12 shadow-inner">
+      <section id="technique" class="mb-20 bg-warm-white rounded-2xl p-8 md:p-12 shadow-inner border border-gray-soft">
         <div class="flex flex-col md:flex-row items-center gap-12">
           <div class="md:w-1/3">
-             <h2 class="text-3xl font-bold text-gray-900 mb-6">Fiche Technique Rapide</h2>
-             <p class="text-gray-600 mb-6">
+             <div class="flex items-center gap-3 mb-4">
+               <span class="text-3xl">📋</span>
+               <h2 class="text-3xl font-bold text-dark-navy">Fiche Technique Rapide</h2>
+             </div>
+             <p class="text-gray-dark mb-6 leading-relaxed">
                La PC800 est une machine unique, conçue pour durer et pour le confort. Voici les chiffres clés qui font sa légende.
              </p>
-             <a href="/specs" class="inline-block bg-gray-900 hover:bg-gray-800 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+             <a href="/specs" class="inline-flex items-center gap-2 bg-dark-navy hover:bg-ocean-deep text-white font-semibold py-3 px-6 rounded-lg transition-colors">
                Voir la fiche complète
+               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+               </svg>
              </a>
           </div>
           <div class="md:w-2/3 w-full">
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
               {specs.map(spec => (
-                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-                  <div class="text-xs text-gray-500 uppercase tracking-wide font-semibold mb-1">{spec.label}</div>
-                  <div class="text-gray-900 font-medium">{spec.value}</div>
+                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-soft hover:shadow-md transition-shadow">
+                  <div class="text-xs text-gray-medium uppercase tracking-wide font-semibold mb-1">{spec.label}</div>
+                  <div class="text-dark-navy font-medium">{spec.value}</div>
                 </div>
               ))}
             </div>
@@ -188,7 +208,80 @@ const specs = [
       </section>
 
     </div>
+
+    {/* Section Communauté */}
+    <CommunitySection />
+
   </main>
 
   <Footer />
 </Layout>
+
+<style>
+  /* Classes utilitaires du design system */
+  .text-dark-navy {
+    color: #001e2b;
+  }
+  .text-ocean-light {
+    color: #0074a3;
+  }
+  .hover\:text-ocean-light:hover {
+    color: #0074a3;
+  }
+  .text-ocean-medium {
+    color: #005a7a;
+  }
+  .text-gray-dark {
+    color: #4b5563;
+  }
+  .text-gray-medium {
+    color: #9ca3af;
+  }
+  .bg-gray-soft {
+    background-color: #e0e0e0;
+  }
+  .bg-sand-beige {
+    background-color: #f4f1e8;
+  }
+  .bg-ocean-deep {
+    background-color: #003d5c;
+  }
+  .bg-dark-navy {
+    background-color: #001e2b;
+  }
+  .bg-sunset-orange {
+    background-color: #ff6b35;
+  }
+  .border-gray-soft {
+    border-color: #e0e0e0;
+  }
+  .border-sunset-orange {
+    border-color: #ff6b35;
+  }
+
+  /* Card component */
+  .card {
+    background-color: #fefefe;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e0e0e0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: all 0.25s ease;
+  }
+
+  .card:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    transform: translateY(-4px);
+  }
+
+  /* Line clamp */
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

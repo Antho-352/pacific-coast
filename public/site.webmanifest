@@ -1,0 +1,25 @@
+{
+  "name": "PC800.fr - L'Esprit Pacific Coast",
+  "short_name": "PC800.fr",
+  "description": "La communauté des passionnés de Honda Pacific Coast PC800. Découvrez l'histoire, les spécifications et la communauté de cette moto culte des années 90.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#003d5c",
+  "theme_color": "#003d5c",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["automotive", "motorcycles", "community"],
+  "lang": "fr",
+  "dir": "ltr"
+}

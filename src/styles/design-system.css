@@ -1,0 +1,177 @@
+/**
+ * Design System - Pacific Coast
+ * Palette de couleurs et variables globales
+ */
+
+:root {
+  /* ========================================
+     COULEURS PRIMAIRES - Océan
+     ======================================== */
+  --ocean-deep: #003d5c;        /* Header, footer, sections principales */
+  --ocean-light: #0074a3;       /* Hover, états actifs */
+  --ocean-medium: #005a7a;      /* Variante intermédiaire */
+  
+  /* ========================================
+     COULEURS ACCENT - Sunset & Turquoise
+     ======================================== */
+  --sunset-orange: #ff6b35;     /* CTAs, boutons primaires */
+  --sunset-orange-dark: #e55a2b; /* Hover boutons */
+  --turquoise: #00b4d8;         /* Liens, badges, highlights */
+  --turquoise-light: #4dcce6;   /* Hover turquoise */
+  
+  /* ========================================
+     COULEURS NEUTRES - Sable & Blanc
+     ======================================== */
+  --sand-beige: #f4f1e8;        /* Backgrounds sections alternées */
+  --warm-white: #fefefe;        /* Backgrounds principaux */
+  --dark-navy: #001e2b;         /* Textes, footer */
+  --gray-soft: #e0e0e0;         /* Bordures, séparateurs */
+  --gray-medium: #9ca3af;       /* Textes secondaires */
+  --gray-dark: #4b5563;         /* Textes principaux */
+  
+  /* ========================================
+     COULEURS UTILITAIRES
+     ======================================== */
+  --text-primary: #001e2b;
+  --text-secondary: #4b5563;
+  --text-light: #fefefe;
+  --text-muted: #9ca3af;
+  
+  --bg-primary: #fefefe;
+  --bg-secondary: #f4f1e8;
+  --bg-dark: #003d5c;
+  --bg-darker: #001e2b;
+  
+  --border-light: #e0e0e0;
+  --border-medium: #9ca3af;
+  
+  /* ========================================
+     TYPOGRAPHIE
+     ======================================== */
+  --font-display: 'Arial Black', 'Impact', system-ui, sans-serif;
+  --font-body: system-ui, -apple-system, sans-serif;
+  
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.5rem;
+  --text-5xl: 3.5rem;
+  
+  /* ========================================
+     ESPACEMENT
+     ======================================== */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  
+  /* ========================================
+     BORDURES & OMBRES
+     ======================================== */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 20px rgba(0, 180, 216, 0.3);
+  
+  /* ========================================
+     TRANSITIONS
+     ======================================== */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 350ms ease;
+}
+
+/* ========================================
+   CLASSES UTILITAIRES COULEURS
+   ======================================== */
+
+/* Backgrounds */
+.bg-ocean-deep { background-color: var(--ocean-deep); }
+.bg-ocean-light { background-color: var(--ocean-light); }
+.bg-sunset { background-color: var(--sunset-orange); }
+.bg-turquoise { background-color: var(--turquoise); }
+.bg-sand { background-color: var(--sand-beige); }
+.bg-warm-white { background-color: var(--warm-white); }
+.bg-dark-navy { background-color: var(--dark-navy); }
+
+/* Textes */
+.text-ocean-deep { color: var(--ocean-deep); }
+.text-ocean-light { color: var(--ocean-light); }
+.text-sunset { color: var(--sunset-orange); }
+.text-turquoise { color: var(--turquoise); }
+.text-sand { color: var(--sand-beige); }
+.text-warm-white { color: var(--warm-white); }
+.text-dark-navy { color: var(--dark-navy); }
+
+/* Boutons */
+.btn-primary {
+  background-color: var(--sunset-orange);
+  color: var(--warm-white);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover {
+  background-color: var(--sunset-orange-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--warm-white);
+  border: 2px solid var(--warm-white);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  transition: all var(--transition-base);
+}
+
+.btn-secondary:hover {
+  background-color: var(--warm-white);
+  color: var(--ocean-deep);
+}
+
+/* Links */
+.link-turquoise {
+  color: var(--turquoise);
+  transition: color var(--transition-fast);
+}
+
+.link-turquoise:hover {
+  color: var(--turquoise-light);
+}
+
+/* Cards */
+.card {
+  background-color: var(--warm-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-light);
+  transition: all var(--transition-base);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-4px);
+}

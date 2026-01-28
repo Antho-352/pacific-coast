@@ -1,86 +1,160 @@
 ---
-  /**
-   * DISCLAIMER: Site indépendant non affilié à Honda Motor Co., Ltd.
-   */
+/**
+ * Navigation - PC800.fr
+ * Style: Ocean Deep avec accents turquoise
+ */
 
-  const navLinks = [
-    { href: '/#a-la-une', label: 'À la Une' },
-    { href: '/#derniers-articles', label: 'Actualités' },
-    { href: '/#histoire', label: "L'Histoire" },
-    { href: '/#outils', label: 'Outils' },
-    { href: '/#technique', label: 'Fiche Technique' },
-    { href: '/#galerie', label: 'Galerie' },
-  ];
-  ---
+const navItems = [
+  { href: '/#a-la-une', label: 'À la Une', icon: '🏠' },
+  { href: '/#derniers-articles', label: 'Actualités', icon: '📰' },
+  { href: '/#histoire', label: "L'Histoire", icon: '📖' },
+  { href: '/#outils', label: 'Outils', icon: '🛠️' },
+  { href: '/#technique', label: 'Fiche Technique', icon: '📋' },
+  { href: '/#galerie', label: 'Galerie', icon: '📸' },
+];
+---
 
-  <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-sm b
-  order-b border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
-        <a href="/" class="flex items-center space-x-2">
-          <div class="w-8 h-8 bg-gauge rounded-sm flex items-center justify-cent
-  er">
-            <span class="text-white font-display font-bold text-sm">PC</span>
-          </div>
-          <span class="text-cream-100 font-display font-semibold text-lg trackin
-  g-wide hidden sm:block">
-            L'Esprit Pacific Coast
-          </span>
-        </a>
+<nav class="fixed top-0 left-0 right-0 z-50 bg-ocean-deep/95 backdrop-blur-md border-b border-ocean-light/30 shadow-lg">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-3 group">
+        <img 
+          src="/images/logo-white.svg" 
+          alt="PC800.fr" 
+          width="120" 
+          height="40"
+          class="h-10 w-auto transition-transform duration-300 group-hover:scale-105"
+        />
+        <span class="text-turquoise text-sm italic hidden lg:block opacity-90">
+          L'Esprit Pacific Coast
+        </span>
+      </a>
 
-        <div class="hidden md:flex items-center space-x-8">
-          {navLinks.map((link) => (
-            <a
-              href={link.href}
-              class="text-slate-300 hover:text-gauge transition-colors duration-
-  200 text-sm font-medium"
-            >
-              {link.label}
-            </a>
-          ))}
-        </div>
-
-        <button
-          type="button"
-          class="md:hidden text-slate-300 hover:text-cream-100 p-2"
-          aria-label="Ouvrir le menu"
-          id="mobile-menu-button"
-        >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24
-  24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2
-  " d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
+      <!-- Navigation Desktop -->
+      <div class="hidden md:flex items-center space-x-1">
+        {navItems.map((link) => (
+          <a
+            href={link.href}
+            class="flex items-center gap-1.5 px-3 py-2 text-warm-white/90 hover:text-turquoise transition-colors duration-200 text-sm font-medium rounded-md hover:bg-ocean-light/20"
+          >
+            <span class="text-base">{link.icon}</span>
+            <span>{link.label}</span>
+          </a>
+        ))}
       </div>
 
-      <div class="md:hidden hidden" id="mobile-menu">
-        <div class="py-3 space-y-2">
-          {navLinks.map((link) => (
-            <a
-              href={link.href}
-              class="block px-3 py-2 text-slate-300 hover:text-gauge hover:bg-sl
-  ate-800 rounded-md text-sm font-medium"
-            >
-              {link.label}
-            </a>
-          ))}
+      <!-- CTA Button Desktop -->
+      <div class="hidden md:block">
+        <a 
+          href="/#communaute" 
+          class="inline-flex items-center gap-2 bg-sunset-orange hover:bg-sunset-orange-dark text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
+        >
+          <span>👥</span>
+          <span>Rejoindre</span>
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button
+        type="button"
+        class="md:hidden text-warm-white hover:text-turquoise p-2 rounded-lg hover:bg-ocean-light/20 transition-colors"
+        aria-label="Ouvrir le menu"
+        id="mobile-menu-button"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="md:hidden hidden pb-4" id="mobile-menu">
+      <div class="space-y-1 pt-2">
+        {navItems.map((link) => (
+          <a
+            href={link.href}
+            class="flex items-center gap-3 px-4 py-3 text-warm-white/90 hover:text-turquoise hover:bg-ocean-light/20 rounded-lg text-sm font-medium transition-colors"
+          >
+            <span class="text-lg">{link.icon}</span>
+            <span>{link.label}</span>
+          </a>
+        ))}
+        <div class="pt-2 mt-2 border-t border-ocean-light/20">
+          <a 
+            href="/#communaute" 
+            class="flex items-center gap-3 mx-4 bg-sunset-orange hover:bg-sunset-orange-dark text-white px-4 py-3 rounded-lg text-sm font-semibold transition-colors"
+          >
+            <span>👥</span>
+            <span>Rejoindre la communauté</span>
+          </a>
         </div>
       </div>
     </div>
-  </nav>
+  </div>
+</nav>
 
-  <script>
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
+<!-- Spacer pour compenser le header fixed -->
+<div class="h-20"></div>
 
-    mobileMenuButton?.addEventListener('click', () => {
-      mobileMenu?.classList.toggle('hidden');
+<script>
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  mobileMenuButton?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+  });
+
+  mobileMenu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
     });
+  });
 
-    mobileMenu?.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
-      });
-    });
-  </script>
+  // Fermer le menu en cliquant à l'extérieur
+  document.addEventListener('click', (e) => {
+    if (!mobileMenuButton?.contains(e.target as Node) && !mobileMenu?.contains(e.target as Node)) {
+      mobileMenu?.classList.add('hidden');
+    }
+  });
+</script>
+
+<style>
+  /* Classes utilitaires CSS custom pour les couleurs du design system */
+  .bg-ocean-deep\/95 {
+    background-color: rgba(0, 61, 92, 0.95);
+  }
+  .bg-ocean-deep {
+    background-color: #003d5c;
+  }
+  .border-ocean-light\/30 {
+    border-color: rgba(0, 116, 163, 0.3);
+  }
+  .hover\:bg-ocean-light\/20:hover {
+    background-color: rgba(0, 116, 163, 0.2);
+  }
+  .bg-ocean-light\/20 {
+    background-color: rgba(0, 116, 163, 0.2);
+  }
+  .text-turquoise {
+    color: #00b4d8;
+  }
+  .hover\:text-turquoise:hover {
+    color: #00b4d8;
+  }
+  .text-warm-white {
+    color: #fefefe;
+  }
+  .text-warm-white\/90 {
+    color: rgba(254, 254, 254, 0.9);
+  }
+  .bg-sunset-orange {
+    background-color: #ff6b35;
+  }
+  .hover\:bg-sunset-orange-dark:hover {
+    background-color: #e55a2b;
+  }
+  .bg-sunset-orange-dark {
+    background-color: #e55a2b;
+  }
+</style>

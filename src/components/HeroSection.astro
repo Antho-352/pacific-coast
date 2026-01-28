@@ -1,0 +1,216 @@
+---
+/**
+ * Hero Section - PC800.fr
+ * Design immersif avec background image et effet parallax
+ */
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  badge?: string;
+  backgroundImage?: string;
+}
+
+const {
+  title = "Honda Pacific Coast PC800",
+  subtitle = "La GT des années 90 qui traverse les décennies",
+  badge = "Produite de 1989 à 1998 • Communauté active en 2026",
+  // Placeholder Unsplash - route côtière avec moto
+  backgroundImage = "https://images.unsplash.com/photo-1558981852-426c6c22a060?w=1920&q=80"
+} = Astro.props;
+---
+
+<section 
+  class="hero-section relative min-h-[85vh] flex items-center justify-center overflow-hidden"
+  style={`background-image: linear-gradient(rgba(0, 29, 43, 0.75), rgba(0, 61, 92, 0.85)), url('${backgroundImage}');`}
+>
+  <!-- Overlay pattern subtil -->
+  <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');">
+  </div>
+
+  <!-- Contenu -->
+  <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    
+    {/* Badge */}
+    <div class="hero-badge inline-flex items-center gap-2 bg-ocean-deep/60 backdrop-blur-sm border border-turquoise/30 rounded-full px-4 py-2 mb-8 animate-fade-in">
+      <span class="w-2 h-2 bg-sunset-orange rounded-full animate-pulse"></span>
+      <span class="text-turquoise text-sm font-medium tracking-wide">{badge}</span>
+    </div>
+
+    {/* Titre principal */}
+    <h1 class="hero-title text-warm-white mb-6">
+      {title}
+    </h1>
+
+    {/* Sous-titre */}
+    <p class="hero-subtitle text-warm-white/90 mb-10 max-w-2xl mx-auto">
+      {subtitle}
+    </p>
+
+    {/* CTA Buttons */}
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a 
+        href="#articles" 
+        class="btn-primary inline-flex items-center gap-2 text-base"
+      >
+        <span>Découvrir</span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+        </svg>
+      </a>
+      <a 
+        href="/specs" 
+        class="btn-secondary inline-flex items-center gap-2 text-base"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        <span>Fiche technique</span>
+      </a>
+    </div>
+
+    {/* Stats rapides */}
+    <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
+      {[
+        { value: '1989', label: 'Lancement' },
+        { value: '45K', label: 'Exemplaires' },
+        { value: '280kg', label: 'Poids' },
+        { value: '140L', label: 'Coffre' },
+      ].map((stat) => (
+        <div class="text-center">
+          <div class="text-2xl md:text-3xl font-bold text-sunset-orange">{stat.value}</div>
+          <div class="text-sm text-warm-white/70 mt-1">{stat.label}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  {/* Scroll indicator */}
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+    <a href="#a-la-une" class="text-warm-white/50 hover:text-turquoise transition-colors">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+      </svg>
+    </a>
+  </div>
+</section>
+
+<style>
+  /* Hero Section Styles */
+  .hero-section {
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Effet parallax */
+    background-repeat: no-repeat;
+  }
+
+  /* Responsive: désactiver parallax sur mobile pour performance */
+  @media (max-width: 768px) {
+    .hero-section {
+      background-attachment: scroll;
+      min-height: 70vh;
+    }
+  }
+
+  /* Typographie responsive avec clamp */
+  .hero-title {
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    line-height: 1.1;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 400;
+    opacity: 0.95;
+    line-height: 1.5;
+  }
+
+  /* Animation fade-in */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+
+  /* Classes utilitaires */
+  .bg-ocean-deep\/60 {
+    background-color: rgba(0, 61, 92, 0.6);
+  }
+
+  .border-turquoise\/30 {
+    border-color: rgba(0, 180, 216, 0.3);
+  }
+
+  .text-turquoise {
+    color: #00b4d8;
+  }
+
+  .text-warm-white {
+    color: #fefefe;
+  }
+
+  .text-warm-white\/90 {
+    color: rgba(254, 254, 254, 0.9);
+  }
+
+  .text-warm-white\/70 {
+    color: rgba(254, 254, 254, 0.7);
+  }
+
+  .text-warm-white\/50 {
+    color: rgba(254, 254, 254, 0.5);
+  }
+
+  .text-sunset-orange {
+    color: #ff6b35;
+  }
+
+  /* Boutons */
+  .btn-primary {
+    background-color: #ff6b35;
+    color: #fefefe;
+    padding: 1rem 2rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-primary:hover {
+    background-color: #e55a2b;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: #fefefe;
+    border: 2px solid rgba(254, 254, 254, 0.8);
+    padding: 1rem 2rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+  }
+
+  .btn-secondary:hover {
+    background-color: #fefefe;
+    color: #003d5c;
+    border-color: #fefefe;
+  }
+
+  .hover\:text-turquoise:hover {
+    color: #00b4d8;
+  }
+</style>

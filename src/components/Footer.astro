@@ -7,55 +7,85 @@ const currentYear = new Date().getFullYear();
 
 const footerLinks = {
   navigation: [
-    { label: "Accueil", href: "/" },
-    { label: "À la Une", href: "/#a-la-une" },
-    { label: "Actualités", href: "/#derniers-articles" },
-    { label: "Histoire", href: "/#histoire" },
+    { label: "Accueil", href: "/", icon: "🏠" },
+    { label: "À la Une", href: "/#a-la-une", icon: "⭐" },
+    { label: "Actualités", href: "/#derniers-articles", icon: "📰" },
+    { label: "Histoire", href: "/#histoire", icon: "📖" },
+    { label: "Galerie", href: "/#galerie", icon: "📸" },
   ],
   legal: [
     { label: "Mentions Légales", href: "/mentions-legales" },
     { label: "Plan du site", href: "/plan-du-site" },
   ],
 };
+
+const socialLinks = [
+  { label: "Facebook", href: "#", icon: "📘" },
+  { label: "Instagram", href: "#", icon: "📷" },
+  { label: "Discord", href: "#", icon: "💬" },
+];
 ---
 
-<footer class="bg-slate-950 border-t border-slate-800">
+<footer class="bg-dark-navy border-t border-ocean-deep">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div>
-        <div class="flex items-center space-x-2 mb-4">
-          <div class="w-8 h-8 bg-red-600 rounded-sm flex items-center justify-center">
-            <span class="text-white font-display font-bold text-sm">PC</span>
-          </div>
-          <span class="text-white font-display font-semibold text-lg">
-            L'Esprit Pacific Coast
-          </span>
-        </div>
-        <p class="text-slate-400 text-sm leading-relaxed">
-          Le site de référence pour les passionnés de la Honda Pacific Coast PC800.
-          Partage, entraide et passion du touring.
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <!-- Logo & Description -->
+      <div class="md:col-span-2">
+        <a href="/" class="flex items-center gap-3 mb-4 group">
+          <img 
+            src="/images/logo-white.svg" 
+            alt="PC800.fr" 
+            width="120" 
+            height="40"
+            class="h-10 w-auto opacity-90 group-hover:opacity-100 transition-opacity"
+          />
+        </a>
+        <p class="text-gray-medium text-sm leading-relaxed max-w-md mb-6">
+          Le site de référence pour les passionnés de la Honda Pacific Coast PC800. 
+          Partage, entraide et passion du touring depuis 2024.
         </p>
+        <!-- Social Links -->
+        <div class="flex items-center gap-3">
+          {socialLinks.map((social) => (
+            <a 
+              href={social.href}
+              class="w-10 h-10 rounded-full bg-ocean-deep hover:bg-ocean-light flex items-center justify-center text-xl transition-all duration-200 hover:scale-110"
+              aria-label={social.label}
+            >
+              {social.icon}
+            </a>
+          ))}
+        </div>
       </div>
 
+      <!-- Navigation -->
       <div>
-        <h3 class="text-white font-display font-semibold mb-4">Navigation</h3>
+        <h3 class="text-warm-white font-semibold mb-4 text-sm uppercase tracking-wider">Navigation</h3>
         <ul class="space-y-2">
           {footerLinks.navigation.map((link) => (
             <li>
-              <a href={link.href} class="text-slate-400 hover:text-red-500 transition-colors text-sm">
-                {link.label}
+              <a 
+                href={link.href} 
+                class="flex items-center gap-2 text-gray-medium hover:text-turquoise transition-colors text-sm"
+              >
+                <span>{link.icon}</span>
+                <span>{link.label}</span>
               </a>
             </li>
           ))}
         </ul>
       </div>
 
+      <!-- Legal -->
       <div>
-        <h3 class="text-white font-display font-semibold mb-4">Informations</h3>
+        <h3 class="text-warm-white font-semibold mb-4 text-sm uppercase tracking-wider">Informations</h3>
         <ul class="space-y-2">
           {footerLinks.legal.map((link) => (
             <li>
-              <a href={link.href} class="text-slate-400 hover:text-red-500 transition-colors text-sm">
+              <a 
+                href={link.href} 
+                class="text-gray-medium hover:text-turquoise transition-colors text-sm"
+              >
                 {link.label}
               </a>
             </li>
@@ -64,20 +94,61 @@ const footerLinks = {
       </div>
     </div>
 
-    <div class="mt-10 pt-8 border-t border-slate-800">
-      <div class="bg-slate-900/50 rounded-lg p-4 mb-6">
-        <p class="text-slate-500 text-xs text-center leading-relaxed">
-          <strong class="text-slate-400">DISCLAIMER IMPORTANT :</strong>
+    <!-- Disclaimer -->
+    <div class="mt-10 pt-8 border-t border-ocean-deep">
+      <div class="bg-ocean-deep/30 rounded-lg p-4 mb-6">
+        <p class="text-gray-medium text-xs text-center leading-relaxed">
+          <strong class="text-warm-white/80">DISCLAIMER IMPORTANT :</strong>
           Ce site est un projet communautaire indépendant.
-          <strong class="text-slate-400">Nous ne sommes pas affiliés, associés, autorisés, approuvés par, ou en aucune façon officiellement connectés avec Honda Motor Co., Ltd.</strong>
+          <strong class="text-warm-white/80">Nous ne sommes pas affiliés, associés, autorisés, approuvés par, ou en aucune façon officiellement connectés avec Honda Motor Co., Ltd.</strong>
           Honda® et Pacific Coast® sont des marques déposées de Honda Motor Co., Ltd.
         </p>
       </div>
 
-      <div class="flex flex-col md:flex-row items-center justify-between text-slate-500 text-sm">
+      <!-- Copyright -->
+      <div class="flex flex-col md:flex-row items-center justify-between text-gray-medium text-sm">
         <p>&copy; {currentYear} L'Esprit Pacific Coast. Tous droits réservés.</p>
-        <p class="mt-2 md:mt-0">Site créé avec passion par des motards pour des motards.</p>
+        <p class="mt-2 md:mt-0 flex items-center gap-2">
+          Site créé avec <span class="text-sunset-orange">❤</span> par des motards pour des motards
+        </p>
       </div>
     </div>
   </div>
 </footer>
+
+<style>
+  /* Classes utilitaires */
+  .bg-dark-navy {
+    background-color: #001e2b;
+  }
+  .bg-ocean-deep {
+    background-color: #003d5c;
+  }
+  .bg-ocean-deep\/30 {
+    background-color: rgba(0, 61, 92, 0.3);
+  }
+  .border-ocean-deep {
+    border-color: #003d5c;
+  }
+  .hover\:bg-ocean-light:hover {
+    background-color: #0074a3;
+  }
+  .text-warm-white {
+    color: #fefefe;
+  }
+  .text-warm-white\/80 {
+    color: rgba(254, 254, 254, 0.8);
+  }
+  .text-gray-medium {
+    color: #9ca3af;
+  }
+  .text-turquoise {
+    color: #00b4d8;
+  }
+  .hover\:text-turquoise:hover {
+    color: #00b4d8;
+  }
+  .text-sunset-orange {
+    color: #ff6b35;
+  }
+</style>
