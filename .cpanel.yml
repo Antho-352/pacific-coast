@@ -1,7 +1,22 @@
 ---
 deployment:
   tasks:
+    # Définition des variables
     - export DEPLOYPATH=/home/hondapacificcoas/public_html/
-    - /opt/cpanel/ea-nodejs20/bin/npm install
-    - /opt/cpanel/ea-nodejs20/bin/npm run build
-    - /bin/cp -R dist/* $DEPLOYPATH
+    - export REPO_PATH=/home/hondapacificcoas/repositories/pacific-coast/
+    
+    # Log de début
+    - echo "[$(date)] 🚀 Démarrage du déploiement automatique" >> /home/hondapacificcoas/deploy.log
+    
+    # Installation des dépendances
+    - cd $REPO_PATH && /opt/cpanel/ea-nodejs20/bin/npm install >> /home/hondapacificcoas/deploy.log 2>&1
+    
+    # Build
+    - cd $REPO_PATH && /opt/cpanel/ea-nodejs20/bin/npm run build >> /home/hondapacificcoas/deploy.log 2>&1
+    
+    # Déploiement (avec suppression des anciens fichiers pour éviter les conflits)
+    - /bin/rm -rf $DEPLOYPATH/*
+    - /bin/cp -R $REPO_PATH/dist/* $DEPLOYPATH/
+    
+    # Log de fin
+    - echo "[$(date)] ✅ Déploiement terminé" >> /home/hondapacificcoas/deploy.log
