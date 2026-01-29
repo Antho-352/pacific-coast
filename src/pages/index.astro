@@ -50,20 +50,20 @@ const specs = [
   <Navigation />
   
   <main>
-    <!-- Hero (image) -->
+    <!-- 1. Hero -->
     <HeroSection 
       title="Honda Pacific Coast PC800"
       subtitle="La GT des années 90 qui traverse les décennies"
       badge="Produite de 1989 à 1998"
     />
 
-    <!-- Section À la une - FOND BLANC -->
-    {aLaUnePosts.length > 0 && (
+    <!-- 2. Section À la une - FOND BLANC (structure prête, masquée si vide) -->
+    {aLaUnePosts.length > 0 ? (
       <section id="a-la-une" class="section bg-white">
         <div class="container">
           <div class="section-header">
             <span class="section-label">À la Une</span>
-            <h2 class="section-header__title">Articles en vedette</h2>
+            <h2 class="section-header__title">Sélection du moment</h2>
           </div>
           
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -91,14 +91,31 @@ const specs = [
           </div>
         </div>
       </section>
+    ) : (
+      <!-- Section masquée si pas d'articles - prête pour activation future -->
+      <section id="a-la-une" class="section bg-white hidden">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-label">À la Une</span>
+            <h2 class="section-header__title">Sélection du moment</h2>
+          </div>
+          <p class="text-gray-500 text-center">Aucun article à la une pour le moment.</p>
+        </div>
+      </section>
     )}
 
-    <!-- Derniers articles - FOND GRIS -->
+    <!-- 3. Outils (Carburant) - FOND BLANC -->
+    <FuelWidget />
+
+    <!-- 4. Quiz - FOND GRIS -->
+    <QuizSection />
+
+    <!-- 5. Derniers articles - FOND GRIS (descendu + label renommé) -->
     <section id="articles" class="section bg-section-gray">
       <div class="container">
         <div class="section-header">
-          <span class="section-label">Actualités</span>
-          <h2 class="section-header__title">Derniers articles</h2>
+          <span class="section-label">Derniers articles</span>
+          <h2 class="section-header__title">Toute l'actualité</h2>
         </div>
         
         {error && (
@@ -133,16 +150,10 @@ const specs = [
       </div>
     </section>
 
-    <!-- Outils (Carburant) - FOND BLANC -->
-    <FuelWidget />
-
-    <!-- Quiz - FOND GRIS -->
-    <QuizSection />
-
-    <!-- Galerie - FOND BEIGE -->
+    <!-- 6. Galerie - FOND BEIGE -->
     <GallerySection />
 
-    <!-- Histoire - FOND SOMBRE -->
+    <!-- 7. Histoire - FOND SOMBRE -->
     <section class="section bg-metal-900 text-white">
       <div class="container">
         <div class="max-w-3xl mx-auto text-center">
@@ -161,7 +172,7 @@ const specs = [
       </div>
     </section>
 
-    <!-- Fiche Technique - FOND BLANC -->
+    <!-- 8. Fiche Technique - FOND BLANC -->
     <section id="technique" class="section bg-white">
       <div class="container">
         <div class="max-w-4xl mx-auto">
@@ -191,7 +202,7 @@ const specs = [
       </div>
     </section>
 
-    <!-- Contribuer - FOND SOMBRE -->
+    <!-- 9. Participer (Contribuer) - FOND SOMBRE -->
     <CommunitySection />
   </main>
 
@@ -342,4 +353,9 @@ const specs = [
   
   .group:hover .group-hover\:scale-105 { transform: scale(1.05); }
   .group:hover .group-hover\:text-red-700 { color: #C53030; }
+  
+  /* Hidden utility */
+  .hidden {
+    display: none !important;
+  }
 </style>

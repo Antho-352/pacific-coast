@@ -1,7 +1,7 @@
 ---
 /**
  * Navigation - PC800.fr
- * Style: Premium touring, sobre, intemporel
+ * Menu horizontal sur desktop, burger sur mobile
  */
 
 const navItems = [
@@ -14,52 +14,46 @@ const navItems = [
 ];
 ---
 
-<nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-16">
+<nav class="nav-fixed">
+  <div class="nav-container">
+    <div class="nav-inner">
       <!-- Logo -->
-      <a href="/" class="flex items-center gap-2 group">
-        <span class="text-xl font-bold text-gray-900 tracking-tight">
-          PC800<span class="text-red-700">.fr</span>
+      <a href="/" class="logo">
+        <span class="logo-text">
+          PC800<span class="logo-accent">.fr</span>
         </span>
-        <span class="text-xs text-gray-500 hidden sm:block">
+        <span class="logo-tagline">
           L'Esprit Pacific Coast
         </span>
       </a>
 
-      <!-- Navigation Desktop -->
-      <div class="hidden md:flex items-center space-x-1">
+      <!-- Navigation Desktop - Visible sur écran moyen et plus -->
+      <div class="nav-desktop">
         {navItems.map((link) => (
-          <a
-            href={link.href}
-            class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 rounded-md transition-colors"
-          >
+          <a href={link.href} class="nav-link">
             {link.label}
           </a>
         ))}
       </div>
 
-      <!-- Mobile Menu Button -->
+      <!-- Mobile Menu Button - Visible uniquement sur mobile -->
       <button
         type="button"
-        class="md:hidden p-2 text-gray-600 hover:text-gray-900"
+        class="mobile-menu-btn"
         aria-label="Ouvrir le menu"
         id="mobile-menu-button"
       >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
     </div>
 
     <!-- Mobile Menu -->
-    <div class="md:hidden hidden pb-4" id="mobile-menu">
-      <div class="space-y-1 pt-2">
+    <div class="mobile-menu hidden" id="mobile-menu">
+      <div class="mobile-menu-inner">
         {navItems.map((link) => (
-          <a
-            href={link.href}
-            class="block px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md text-sm font-medium transition-colors"
-          >
+          <a href={link.href} class="mobile-nav-link">
             {link.label}
           </a>
         ))}
@@ -68,8 +62,178 @@ const navItems = [
   </div>
 </nav>
 
-<!-- Spacer -->
-<div class="h-16"></div>
+<!-- Spacer pour compenser la nav fixed -->
+<div class="nav-spacer"></div>
+
+<style>
+  /* Navigation fixe */
+  .nav-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #E5E7EB;
+  }
+  
+  .nav-container {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  @media (min-width: 640px) {
+    .nav-container {
+      padding: 0 1.5rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .nav-container {
+      padding: 0 2rem;
+    }
+  }
+  
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4rem;
+  }
+  
+  /* Logo */
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+  }
+  
+  .logo-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
+    letter-spacing: -0.025em;
+  }
+  
+  .logo-accent {
+    color: #C41E3A;
+  }
+  
+  .logo-tagline {
+    font-size: 0.75rem;
+    color: #6B7280;
+    display: none;
+  }
+  
+  @media (min-width: 640px) {
+    .logo-tagline {
+      display: block;
+    }
+  }
+  
+  /* Navigation Desktop */
+  .nav-desktop {
+    display: none;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  /* Visible à partir de 768px */
+  @media (min-width: 768px) {
+    .nav-desktop {
+      display: flex;
+    }
+  }
+  
+  .nav-link {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #4B5563;
+    text-decoration: none;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+  }
+  
+  .nav-link:hover {
+    color: #111827;
+    background-color: #F3F4F6;
+  }
+  
+  /* Mobile Menu Button */
+  .mobile-menu-btn {
+    display: block;
+    padding: 0.5rem;
+    color: #4B5563;
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 0.375rem;
+  }
+  
+  .mobile-menu-btn:hover {
+    color: #111827;
+  }
+  
+  /* Caché sur desktop */
+  @media (min-width: 768px) {
+    .mobile-menu-btn {
+      display: none;
+    }
+  }
+  
+  .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  
+  /* Mobile Menu */
+  .mobile-menu {
+    padding-bottom: 1rem;
+  }
+  
+  .mobile-menu.hidden {
+    display: none;
+  }
+  
+  /* Caché sur desktop */
+  @media (min-width: 768px) {
+    .mobile-menu {
+      display: none !important;
+    }
+  }
+  
+  .mobile-menu-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-top: 0.5rem;
+  }
+  
+  .mobile-nav-link {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #4B5563;
+    text-decoration: none;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+  }
+  
+  .mobile-nav-link:hover {
+    color: #111827;
+    background-color: #F9FAFB;
+  }
+  
+  /* Spacer */
+  .nav-spacer {
+    height: 4rem;
+  }
+</style>
 
 <script>
   const mobileMenuButton = document.getElementById('mobile-menu-button');
