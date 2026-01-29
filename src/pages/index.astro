@@ -134,37 +134,13 @@ const specs = [
     </section>
 
     <!-- Outils (Carburant) - FOND BLANC -->
-    <section id="outils" class="section bg-white">
-      <div class="container">
-        <div class="max-w-2xl mx-auto">
-          <div class="text-center mb-8">
-            <span class="section-label">Outils pratiques</span>
-            <h2 class="section-header__title">Prix des carburants</h2>
-            <p class="section-header__intro mx-auto">
-              Préparez vos trajets et gardez un œil sur votre budget. Cet outil vous permet de consulter rapidement les prix des carburants autour de chez vous.
-            </p>
-          </div>
-          
-          <div class="card p-6 md:p-8">
-            <FuelWidget />
-          </div>
-        </div>
-      </div>
-    </section>
+    <FuelWidget />
 
     <!-- Quiz - FOND GRIS -->
-    <section id="quiz" class="section bg-section-gray">
-      <div class="container">
-        <QuizSection />
-      </div>
-    </section>
+    <QuizSection />
 
     <!-- Galerie - FOND BEIGE -->
-    <section id="galerie" class="section bg-section-beige">
-      <div class="container">
-        <GallerySection />
-      </div>
-    </section>
+    <GallerySection />
 
     <!-- Histoire - FOND SOMBRE -->
     <section class="section bg-metal-900 text-white">
@@ -364,6 +340,6 @@ const specs = [
   .transition-colors { transition-property: color, background-color, border-color; }
   .duration-500 { transition-duration: 500ms; }
   
-  .group:hover .group-hover\\:scale-105 { transform: scale(1.05); }
-  .group:hover .group-hover\\:text-red-700 { color: #C53030; }
+  .group:hover .group-hover\:scale-105 { transform: scale(1.05); }
+  .group:hover .group-hover\:text-red-700 { color: #C53030; }
 </style>
