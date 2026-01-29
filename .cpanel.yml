@@ -14,9 +14,8 @@ deployment:
     # Build
     - cd $REPO_PATH && /opt/cpanel/ea-nodejs20/bin/npm run build >> /home/hondapacificcoas/deploy.log 2>&1
     
-    # Déploiement (avec suppression des anciens fichiers pour éviter les conflits)
-    - /bin/rm -rf $DEPLOYPATH/*
-    - /bin/cp -R $REPO_PATH/dist/* $DEPLOYPATH/
+    # Déploiement avec rsync (protège /magazine et autres dossiers WordPress)
+    - /usr/bin/rsync -av --delete --exclude='/magazine' --exclude='/wp-content' --exclude='/.htaccess' --exclude='/wp-admin' --exclude='/wp-includes' $REPO_PATH/dist/ $DEPLOYPATH/ >> /home/hondapacificcoas/deploy.log 2>&1
     
     # Log de fin
     - echo "[$(date)] ✅ Déploiement terminé" >> /home/hondapacificcoas/deploy.log
