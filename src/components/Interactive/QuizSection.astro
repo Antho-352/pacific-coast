@@ -182,8 +182,8 @@ const quizThemes = [
 </section>
 
 <style>
-  .section { padding: 4rem 0; }
-  @media (min-width: 768px) { .section { padding: 6rem 0; } }
+  .section { padding: 2.5rem 0; border-top: 1px solid rgba(0,0,0,0.06); }
+  @media (min-width: 768px) { .section { padding: 3rem 0; } }
   
   .container {
     width: 100%;
@@ -282,21 +282,29 @@ const quizThemes = [
   .btn--primary {
     background-color: #C41E3A;
     color: white;
+    font-weight: 700;
+    box-shadow: 0 4px 14px rgba(196, 30, 58, 0.35);
   }
   
   .btn--primary:hover {
     background-color: #A01830;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(196, 30, 58, 0.45);
   }
   
   .btn--secondary {
     background-color: transparent;
     color: #111827;
     border: 1.5px solid #D1D5DB;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   }
   
   .btn--secondary:hover {
     border-color: #C41E3A;
     color: #C41E3A;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
 </style>
 

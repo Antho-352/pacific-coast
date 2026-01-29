@@ -50,23 +50,23 @@ const specs = [
   <Navigation />
   
   <main>
-    <!-- Hero -->
+    <!-- Hero (image) -->
     <HeroSection 
       title="Honda Pacific Coast PC800"
       subtitle="La GT des années 90 qui traverse les décennies"
       badge="Produite de 1989 à 1998"
     />
 
-    <!-- Section À la une -->
+    <!-- Section À la une - FOND BLANC -->
     {aLaUnePosts.length > 0 && (
       <section id="a-la-une" class="section bg-white">
         <div class="container">
           <div class="section-header">
-            <span class="section-header__label">À la Une</span>
+            <span class="section-label">À la Une</span>
             <h2 class="section-header__title">Articles en vedette</h2>
           </div>
           
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {aLaUnePosts.map(post => (
               <article class="card group">
                 <a href={`/post/${post.slug}`} class="block aspect-video overflow-hidden">
@@ -93,21 +93,21 @@ const specs = [
       </section>
     )}
 
-    <!-- Derniers articles -->
-    <section id="articles" class="section bg-metal-50">
+    <!-- Derniers articles - FOND GRIS -->
+    <section id="articles" class="section bg-section-gray">
       <div class="container">
         <div class="section-header">
-          <span class="section-header__label">Actualités</span>
+          <span class="section-label">Actualités</span>
           <h2 class="section-header__title">Derniers articles</h2>
         </div>
         
         {error && (
-          <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-8" role="alert">
+          <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6" role="alert">
             <p class="text-amber-800 text-sm">Impossible de charger les articles. Veuillez réessayer plus tard.</p>
           </div>
         )}
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {recentPosts.map(post => (
             <article class="card group">
               <a href={`/post/${post.slug}`} class="block aspect-video overflow-hidden">
@@ -133,25 +133,49 @@ const specs = [
       </div>
     </section>
 
-    <!-- Outils (Carburant) -->
-    <FuelWidget />
+    <!-- Outils (Carburant) - FOND BLANC -->
+    <section id="outils" class="section bg-white">
+      <div class="container">
+        <div class="max-w-2xl mx-auto">
+          <div class="text-center mb-8">
+            <span class="section-label">Outils pratiques</span>
+            <h2 class="section-header__title">Prix des carburants</h2>
+            <p class="section-header__intro mx-auto">
+              Préparez vos trajets et gardez un œil sur votre budget. Cet outil vous permet de consulter rapidement les prix des carburants autour de chez vous.
+            </p>
+          </div>
+          
+          <div class="card p-6 md:p-8">
+            <FuelWidget />
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <!-- Quiz -->
-    <QuizSection />
+    <!-- Quiz - FOND GRIS -->
+    <section id="quiz" class="section bg-section-gray">
+      <div class="container">
+        <QuizSection />
+      </div>
+    </section>
 
-    <!-- Galerie -->
-    <GallerySection />
+    <!-- Galerie - FOND BEIGE -->
+    <section id="galerie" class="section bg-section-beige">
+      <div class="container">
+        <GallerySection />
+      </div>
+    </section>
 
-    <!-- Histoire (lien vers page dédiée) -->
+    <!-- Histoire - FOND SOMBRE -->
     <section class="section bg-metal-900 text-white">
       <div class="container">
         <div class="max-w-3xl mx-auto text-center">
-          <span class="text-red-400 text-sm font-semibold tracking-wider uppercase">Histoire</span>
-          <h2 class="text-3xl md:text-4xl font-bold mt-4 mb-6">L'histoire de la Pacific Coast</h2>
-          <p class="text-gray-300 text-lg mb-8">
+          <span class="inline-block text-xs font-bold uppercase tracking-wider text-red-400 bg-red-400/10 px-3 py-1 rounded mb-4">Histoire</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold mb-6">L'histoire de la Pacific Coast</h2>
+          <p class="text-gray-300 text-lg mb-8 leading-relaxed">
             De son lancement révolutionnaire en 1989 à son statut de moto culte aujourd'hui, découvrez l'histoire complète de la PC800.
           </p>
-          <a href="/histoire" class="inline-flex items-center px-6 py-3 bg-red-700 hover:bg-red-800 text-white font-medium rounded-lg transition-colors">
+          <a href="/histoire" class="btn btn-primary">
             Lire l'histoire complète
             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -161,29 +185,29 @@ const specs = [
       </div>
     </section>
 
-    <!-- Fiche Technique -->
+    <!-- Fiche Technique - FOND BLANC -->
     <section id="technique" class="section bg-white">
       <div class="container">
         <div class="max-w-4xl mx-auto">
           <div class="section-header text-center">
-            <span class="section-header__label">Spécifications</span>
+            <span class="section-label">Spécifications</span>
             <h2 class="section-header__title">Fiche technique rapide</h2>
             <p class="section-header__intro mx-auto">
               La PC800 est une machine unique, conçue pour durer et pour le confort. Voici les chiffres clés qui font sa légende.
             </p>
           </div>
           
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
             {specs.map(spec => (
-              <div class="bg-metal-50 rounded-lg p-4 border border-gray-100">
-                <div class="text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">{spec.label}</div>
-                <div class="text-gray-900 font-semibold">{spec.value}</div>
+              <div class="bg-section-gray rounded-lg p-4 border border-gray-100">
+                <div class="text-xs text-gray-500 uppercase tracking-wide font-semibold mb-1">{spec.label}</div>
+                <div class="text-gray-900 font-bold">{spec.value}</div>
               </div>
             ))}
           </div>
           
           <div class="text-center mt-8">
-            <a href="/specs" class="inline-flex items-center px-6 py-3 border-2 border-gray-900 text-gray-900 font-medium rounded-lg hover:bg-gray-900 hover:text-white transition-colors">
+            <a href="/specs" class="btn btn-secondary">
               Voir la fiche complète
             </a>
           </div>
@@ -191,7 +215,7 @@ const specs = [
       </div>
     </section>
 
-    <!-- Contribuer -->
+    <!-- Contribuer - FOND SOMBRE -->
     <CommunitySection />
   </main>
 
@@ -199,9 +223,23 @@ const specs = [
 </Layout>
 
 <style>
-  .section { padding: 4rem 0; }
-  @media (min-width: 768px) { .section { padding: 5rem 0; } }
+  /* Section backgrounds */
+  .bg-white { background-color: #FFFFFF; }
+  .bg-section-gray { background-color: #F8F9FA; }
+  .bg-section-beige { background-color: #FFF9F5; }
+  .bg-metal-900 { background-color: #1A1A1A; }
   
+  /* Section base */
+  .section {
+    padding: 3rem 0;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+  
+  @media (min-width: 768px) {
+    .section { padding: 3.5rem 0; }
+  }
+  
+  /* Container */
   .container {
     width: 100%;
     max-width: 1200px;
@@ -209,35 +247,46 @@ const specs = [
     padding: 0 1rem;
   }
   
-  .section-header {
-    margin-bottom: 2.5rem;
+  @media (min-width: 640px) {
+    .container { padding: 0 1.5rem; }
   }
   
-  .section-header__label {
+  /* Section label avec fond */
+  .section-label {
+    display: inline-block;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #C41E3A;
-    margin-bottom: 0.5rem;
-    display: block;
+    color: #C53030;
+    background-color: #FEE2E2;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.375rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Section header */
+  .section-header {
+    margin-bottom: 2rem;
   }
   
   .section-header__title {
-    font-size: clamp(1.75rem, 4vw, 2.25rem);
-    font-weight: 700;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 800;
     color: #111827;
     line-height: 1.2;
+    letter-spacing: -0.02em;
   }
   
   .section-header__intro {
     font-size: 1.125rem;
     color: #4B5563;
-    line-height: 1.6;
+    line-height: 1.7;
     max-width: 600px;
     margin-top: 0.75rem;
   }
   
+  /* Cards */
   .card {
     background-color: white;
     border: 1px solid #E5E7EB;
@@ -247,13 +296,58 @@ const specs = [
   }
   
   .card:hover {
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
     border-color: #D1D5DB;
+    transform: translateY(-3px);
   }
   
-  .bg-metal-50 { background-color: #FAFAF9; }
-  .bg-metal-100 { background-color: #F5F5F4; }
-  .bg-metal-900 { background-color: #1C1917; }
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.75rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .btn-primary {
+    background-color: #C53030;
+    color: white;
+    box-shadow: 0 4px 14px rgba(197, 48, 48, 0.35);
+  }
+  
+  .btn-primary:hover {
+    background-color: #9B2C2C;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(197, 48, 48, 0.45);
+  }
+  
+  .btn-secondary {
+    background-color: white;
+    color: #111827;
+    border: 2px solid #D1D5DB;
+  }
+  
+  .btn-secondary:hover {
+    border-color: #C53030;
+    color: #C53030;
+    transform: translateY(-2px);
+  }
+  
+  /* Utilities */
+  .text-gray-500 { color: #6B7280; }
+  .text-gray-600 { color: #4B5563; }
+  .text-gray-900 { color: #111827; }
+  .text-gray-300 { color: #D1D5DB; }
+  .text-red-400 { color: #F87171; }
+  .text-red-700 { color: #C53030; }
+  .text-white { color: white; }
   
   .line-clamp-2 {
     display: -webkit-box;
@@ -261,4 +355,15 @@ const specs = [
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+  
+  .aspect-video { aspect-ratio: 16 / 9; }
+  
+  .object-cover { object-fit: cover; }
+  
+  .transition-transform { transition-property: transform; }
+  .transition-colors { transition-property: color, background-color, border-color; }
+  .duration-500 { transition-duration: 500ms; }
+  
+  .group:hover .group-hover\\:scale-105 { transform: scale(1.05); }
+  .group:hover .group-hover\\:text-red-700 { color: #C53030; }
 </style>

@@ -64,13 +64,14 @@ a {
   .container { padding: 0 2rem; }
 }
 
-/* Sections */
+/* Sections - Padding réduit de 30-40% */
 .section {
-  padding: 4rem 0;
+  padding: 2.5rem 0;
+  border-top: 1px solid rgba(0,0,0,0.06);
 }
 
 @media (min-width: 768px) {
-  .section { padding: 6rem 0; }
+  .section { padding: 3rem 0; }
 }
 
 .section-header {
@@ -112,6 +113,15 @@ a {
 .bg-metal-900 { background-color: var(--metal-900); }
 .bg-red-700 { background-color: var(--red-700); }
 .bg-red-50 { background-color: #FEF2F2; }
+
+/* Alternance de fonds pour les sections */
+.bg-section-gray { background-color: #F8F9FA; }
+.bg-section-beige { background-color: #FFF9F5; }
+.bg-dark { background-color: #0A0A0A; }
+
+/* Borders */
+.border-top { border-top: 1px solid rgba(0,0,0,0.06); }
+.border-left-accent { border-left: 4px solid var(--red-700); }
 
 /* Text colors */
 .text-white { color: white; }
@@ -389,9 +399,23 @@ a {
 }
 
 .card:hover {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
   border-color: var(--gray-300);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+}
+
+/* Feature cards avec fond beige léger */
+.feature-card {
+  background-color: #FFFCFA;
+  border: 1px solid #F0E6E0;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  transition: all 0.2s ease;
+}
+
+.feature-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border-color: #E5D5CC;
 }
 
 .btn {
@@ -401,11 +425,17 @@ a {
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   border-radius: 0.5rem;
   transition: all 0.2s ease;
   cursor: pointer;
   border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .btn:focus-visible {
@@ -416,21 +446,27 @@ a {
 .btn--primary {
   background-color: var(--red-700);
   color: white;
+  box-shadow: 0 4px 14px rgba(196, 30, 58, 0.35);
 }
 
 .btn--primary:hover {
   background-color: var(--red-800);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(196, 30, 58, 0.45);
 }
 
 .btn--secondary {
   background-color: white;
   color: var(--gray-900);
   border: 2px solid var(--gray-300);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .btn--secondary:hover {
   border-color: var(--red-700);
   color: var(--red-700);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .input {

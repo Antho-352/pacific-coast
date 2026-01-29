@@ -18,40 +18,29 @@ const milestones = [
 <Layout title={title} description={description}>
   <Navigation />
   
-  <main class="bg-white">
-    <!-- Hero -->
-    <div class="relative bg-metal-900 text-white overflow-hidden">
-      <!-- Background avec gradient -->
-      <div class="absolute inset-0 bg-gradient-to-br from-metal-900 via-metal-800 to-metal-900"></div>
-      
-      <div class="relative container mx-auto px-4 py-24 md:py-32">
+  <main>
+    <!-- Hero avec intro intégrée - FOND SOMBRE -->
+    <div class="bg-dark text-white">
+      <div class="container py-16 md:py-24">
         <div class="max-w-3xl">
-          <span class="text-red-400 text-sm font-semibold tracking-wider uppercase">L'Histoire</span>
-          <h1 class="text-4xl md:text-5xl font-bold mt-4 mb-6">L'histoire de la Pacific Coast</h1>
-          <p class="text-xl text-gray-300 leading-relaxed">
+          <span class="inline-block text-xs font-bold uppercase tracking-wider text-red-400 bg-red-400/10 px-3 py-1 rounded mb-4">L'Histoire</span>
+          <h1 class="text-4xl md:text-5xl font-extrabold mb-6">L'histoire de la Pacific Coast</h1>
+          <p class="text-xl text-gray-300 leading-relaxed mb-8">
             La Honda Pacific Coast PC800 est une moto à part. Pensée pour voyager autrement, elle a misé sur le confort, la protection et le côté pratique, là où le marché rêvait surtout de sport et de performance.
+          </p>
+          <p class="text-lg text-gray-400 leading-relaxed border-l-4 border-red-600 pl-6">
+            Aujourd'hui, elle est devenue une machine culte : atypique, attachante, et taillée pour avaler les kilomètres. Voici son histoire, ses idées fortes, et pourquoi elle intrigue encore.
           </p>
         </div>
       </div>
     </div>
 
-    <!-- Intro -->
-    <section class="section">
-      <div class="container mx-auto px-4">
+    <!-- Concept - FOND BLANC -->
+    <section class="section bg-white border-top">
+      <div class="container">
         <div class="max-w-3xl mx-auto">
-          <p class="text-lg text-gray-600 leading-relaxed mb-6">
-            Aujourd'hui, elle est devenue une machine culte : atypique, attachante, et taillée pour avaler les kilomètres. Voici son histoire, ses idées fortes, et pourquoi elle intrigue encore.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Concept -->
-    <section class="section bg-metal-50">
-      <div class="container mx-auto px-4">
-        <div class="max-w-3xl mx-auto">
-          <h2 class="text-3xl font-bold text-gray-900 mb-6">Une idée différente du touring</h2>
-          <p class="text-gray-600 leading-relaxed mb-6">
+          <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Une idée différente du touring</h2>
+          <p class="text-gray-600 leading-relaxed mb-4">
             La PC800 assume une approche "grand tourisme" : rouler loin, rouler longtemps, et simplifier la vie du motard. Protection, rangement, cardan… tout est pensé pour réduire les contraintes et augmenter le plaisir de voyage.
           </p>
           <p class="text-gray-600 leading-relaxed">
@@ -61,12 +50,12 @@ const milestones = [
       </div>
     </section>
 
-    <!-- Style -->
-    <section class="section">
-      <div class="container mx-auto px-4">
+    <!-- Style - FOND GRIS -->
+    <section class="section bg-section-gray border-top">
+      <div class="container">
         <div class="max-w-3xl mx-auto">
-          <h2 class="text-3xl font-bold text-gray-900 mb-6">Le style qui divise… et qui marque</h2>
-          <p class="text-gray-600 leading-relaxed mb-6">
+          <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Le style qui divise… et qui marque</h2>
+          <p class="text-gray-600 leading-relaxed mb-4">
             Avec son carénage enveloppant et sa silhouette "automobile", la Pacific Coast a longtemps dérouté. Certains y voyaient une moto sans âme, d'autres un objet de design audacieux. Mais c'est aussi ce qui fait sa signature : une moto immédiatement reconnaissable, conçue comme un objet cohérent.
           </p>
           <p class="text-gray-600 leading-relaxed">
@@ -76,78 +65,90 @@ const milestones = [
       </div>
     </section>
 
-    <!-- Pourquoi culte -->
-    <section class="section bg-red-50">
-      <div class="container mx-auto px-4">
+    <!-- Pourquoi culte - FOND BEIGE avec encadrés -->
+    <section class="section bg-section-beige border-top">
+      <div class="container">
         <div class="max-w-3xl mx-auto">
-          <h2 class="text-3xl font-bold text-gray-900 mb-6">Pourquoi elle est devenue culte</h2>
-          <ul class="space-y-4">
-            <li class="flex items-start gap-4">
-              <div class="w-6 h-6 bg-red-700 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                </svg>
+          <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-8">Pourquoi elle est devenue culte</h2>
+          
+          <div class="space-y-4">
+            <div class="feature-card">
+              <div class="flex items-start gap-4">
+                <div class="w-8 h-8 bg-red-700 rounded-full flex items-center justify-center flex-shrink-0">
+                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-bold text-gray-900">Coffre intégré</h3>
+                  <p class="text-gray-600 text-sm">140 litres de rangement : on part en week-end sans ajouter de valises externes.</p>
+                </div>
               </div>
-              <div>
-                <h3 class="font-semibold text-gray-900">Coffre intégré</h3>
-                <p class="text-gray-600">140 litres de rangement : on part en week-end sans ajouter de valises externes.</p>
+            </div>
+            
+            <div class="feature-card">
+              <div class="flex items-start gap-4">
+                <div class="w-8 h-8 bg-red-700 rounded-full flex items-center justify-center flex-shrink-0">
+                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-bold text-gray-900">Confort et protection</h3>
+                  <p class="text-gray-600 text-sm">Carénage intégral, position naturelle, protection météo : une vraie bulle de touring.</p>
+                </div>
               </div>
-            </li>
-            <li class="flex items-start gap-4">
-              <div class="w-6 h-6 bg-red-700 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                </svg>
+            </div>
+            
+            <div class="feature-card">
+              <div class="flex items-start gap-4">
+                <div class="w-8 h-8 bg-red-700 rounded-full flex items-center justify-center flex-shrink-0">
+                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-bold text-gray-900">Transmission par cardan</h3>
+                  <p class="text-gray-600 text-sm">Moins d'entretien qu'une chaîne, plus de fiabilité pour les longs trajets.</p>
+                </div>
               </div>
-              <div>
-                <h3 class="font-semibold text-gray-900">Confort et protection</h3>
-                <p class="text-gray-600">Carénage intégral, position naturelle, protection météo : une vraie bulle de touring.</p>
+            </div>
+            
+            <div class="feature-card">
+              <div class="flex items-start gap-4">
+                <div class="w-8 h-8 bg-red-700 rounded-full flex items-center justify-center flex-shrink-0">
+                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-bold text-gray-900">Une moto différente</h3>
+                  <p class="text-gray-600 text-sm">Son look unique crée un lien fort entre passionnés. On ne passe pas inaperçu en PC800.</p>
+                </div>
               </div>
-            </li>
-            <li class="flex items-start gap-4">
-              <div class="w-6 h-6 bg-red-700 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                </svg>
-              </div>
-              <div>
-                <h3 class="font-semibold text-gray-900">Transmission par cardan</h3>
-                <p class="text-gray-600">Moins d'entretien qu'une chaîne, plus de fiabilité pour les longs trajets.</p>
-              </div>
-            </li>
-            <li class="flex items-start gap-4">
-              <div class="w-6 h-6 bg-red-700 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                </svg>
-              </div>
-              <div>
-                <h3 class="font-semibold text-gray-900">Une moto différente</h3>
-                <p class="text-gray-600">Son look unique crée un lien fort entre passionnés. On ne passe pas inaperçu en PC800.</p>
-              </div>
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Timeline -->
-    <section class="section">
-      <div class="container mx-auto px-4">
+    <!-- Timeline - FOND BLANC -->
+    <section class="section bg-white border-top">
+      <div class="container">
         <div class="max-w-3xl mx-auto">
-          <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">Repères chronologiques</h2>
+          <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-10 text-center">Repères chronologiques</h2>
           
           <div class="relative">
             <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gray-300 md:-translate-x-1/2"></div>
             
             {milestones.map((item, index) => (
-              <div class={`relative flex items-start gap-8 mb-12 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-                <div class="absolute left-4 md:left-1/2 w-3 h-3 bg-red-700 rounded-full border-4 border-white md:-translate-x-1/2 z-10"></div>
+              <div class={`relative flex items-start gap-6 mb-10 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+                <div class="absolute left-4 md:left-1/2 w-3 h-3 bg-red-700 rounded-full border-4 border-white md:-translate-x-1/2 z-10 shadow-md"></div>
                 
                 <div class={`ml-12 md:ml-0 md:w-1/2 ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}>
                   <span class="text-red-700 font-bold text-lg">{item.year}</span>
-                  <h3 class="text-xl font-semibold text-gray-900 mt-1 mb-2">{item.title}</h3>
-                  <p class="text-gray-600">{item.description}</p>
+                  <h3 class="text-lg font-bold text-gray-900 mt-1 mb-1">{item.title}</h3>
+                  <p class="text-gray-600 text-sm leading-relaxed">{item.description}</p>
                 </div>
                 <div class="hidden md:block md:w-1/2"></div>
               </div>
@@ -157,52 +158,54 @@ const milestones = [
       </div>
     </section>
 
-    <!-- Le saviez-vous -->
-    <section class="section bg-metal-100">
-      <div class="container mx-auto px-4">
-        <div class="max-w-3xl mx-auto bg-white rounded-xl p-8 border-l-4 border-red-700 shadow-sm">
-          <p class="text-gray-700 italic">
-            <strong class="text-gray-900">Le saviez-vous ?</strong> La PC800 a été conçue par le studio de design Honda en Californie, d'où son nom "Pacific Coast" en référence à la côte ouest américaine. Cette inspiration californienne se retrouve dans son esprit grand tourisme et son style décontracté.
-          </p>
+    <!-- Le saviez-vous - FOND GRIS -->
+    <section class="section bg-section-gray border-top">
+      <div class="container">
+        <div class="max-w-3xl mx-auto">
+          <div class="bg-white rounded-xl p-6 md:p-8 border-l-4 border-red-700 shadow-sm">
+            <p class="text-gray-700 leading-relaxed">
+              <strong class="text-gray-900">Le saviez-vous ?</strong> La PC800 a été conçue par le studio de design Honda en Californie, d'où son nom "Pacific Coast" en référence à la côte ouest américaine. Cette inspiration californienne se retrouve dans son esprit grand tourisme et son style décontracté.
+            </p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Aller plus loin -->
-    <section class="section">
-      <div class="container mx-auto px-4">
+    <!-- Aller plus loin - FOND BLANC -->
+    <section class="section bg-white border-top">
+      <div class="container">
         <div class="max-w-3xl mx-auto">
-          <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Aller plus loin</h2>
+          <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">Aller plus loin</h2>
           
-          <div class="grid md:grid-cols-3 gap-6">
-            <a href="/specs" class="group bg-white border border-gray-200 rounded-xl p-6 hover:border-red-700 hover:shadow-lg transition-all">
-              <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-700 transition-colors">
+          <div class="grid md:grid-cols-3 gap-4">
+            <a href="/specs" class="group bg-white border border-gray-200 rounded-xl p-5 hover:border-red-700 hover:shadow-lg transition-all">
+              <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mb-3 group-hover:bg-red-700 transition-colors">
                 <svg class="w-5 h-5 text-red-700 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
               </div>
-              <h3 class="font-semibold text-gray-900 mb-2">Fiche technique</h3>
-              <p class="text-sm text-gray-600">Toutes les spécifications de la PC800.</p>
+              <h3 class="font-bold text-gray-900 mb-1">Fiche technique</h3>
+              <p class="text-sm text-gray-600">Toutes les spécifications.</p>
             </a>
             
-            <a href="/#galerie" class="group bg-white border border-gray-200 rounded-xl p-6 hover:border-red-700 hover:shadow-lg transition-all">
-              <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-700 transition-colors">
+            <a href="/#galerie" class="group bg-white border border-gray-200 rounded-xl p-5 hover:border-red-700 hover:shadow-lg transition-all">
+              <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mb-3 group-hover:bg-red-700 transition-colors">
                 <svg class="w-5 h-5 text-red-700 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                 </svg>
               </div>
-              <h3 class="font-semibold text-gray-900 mb-2">Galerie</h3>
-              <p class="text-sm text-gray-600">Photos et détails de la PC800.</p>
+              <h3 class="font-bold text-gray-900 mb-1">Galerie</h3>
+              <p class="text-sm text-gray-600">Photos et détails.</p>
             </a>
             
-            <a href="/#articles" class="group bg-white border border-gray-200 rounded-xl p-6 hover:border-red-700 hover:shadow-lg transition-all">
-              <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-700 transition-colors">
+            <a href="/#articles" class="group bg-white border border-gray-200 rounded-xl p-5 hover:border-red-700 hover:shadow-lg transition-all">
+              <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mb-3 group-hover:bg-red-700 transition-colors">
                 <svg class="w-5 h-5 text-red-700 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
                 </svg>
               </div>
-              <h3 class="font-semibold text-gray-900 mb-2">Articles & guides</h3>
-              <p class="text-sm text-gray-600">Conseils et actualités.</p>
+              <h3 class="font-bold text-gray-900 mb-1">Articles</h3>
+              <p class="text-sm text-gray-600">Conseils et guides.</p>
             </a>
           </div>
         </div>
@@ -214,8 +217,22 @@ const milestones = [
 </Layout>
 
 <style>
-  .section { padding: 3rem 0; }
-  @media (min-width: 768px) { .section { padding: 3.5rem 0; } }
+  .bg-dark { background-color: #0A0A0A; }
+  .bg-white { background-color: #FFFFFF; }
+  .bg-section-gray { background-color: #F8F9FA; }
+  .bg-section-beige { background-color: #FFF9F5; }
+  
+  .section {
+    padding: 2.5rem 0;
+  }
+  
+  @media (min-width: 768px) {
+    .section { padding: 3rem 0; }
+  }
+  
+  .border-top {
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
   
   .container {
     width: 100%;
@@ -224,8 +241,161 @@ const milestones = [
     padding: 0 1rem;
   }
   
-  .bg-metal-900 { background-color: #1C1917; }
-  .bg-metal-50 { background-color: #FAFAF9; }
-  .bg-metal-100 { background-color: #F5F5F4; }
-  .bg-red-50 { background-color: #FEF2F2; }
+  @media (min-width: 640px) {
+    .container { padding: 0 1.5rem; }
+  }
+  
+  /* Feature cards avec fond beige léger */
+  .feature-card {
+    background-color: #FFFCFA;
+    border: 1px solid #F0E6E0;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    transition: all 0.2s ease;
+  }
+  
+  .feature-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border-color: #E5D5CC;
+  }
+  
+  /* Text colors */
+  .text-white { color: white; }
+  .text-gray-300 { color: #D1D5DB; }
+  .text-gray-400 { color: #9CA3AF; }
+  .text-gray-600 { color: #4B5563; }
+  .text-gray-700 { color: #374151; }
+  .text-gray-900 { color: #111827; }
+  .text-red-400 { color: #F87171; }
+  .text-red-700 { color: #C53030; }
+  
+  /* Utilities */
+  .font-bold { font-weight: 700; }
+  .font-extrabold { font-weight: 800; }
+  
+  .text-xs { font-size: 0.75rem; }
+  .text-sm { font-size: 0.875rem; }
+  .text-lg { font-size: 1.125rem; }
+  .text-xl { font-size: 1.25rem; }
+  .text-2xl { font-size: 1.5rem; }
+  .text-3xl { font-size: 1.875rem; }
+  .text-4xl { font-size: 2.25rem; }
+  .text-5xl { font-size: 3rem; }
+  
+  .leading-relaxed { line-height: 1.7; }
+  
+  .text-center { text-align: center; }
+  
+  .max-w-3xl { max-width: 48rem; }
+  
+  .mx-auto { margin-left: auto; margin-right: auto; }
+  
+  .mb-1 { margin-bottom: 0.25rem; }
+  .mb-3 { margin-bottom: 0.75rem; }
+  .mb-4 { margin-bottom: 1rem; }
+  .mb-6 { margin-bottom: 1.5rem; }
+  .mb-8 { margin-bottom: 2rem; }
+  .mb-10 { margin-bottom: 2.5rem; }
+  
+  .mt-1 { margin-top: 0.25rem; }
+  .mt-4 { margin-top: 1rem; }
+  
+  .py-16 { padding-top: 4rem; padding-bottom: 4rem; }
+  
+  .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+  .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+  
+  .pl-6 { padding-left: 1.5rem; }
+  .p-5 { padding: 1.25rem; }
+  .p-6 { padding: 1.5rem; }
+  
+  /* Flexbox */
+  .flex { display: flex; }
+  .flex-col { flex-direction: column; }
+  .items-start { align-items: flex-start; }
+  .flex-shrink-0 { flex-shrink: 0; }
+  .gap-4 { gap: 1rem; }
+  .gap-6 { gap: 1.5rem; }
+  
+  /* Grid */
+  .grid { display: grid; }
+  
+  @media (min-width: 768px) {
+    .md\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .md\\:flex-row { flex-direction: row; }
+    .md\\:w-1\\/2 { width: 50%; }
+    .md\\:pr-12 { padding-right: 3rem; }
+    .md\\:pl-12 { padding-left: 3rem; }
+    .md\\:text-right { text-align: right; }
+    .md\\:-translate-x-1\\/2 { transform: translateX(-50%); }
+    .md\\:py-24 { padding-top: 6rem; padding-bottom: 6rem; }
+  }
+  
+  /* Display */
+  .hidden { display: none; }
+  
+  @media (min-width: 768px) {
+    .md\\:block { display: block; }
+    .md\\:flex { display: flex; }
+  }
+  
+  /* Positioning */
+  .relative { position: relative; }
+  .absolute { position: absolute; }
+  
+  .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+  .top-0 { top: 0; }
+  .bottom-0 { bottom: 0; }
+  .left-4 { left: 1rem; }
+  
+  .z-10 { z-index: 10; }
+  
+  /* Width & Height */
+  .w-3 { width: 0.75rem; }
+  .w-4 { width: 1rem; }
+  .w-5 { width: 1.25rem; }
+  .w-8 { width: 2rem; }
+  .w-10 { width: 2.5rem; }
+  .w-px { width: 1px; }
+  
+  .h-3 { height: 0.75rem; }
+  .h-4 { height: 1rem; }
+  .h-5 { height: 1.25rem; }
+  .h-8 { height: 2rem; }
+  .h-10 { height: 2.5rem; }
+  
+  /* Borders */
+  .border { border-width: 1px; }
+  .border-l-4 { border-left-width: 4px; }
+  
+  .border-red-600 { border-color: #DC2626; }
+  .border-red-700 { border-color: #C53030; }
+  .border-gray-200 { border-color: #E5E7EB; }
+  .border-gray-300 { border-color: #D1D5DB; }
+  
+  .rounded-full { border-radius: 9999px; }
+  .rounded-lg { border-radius: 0.5rem; }
+  .rounded-xl { border-radius: 0.75rem; }
+  
+  /* Backgrounds */
+  .bg-red-400\\/10 { background-color: rgba(248, 113, 113, 0.1); }
+  .bg-red-100 { background-color: #FEE2E2; }
+  .bg-red-700 { background-color: #C53030; }
+  .bg-white { background-color: white; }
+  
+  /* Shadow */
+  .shadow-sm { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+  .shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+  .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+  
+  /* Transitions */
+  .transition-all { transition-property: all; }
+  .transition-colors { transition-property: color, background-color, border-color; }
+  
+  .hover\\:border-red-700:hover { border-color: #C53030; }
+  .hover\\:shadow-lg:hover { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+  .hover\\:bg-red-700:hover { background-color: #C53030; }
+  
+  .group:hover .group-hover\\:bg-red-700 { background-color: #C53030; }
+  .group:hover .group-hover\\:text-white { color: white; }
 </style>
