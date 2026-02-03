@@ -1,0 +1,46 @@
+# ============================================================
+# Configuration Apache pour Honda Pacific Coast
+# ============================================================
+
+# --- 1. Permettre l'accès direct au dossier /magazine (WordPress) ---
+# Si l'URL commence par /magazine, on ne réécrit pas et on laisse WordPress gérer
+RewriteEngine On
+RewriteBase /
+
+# Ne pas appliquer de règles de réécriture pour le dossier /magazine
+RewriteRule ^magazine - [L]
+
+# --- 2. Gestion des routes Astro (SPA-like) ---
+# Si le fichier ou dossier existe physiquement, on sert directement
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# --- 3. Redirection vers https (optionnel, décommenter si besoin) ---
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# --- 4. Compression gzip ---
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# --- 5. Cache navigateur ---
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType text/css "access plus 1 week"
+  ExpiresByType application/javascript "access plus 1 week"
+</IfModule>
+
+# --- 6. Sécurité de base ---
+# Désactiver l'affichage des répertoires
+Options -Indexes
+
+# Protéger les fichiers sensibles
+<FilesMatch "^\.">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
