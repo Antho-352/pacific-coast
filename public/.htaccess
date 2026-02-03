@@ -2,13 +2,9 @@
 # Configuration Apache pour Honda Pacific Coast
 # ============================================================
 
-# --- 1. Permettre l'accès direct au dossier /magazine (WordPress) ---
-# Si l'URL commence par /magazine, on ne réécrit pas et on laisse WordPress gérer
+# --- 1. Configuration Rewrite ---
 RewriteEngine On
 RewriteBase /
-
-# Ne pas appliquer de règles de réécriture pour le dossier /magazine
-RewriteRule ^magazine - [L]
 
 # --- 2. Gestion des routes Astro (SPA-like) ---
 # Si le fichier ou dossier existe physiquement, on sert directement
