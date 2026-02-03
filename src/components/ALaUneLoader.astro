@@ -1,5 +1,7 @@
 ---
 // Composant qui charge les articles "À la Une" dynamiquement
+// Format : Image + Titre (cliquables) + Date (non cliquable)
+
 const { apiUrl = 'https://honda-pacific-coast.fr/magazine/wp-json/wp/v2', categorySlug = 'a-la-une' } = Astro.props;
 ---
 
@@ -11,25 +13,21 @@ const { apiUrl = 'https://honda-pacific-coast.fr/magazine/wp-json/wp/v2', catego
   const API_URL = apiUrl;
   const CATEGORY_SLUG = categorySlug;
   
+  // Fonction pour extraire l'URL de l'image à la une
   function getFeaturedImageUrl(post) {
     if (post._embedded && post._embedded['wp:featuredmedia'] && post._embedded['wp:featuredmedia'][0]) {
       return post._embedded['wp:featuredmedia'][0].source_url;
     }
-    return '/images/default-bike.jpg';
+    return '/images/logo.svg';
   }
   
+  // Fonction pour formater la date
   function formatDate(dateString) {
     return new Date(dateString).toLocaleDateString('fr-FR', {
       day: 'numeric',
       month: 'long',
       year: 'numeric'
     });
-  }
-  
-  function extractExcerpt(htmlContent) {
-    if (!htmlContent) return '';
-    const text = htmlContent.replace(/<[^>]+>/g, '');
-    return text.substring(0, 150) + (text.length > 150 ? '...' : '');
   }
   
   async function loadALaUnePosts() {
@@ -66,23 +64,25 @@ const { apiUrl = 'https://honda-pacific-coast.fr/magazine/wp-json/wp/v2', catego
       
       container.innerHTML = posts.map(post => `
         <article class="card group bg-white border border-gray-200 rounded-xl overflow-hidden transition-all duration-200 hover:shadow-lg hover:-translate-y-1">
-          <a href="/magazine/${post.slug}/" class="block aspect-video overflow-hidden" target="_blank" rel="noopener">
+          <!-- Image cliquable -->
+          <a href="/magazine/${post.slug}/" class="block aspect-video overflow-hidden bg-gray-100 flex items-center justify-center" target="_blank" rel="noopener">
             <img 
               src="${getFeaturedImageUrl(post)}" 
               alt="${post.title.rendered.replace(/"/g, '&quot;')}"
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${!post._embedded?.['wp:featuredmedia']?.[0] ? 'p-8 object-contain' : ''}"
               loading="lazy"
-              onerror="this.src='/images/default-bike.jpg'"
+              onerror="this.src='/images/logo.svg'; this.classList.add('p-8', 'object-contain');"
             />
           </a>
-          <div class="p-5">
-            <div class="text-xs text-gray-500 mb-2 flex items-center gap-2">
+          <div class="p-4">
+            <!-- Date (non cliquable) -->
+            <div class="text-xs text-gray-500 mb-2">
               <time datetime="${post.date}">${formatDate(post.date)}</time>
             </div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-2 leading-tight group-hover:text-red-700 transition-colors">
-              <a href="/magazine/${post.slug}/" target="_blank" rel="noopener">${post.title.rendered}</a>
+            <!-- Titre cliquable -->
+            <h3 class="text-base font-semibold text-gray-900 leading-tight group-hover:text-red-700 transition-colors">
+              <a href="/magazine/${post.slug}/" target="_blank" rel="noopener" class="hover:text-red-700">${post.title.rendered}</a>
             </h3>
-            <div class="text-gray-600 text-sm line-clamp-2">${extractExcerpt(post.excerpt.rendered)}</div>
           </div>
         </article>
       `).join('');
@@ -101,13 +101,6 @@ const { apiUrl = 'https://honda-pacific-coast.fr/magazine/wp-json/wp/v2', catego
 </script>
 
 <style>
-  .line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  
   .aspect-video {
     aspect-ratio: 16 / 9;
   }
