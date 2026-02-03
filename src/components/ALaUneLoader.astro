@@ -101,6 +101,25 @@ const { apiUrl = 'https://honda-pacific-coast.fr/magazine/wp-json/wp/v2', catego
 </script>
 
 <style>
+  /* Grille responsive : 1 colonne mobile, 2 tablette, 3 desktop */
+  #alaune-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  @media (min-width: 768px) {
+    #alaune-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    #alaune-container {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
   .aspect-video {
     aspect-ratio: 16 / 9;
   }
