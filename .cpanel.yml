@@ -3,32 +3,20 @@ deployment:
   tasks:
     # Définition des variables
     - export DEPLOYPATH=/home/hondapacificcoas/public_html/
-    - export REPO_PATH=/home/hondapacificcoas/repositories/pacific-coast/
-    - export BACKUP_PATH=/tmp/magazine-backup-$(date +%s)
+    - export REPO_PATH=/home/hondapacificcoas/repositories/honda-pacific-coast/
     
     # Log de début
     - echo "[$(date)] 🚀 Démarrage du déploiement automatique" >> /home/hondapacificcoas/deploy.log
     
-    # Étape 1 : SAUVEGARDE du dossier /magazine s'il existe
-    - if [ -d "$DEPLOYPATH/magazine" ]; then echo "[$(date)] 💾 Sauvegarde de /magazine..." >> /home/hondapacificcoas/deploy.log && mkdir -p $BACKUP_PATH && cp -R $DEPLOYPATH/magazine $BACKUP_PATH/ && echo "[$(date)] ✅ /magazine sauvegardé dans $BACKUP_PATH" >> /home/hondapacificcoas/deploy.log; else echo "[$(date)] ℹ️ Pas de /magazine à sauvegarder" >> /home/hondapacificcoas/deploy.log; fi
-    
-    # Étape 2 : Installation des dépendances
+    # Étape 1 : Installation des dépendances
     - cd $REPO_PATH && /opt/cpanel/ea-nodejs20/bin/npm install >> /home/hondapacificcoas/deploy.log 2>&1
     
-    # Étape 3 : Build
+    # Étape 2 : Build
     - cd $REPO_PATH && /opt/cpanel/ea-nodejs20/bin/npm run build >> /home/hondapacificcoas/deploy.log 2>&1
     
-    # Étape 4 : Déploiement - suppression des fichiers Astro uniquement (pas les dossiers WordPress)
-    - echo "[$(date)] 🧹 Nettoyage des anciens fichiers..." >> /home/hondapacificcoas/deploy.log
-    - find $DEPLOYPATH -mindepth 1 -maxdepth 1 -type f -delete 2>/dev/null || true
-    - find $DEPLOYPATH -mindepth 1 -maxdepth 1 -type d ! -name 'magazine' ! -name 'wp-content' ! -name 'wp-admin' ! -name 'wp-includes' -exec rm -rf {} + 2>/dev/null || true
-    
-    # Étape 5 : Copie des nouveaux fichiers
-    - echo "[$(date)] 📁 Copie des nouveaux fichiers..." >> /home/hondapacificcoas/deploy.log
-    - cp -R $REPO_PATH/dist/* $DEPLOYPATH/
-    
-    # Étape 6 : RESTAURATION de /magazine
-    - if [ -d "$BACKUP_PATH/magazine" ]; then echo "[$(date)] ♻️ Restauration de /magazine..." >> /home/hondapacificcoas/deploy.log && rm -rf $DEPLOYPATH/magazine && cp -R $BACKUP_PATH/magazine $DEPLOYPATH/ && rm -rf $BACKUP_PATH && echo "[$(date)] ✅ /magazine restauré avec succès" >> /home/hondapacificcoas/deploy.log; fi
+    # Étape 3 : Déploiement avec rsync (EXCLUT /magazine et WordPress)
+    - echo "[$(date)] 📁 Déploiement sécurisé sans toucher /magazine..." >> /home/hondapacificcoas/deploy.log
+    - rsync -av --delete --exclude='magazine/' --exclude='wp-admin/' --exclude='wp-content/' --exclude='wp-includes/' --exclude='wp-*.php' --exclude='xmlrpc.php' --exclude='index.php' $REPO_PATH/dist/ $DEPLOYPATH >> /home/hondapacificcoas/deploy.log 2>&1
     
     # Log de fin
-    - echo "[$(date)] ✅ Déploiement terminé" >> /home/hondapacificcoas/deploy.log
+    - echo "[$(date)] ✅ Déploiement terminé (WordPress préservé)" >> /home/hondapacificcoas/deploy.log

@@ -29,8 +29,19 @@ echo -e "${YELLOW}📦 Installation des dépendances...${NC}"
 echo -e "${YELLOW}🔨 Build...${NC}"
 /opt/cpanel/ea-nodejs20/bin/npm run build
 
-echo -e "${YELLOW}🚀 Déploiement...${NC}"
-rsync -av --delete dist/ "$DEPLOY_PATH"
+echo -e "${YELLOW}🚀 Déploiement (sans toucher /magazine)...${NC}"
+
+# Déploiement sécurisé : copie fichier par fichier en EXCLUANT /magazine
+# On utilise rsync avec --exclude pour protéger WordPress
+rsync -av --delete \
+  --exclude='magazine/' \
+  --exclude='wp-admin/' \
+  --exclude='wp-content/' \
+  --exclude='wp-includes/' \
+  --exclude='wp-*.php' \
+  --exclude='xmlrpc.php' \
+  --exclude='index.php' \
+  dist/ "$DEPLOY_PATH"
 
 echo -e "${GREEN}✅ Déploiement terminé avec succès !${NC}"
 echo "🌐 Vérifie sur : https://honda-pacific-coast.fr/"
