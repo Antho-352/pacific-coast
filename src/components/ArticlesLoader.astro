@@ -2,7 +2,7 @@
 // Composant qui charge les articles dynamiquement côté client
 // Plus besoin de rebuild le site quand un article est publié !
 
-const { apiUrl = 'https://honda-pacific-coast.fr/magazine/index.php?rest_route=/wp/v2' } = Astro.props;
+const { apiUrl = 'https://honda-pacific-coast.fr/magazine/wp-json/wp/v2' } = Astro.props;
 ---
 
 <div id="articles-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

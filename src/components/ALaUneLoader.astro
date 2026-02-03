@@ -1,6 +1,6 @@
 ---
 // Composant qui charge les articles "À la Une" dynamiquement
-const { apiUrl = 'https://honda-pacific-coast.fr/magazine/index.php?rest_route=/wp/v2', categorySlug = 'a-la-une' } = Astro.props;
+const { apiUrl = 'https://honda-pacific-coast.fr/magazine/wp-json/wp/v2', categorySlug = 'a-la-une' } = Astro.props;
 ---
 
 <div id="alaune-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
