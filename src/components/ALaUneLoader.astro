@@ -1,0 +1,118 @@
+---
+// Composant qui charge les articles "À la Une" dynamiquement
+const { apiUrl = 'https://honda-pacific-coast.fr/magazine/wp-json/wp/v2', categorySlug = 'a-la-une' } = Astro.props;
+---
+
+<div id="alaune-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  <!-- Les articles seront injectés ici -->
+</div>
+
+<script define:vars={{ apiUrl, categorySlug }}>
+  const API_URL = apiUrl;
+  const CATEGORY_SLUG = categorySlug;
+  
+  function getFeaturedImageUrl(post) {
+    if (post._embedded && post._embedded['wp:featuredmedia'] && post._embedded['wp:featuredmedia'][0]) {
+      return post._embedded['wp:featuredmedia'][0].source_url;
+    }
+    return '/images/default-bike.jpg';
+  }
+  
+  function formatDate(dateString) {
+    return new Date(dateString).toLocaleDateString('fr-FR', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+  }
+  
+  function extractExcerpt(htmlContent) {
+    if (!htmlContent) return '';
+    const text = htmlContent.replace(/<[^>]+>/g, '');
+    return text.substring(0, 150) + (text.length > 150 ? '...' : '');
+  }
+  
+  async function loadALaUnePosts() {
+    const container = document.getElementById('alaune-container');
+    const section = document.getElementById('a-la-une');
+    
+    try {
+      // Récupère l'ID de la catégorie
+      const catResponse = await fetch(`${API_URL}/categories?slug=${CATEGORY_SLUG}`);
+      const categories = await catResponse.json();
+      
+      if (categories.length === 0) {
+        // Pas de catégorie "à la une", cache la section
+        if (section) section.classList.add('hidden');
+        return;
+      }
+      
+      const categoryId = categories[0].id;
+      
+      // Récupère les articles de cette catégorie
+      const response = await fetch(`${API_URL}/posts?_embed&categories=${categoryId}&per_page=3`);
+      
+      if (!response.ok) throw new Error('Erreur réseau');
+      
+      const posts = await response.json();
+      
+      if (posts.length === 0) {
+        if (section) section.classList.add('hidden');
+        return;
+      }
+      
+      // Affiche la section et injecte les articles
+      if (section) section.classList.remove('hidden');
+      
+      container.innerHTML = posts.map(post => `
+        <article class="card group bg-white border border-gray-200 rounded-xl overflow-hidden transition-all duration-200 hover:shadow-lg hover:-translate-y-1">
+          <a href="/magazine/${post.slug}/" class="block aspect-video overflow-hidden" target="_blank" rel="noopener">
+            <img 
+              src="${getFeaturedImageUrl(post)}" 
+              alt="${post.title.rendered.replace(/"/g, '&quot;')}"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+              onerror="this.src='/images/default-bike.jpg'"
+            />
+          </a>
+          <div class="p-5">
+            <div class="text-xs text-gray-500 mb-2 flex items-center gap-2">
+              <time datetime="${post.date}">${formatDate(post.date)}</time>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-2 leading-tight group-hover:text-red-700 transition-colors">
+              <a href="/magazine/${post.slug}/" target="_blank" rel="noopener">${post.title.rendered}</a>
+            </h3>
+            <div class="text-gray-600 text-sm line-clamp-2">${extractExcerpt(post.excerpt.rendered)}</div>
+          </div>
+        </article>
+      `).join('');
+      
+    } catch (error) {
+      console.error('Erreur chargement À la Une:', error);
+      if (section) section.classList.add('hidden');
+    }
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadALaUnePosts);
+  } else {
+    loadALaUnePosts();
+  }
+</script>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .aspect-video {
+    aspect-ratio: 16 / 9;
+  }
+  
+  .hidden {
+    display: none !important;
+  }
+</style>

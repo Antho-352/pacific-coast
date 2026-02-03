@@ -8,21 +8,8 @@ import GallerySection from '../components/GallerySection.astro';
 import CommunitySection from '../components/CommunitySection.astro';
 import FuelWidget from '../components/Interactive/FuelWidget.astro';
 import QuizSection from '../components/Interactive/QuizSection.astro';
-import { getALaUnePosts, getRecentPosts, getFeaturedImageUrl, formatDate, extractExcerpt } from '../lib/wordpress.js';
-
-// Initialisation des variables pour éviter les crashs si l'API échoue
-let aLaUnePosts = [];
-let recentPosts = [];
-let error = null;
-
-try {
-  aLaUnePosts = await getALaUnePosts(3);
-  const aLaUneIds = aLaUnePosts.map(post => post.id);
-  recentPosts = await getRecentPosts(21, aLaUneIds);
-} catch (e) { 
-  error = e.message; 
-  console.error('Erreur chargement articles:', e); 
-}
+import ArticlesLoader from '../components/ArticlesLoader.astro';
+import ALaUneLoader from '../components/ALaUneLoader.astro';
 
 const pageTitle = "PC800.fr - L'Esprit Pacific Coast";
 const pageDescription = "La référence pour les passionnés de Honda Pacific Coast PC800. Découvrez l'histoire, les spécifications et les guides de cette moto culte des années 90.";
@@ -58,52 +45,17 @@ const specs = [
       badge="Produite de 1989 à 1998"
     />
 
-    <!-- 2. Section À la une - FOND BLANC (structure prête, masquée si vide) -->
-    {aLaUnePosts.length > 0 ? (
-      <section id="a-la-une" class="section bg-white">
-        <div class="container">
-          <div class="section-header">
-            <span class="section-label">À la Une</span>
-            <h2 class="section-header__title">Sélection du moment</h2>
-          </div>
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {aLaUnePosts.map(post => (
-              <article class="card group">
-                <a href={`/post/${post.slug}`} class="block aspect-video overflow-hidden">
-                  <img 
-                    src={getFeaturedImageUrl(post)} 
-                    alt={post.title.rendered}
-                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                </a>
-                <div class="p-5">
-                  <div class="text-xs text-gray-500 mb-2 flex items-center gap-2">
-                    <time datetime={post.date}>{formatDate(post.date)}</time>
-                  </div>
-                  <h3 class="text-lg font-semibold text-gray-900 mb-2 leading-tight group-hover:text-red-700 transition-colors">
-                    <a href={`/post/${post.slug}`} set:html={post.title.rendered} />
-                  </h3>
-                  <div class="text-gray-600 text-sm line-clamp-2" set:html={extractExcerpt(post.excerpt.rendered)} />
-                </div>
-              </article>
-            ))}
-          </div>
+    <!-- 2. Section À la une - FOND BLANC (chargement dynamique) -->
+    <section id="a-la-une" class="section bg-white hidden">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">À la Une</span>
+          <h2 class="section-header__title">Sélection du moment</h2>
         </div>
-      </section>
-    ) : (
-      <!-- Section masquée si pas d'articles - prête pour activation future -->
-      <section id="a-la-une" class="section bg-white hidden">
-        <div class="container">
-          <div class="section-header">
-            <span class="section-label">À la Une</span>
-            <h2 class="section-header__title">Sélection du moment</h2>
-          </div>
-          <p class="text-gray-500 text-center">Aucun article à la une pour le moment.</p>
-        </div>
-      </section>
-    )}
+        
+        <ALaUneLoader />
+      </div>
+    </section>
 
     <!-- 3. Outils (Carburant) - FOND BLANC -->
     <FuelWidget />
@@ -111,7 +63,7 @@ const specs = [
     <!-- 4. Quiz - FOND GRIS -->
     <QuizSection />
 
-    <!-- 5. Derniers articles - FOND GRIS (descendu + label renommé) -->
+    <!-- 5. Derniers articles - FOND GRIS (chargement dynamique, pas besoin de rebuild !) -->
     <section id="articles" class="section bg-section-gray">
       <div class="container">
         <div class="section-header">
@@ -119,35 +71,8 @@ const specs = [
           <h2 class="section-header__title">Toute l'actualité</h2>
         </div>
         
-        {error && (
-          <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6" role="alert">
-            <p class="text-amber-800 text-sm">Impossible de charger les articles. Veuillez réessayer plus tard.</p>
-          </div>
-        )}
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {recentPosts.map(post => (
-            <article class="card group">
-              <a href={`/post/${post.slug}`} class="block aspect-video overflow-hidden">
-                <img 
-                  src={getFeaturedImageUrl(post)} 
-                  alt={post.title.rendered}
-                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                />
-              </a>
-              <div class="p-5">
-                <div class="text-xs text-gray-500 mb-2">
-                  <time datetime={post.date}>{formatDate(post.date)}</time>
-                </div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-2 leading-tight group-hover:text-red-700 transition-colors">
-                  <a href={`/post/${post.slug}`} set:html={post.title.rendered} />
-                </h3>
-                <div class="text-gray-600 text-sm line-clamp-2" set:html={extractExcerpt(post.excerpt.rendered)} />
-              </div>
-            </article>
-          ))}
-        </div>
+        <!-- Articles chargés dynamiquement depuis WordPress -->
+        <ArticlesLoader />
       </div>
     </section>
 

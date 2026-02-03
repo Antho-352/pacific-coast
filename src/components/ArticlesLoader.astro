@@ -1,0 +1,145 @@
+---
+// Composant qui charge les articles dynamiquement côté client
+// Plus besoin de rebuild le site quand un article est publié !
+
+const { apiUrl = 'https://honda-pacific-coast.fr/magazine/wp-json/wp/v2' } = Astro.props;
+---
+
+<div id="articles-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  <!-- Les articles seront injectés ici par JavaScript -->
+  <div class="loading-state col-span-full text-center py-8">
+    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-red-600"></div>
+    <p class="text-gray-500 mt-2 text-sm">Chargement des articles...</p>
+  </div>
+</div>
+
+<div id="articles-error" class="hidden bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
+  <p class="text-amber-800 text-sm">Impossible de charger les articles. <button onclick="loadArticles()" class="underline hover:text-amber-900">Réessayer</button></p>
+</div>
+
+<script define:vars={{ apiUrl }}>
+  const API_URL = apiUrl;
+  
+  // Fonction pour extraire l'URL de l'image à la une
+  function getFeaturedImageUrl(post) {
+    if (post._embedded && post._embedded['wp:featuredmedia'] && post._embedded['wp:featuredmedia'][0]) {
+      return post._embedded['wp:featuredmedia'][0].source_url;
+    }
+    return '/images/default-bike.jpg';
+  }
+  
+  // Fonction pour formater la date
+  function formatDate(dateString) {
+    return new Date(dateString).toLocaleDateString('fr-FR', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+  }
+  
+  // Fonction pour extraire un extrait
+  function extractExcerpt(htmlContent) {
+    if (!htmlContent) return '';
+    const text = htmlContent.replace(/<[^>]+>/g, '');
+    return text.substring(0, 150) + (text.length > 150 ? '...' : '');
+  }
+  
+  // Fonction principale pour charger les articles
+  async function loadArticles() {
+    const container = document.getElementById('articles-container');
+    const errorDiv = document.getElementById('articles-error');
+    
+    // Reset
+    container.innerHTML = `
+      <div class="loading-state col-span-full text-center py-8">
+        <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-red-600"></div>
+        <p class="text-gray-500 mt-2 text-sm">Chargement des articles...</p>
+      </div>
+    `;
+    errorDiv.classList.add('hidden');
+    
+    try {
+      // Récupère les articles récents
+      const response = await fetch(`${API_URL}/posts?_embed&per_page=21&orderby=date&order=desc`);
+      
+      if (!response.ok) {
+        throw new Error('Erreur réseau');
+      }
+      
+      const posts = await response.json();
+      
+      if (posts.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full text-center py-8 text-gray-500">
+            <p>Aucun article pour le moment.</p>
+          </div>
+        `;
+        return;
+      }
+      
+      // Génère le HTML pour chaque article
+      container.innerHTML = posts.map(post => `
+        <article class="card group bg-white border border-gray-200 rounded-xl overflow-hidden transition-all duration-200 hover:shadow-lg hover:-translate-y-1">
+          <a href="/magazine/${post.slug}/" class="block aspect-video overflow-hidden" target="_blank" rel="noopener">
+            <img 
+              src="${getFeaturedImageUrl(post)}" 
+              alt="${post.title.rendered.replace(/"/g, '&quot;')}"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+              onerror="this.src='/images/default-bike.jpg'"
+            />
+          </a>
+          <div class="p-5">
+            <div class="text-xs text-gray-500 mb-2">
+              <time datetime="${post.date}">${formatDate(post.date)}</time>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-2 leading-tight group-hover:text-red-700 transition-colors">
+              <a href="/magazine/${post.slug}/" target="_blank" rel="noopener">${post.title.rendered}</a>
+            </h3>
+            <div class="text-gray-600 text-sm line-clamp-2">${extractExcerpt(post.excerpt.rendered)}</div>
+          </div>
+        </article>
+      `).join('');
+      
+    } catch (error) {
+      console.error('Erreur chargement articles:', error);
+      container.innerHTML = '';
+      errorDiv.classList.remove('hidden');
+    }
+  }
+  
+  // Charge les articles au chargement de la page
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadArticles);
+  } else {
+    loadArticles();
+  }
+  
+  // Rafraîchit les articles toutes les 5 minutes (si l'onglet est actif)
+  setInterval(() => {
+    if (!document.hidden) {
+      loadArticles();
+    }
+  }, 5 * 60 * 1000);
+</script>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .aspect-video {
+    aspect-ratio: 16 / 9;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+</style>
